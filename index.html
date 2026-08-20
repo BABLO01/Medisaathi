@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MediSaathi — Personal Health &amp; Medicine Companion</title>
+<meta name="description" content="MediSaathi is a private, offline-friendly companion for medicine reminders, health tracking and family health records.">
+
+<meta name="theme-color" content="#0EA5A0">
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" href="./icons/icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="./icons/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="MediSaathi">
+<meta name="mobile-web-app-capable" content="yes">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600&family=Noto+Sans+Urdu:wght@500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+<a class="skip-link" href="#app">Skip to content</a>
+
+<header class="topbar">
+  <div class="topbar__row">
+    <h1 id="topbar-title" class="topbar__title">MediSaathi</h1>
+    <button id="search-trigger" class="icon-btn" aria-label="Search">🔍</button>
+  </div>
+  <div id="person-bar" class="person-bar"></div>
+</header>
+
+<main id="app" class="app" aria-busy="false"></main>
+
+<nav id="bottom-nav" class="bottom-nav" aria-label="Primary"></nav>
+
+<div id="modal-root"></div>
+
+<noscript>
+  <div style="padding:2rem;text-align:center;font-family:sans-serif;">
+    MediSaathi needs JavaScript enabled to run. Please enable JavaScript in your browser settings.
+  </div>
+</noscript>
+
+<script type="module" src="./js/app.js"></script>
+</body>
+</html>
