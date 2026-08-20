@@ -8,8 +8,8 @@
 
 <meta name="theme-color" content="#0EA5A0">
 <link rel="manifest" href="./manifest.json">
-<link rel="icon" href="./icons/icon-192.png" type="image/png">
-<link rel="apple-touch-icon" href="./icons/icon-192.png">
+<link rel="icon" href="./icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="./icon-192.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="MediSaathi">
@@ -19,7 +19,541 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600&family=Noto+Sans+Urdu:wght@500;600;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="./css/style.css">
+<style>
+/* =========================================================================
+   MediSaathi — Design tokens
+   Palette: #0EA5A0 teal (primary/trust), #6C63FF violet (secondary),
+   #FF8A5B coral (accent/attention), #2FB380 success, #E1523D danger,
+   #FFB020 warning. Type: Outfit (display) + Inter (body) + Noto Sans Urdu.
+   ========================================================================= */
+
+:root {
+  --accent: #0EA5A0;
+  --accent-2: #6C63FF;
+  --accent-soft: #E3F6F4;
+  --success: #2FB380;
+  --warning: #FFB020;
+  --danger: #E1523D;
+
+  --bg: #EEF6F5;
+  --bg-grad: radial-gradient(1200px 600px at 10% -10%, #DFF3F0 0%, transparent 60%),
+             radial-gradient(1000px 500px at 110% 10%, #EDE9FF 0%, transparent 55%),
+             #F3F8F7;
+  --surface: rgba(255, 255, 255, 0.62);
+  --surface-solid: #FFFFFF;
+  --surface-border: rgba(255, 255, 255, 0.55);
+  --text: #0B2233;
+  --text-muted: #5B7481;
+  --shadow: 0 10px 30px rgba(15, 60, 60, 0.10);
+  --shadow-sm: 0 4px 14px rgba(15, 60, 60, 0.08);
+  --radius-lg: 26px;
+  --radius-md: 18px;
+  --radius-sm: 12px;
+  --chart-grid: rgba(91, 116, 129, 0.16);
+  --ring-track: rgba(91, 116, 129, 0.14);
+  --blur: 18px;
+
+  --font-display: 'Outfit', 'Segoe UI', system-ui, sans-serif;
+  --font-body: 'Inter', 'Segoe UI', system-ui, sans-serif;
+
+  --nav-h: 74px;
+  --topbar-h: auto;
+}
+
+:root[dir="rtl"] {
+  --font-display: 'Noto Sans Urdu', 'Outfit', system-ui, sans-serif;
+  --font-body: 'Noto Sans Urdu', 'Inter', system-ui, sans-serif;
+}
+
+[data-theme="dark"] {
+  --bg: #0B1220;
+  --bg-grad: radial-gradient(1200px 600px at 10% -10%, rgba(14,165,160,0.16) 0%, transparent 60%),
+             radial-gradient(1000px 500px at 110% 10%, rgba(108,99,255,0.14) 0%, transparent 55%),
+             #0B1220;
+  --surface: rgba(255, 255, 255, 0.06);
+  --surface-solid: #111a2b;
+  --surface-border: rgba(255, 255, 255, 0.10);
+  --text: #EAF2F3;
+  --text-muted: #93A6B0;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  --shadow-sm: 0 4px 14px rgba(0, 0, 0, 0.3);
+  --chart-grid: rgba(255, 255, 255, 0.10);
+  --ring-track: rgba(255, 255, 255, 0.10);
+}
+
+[data-theme="medical"] {
+  --accent: #0B7C86;
+  --accent-2: #2C6EF2;
+  --accent-soft: #E4F1F3;
+  --bg: #F4F8FA;
+  --bg-grad: radial-gradient(1100px 550px at 8% -10%, #E1F1F4 0%, transparent 55%),
+             radial-gradient(900px 500px at 105% 5%, #E7EEFC 0%, transparent 55%),
+             #F6FAFB;
+  --surface: rgba(255, 255, 255, 0.72);
+  --surface-solid: #FFFFFF;
+  --surface-border: rgba(11, 124, 134, 0.14);
+  --text: #0B2233;
+  --text-muted: #4E6672;
+  --shadow: 0 10px 26px rgba(11, 60, 70, 0.10);
+}
+
+/* =========================================================================
+   Reset + base
+   ========================================================================= */
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  background: var(--bg-grad);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  padding-bottom: calc(var(--nav-h) + env(safe-area-inset-bottom));
+}
+h1, h2, h3 { font-family: var(--font-display); margin: 0 0 .4em; line-height: 1.2; }
+p { margin: 0 0 .6em; line-height: 1.5; }
+ul { list-style: none; margin: 0; padding: 0; }
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; display: block; }
+button, input, select, textarea { font-family: inherit; font-size: 1rem; color: inherit; }
+button { cursor: pointer; }
+
+.skip-link {
+  position: absolute; left: -999px; top: 0; background: var(--accent); color: #fff;
+  padding: .6em 1em; z-index: 999; border-radius: 0 0 8px 0;
+}
+.skip-link:focus { left: 0; }
+
+:focus-visible {
+  outline: 3px solid var(--accent-2);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+}
+
+.muted { color: var(--text-muted); }
+.warning-text { color: var(--warning); font-weight: 600; }
+.up { color: var(--danger); }
+.down { color: var(--accent); }
+
+/* =========================================================================
+   Glass surface
+   ========================================================================= */
+.glass {
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
+  backdrop-filter: blur(var(--blur));
+  -webkit-backdrop-filter: blur(var(--blur));
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+}
+
+/* =========================================================================
+   Layout shell
+   ========================================================================= */
+.topbar {
+  position: sticky; top: 0; z-index: 40;
+  padding: max(14px, env(safe-area-inset-top)) 16px 10px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--surface-border);
+}
+.topbar__row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.topbar__title { font-size: 1.15rem; font-weight: 700; margin: 0; }
+
+.app {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 14px 16px 32px;
+  min-height: 50vh;
+}
+
+.bottom-nav {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 50;
+  display: flex; justify-content: space-around;
+  height: var(--nav-h);
+  padding-bottom: env(safe-area-inset-bottom);
+  background: var(--surface-solid);
+  border-top: 1px solid var(--surface-border);
+  box-shadow: 0 -6px 20px rgba(0,0,0,0.05);
+}
+.nav-btn {
+  background: none; border: none; flex: 1;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+  color: var(--text-muted); font-size: .72rem; padding: 6px 2px;
+  transition: color .15s ease, transform .15s ease;
+}
+.nav-btn__icon { font-size: 1.3rem; }
+.nav-btn--active { color: var(--accent); }
+.nav-btn--active .nav-btn__icon { transform: translateY(-1px) scale(1.08); }
+
+.icon-btn {
+  background: var(--surface); border: 1px solid var(--surface-border);
+  width: 40px; height: 40px; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 1.05rem;
+}
+
+/* Person bar */
+.person-bar { margin-top: 8px; }
+.person-chip {
+  display: flex; align-items: center; gap: 10px;
+  background: var(--surface); border: 1px solid var(--surface-border);
+  border-radius: 999px; padding: 6px 14px 6px 6px; width: 100%;
+}
+.person-chip__avatar {
+  width: 34px; height: 34px; border-radius: 50%; color: #fff; font-weight: 700;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.person-chip__meta { display: flex; flex-direction: column; align-items: flex-start; flex: 1; }
+.person-chip__label { font-size: .68rem; color: var(--text-muted); }
+.person-chip__name { font-weight: 600; }
+.person-chip__chevron { color: var(--text-muted); }
+
+.person-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+.person-option {
+  display: flex; align-items: center; gap: 12px; background: var(--surface);
+  border: 1px solid var(--surface-border); border-radius: var(--radius-md); padding: 10px 14px; text-align: start;
+}
+.person-option--active { outline: 2px solid var(--accent); }
+.person-option small { display: block; color: var(--text-muted); }
+
+/* =========================================================================
+   Buttons
+   ========================================================================= */
+.btn {
+  border-radius: 999px; padding: .7em 1.3em; font-weight: 600; border: 1px solid transparent;
+  transition: transform .1s ease, box-shadow .15s ease;
+}
+.btn:active { transform: scale(0.97); }
+.btn--primary { background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #fff; box-shadow: var(--shadow-sm); }
+.btn--soft { background: var(--accent-soft); color: var(--accent); }
+.btn--ghost { background: transparent; border-color: var(--surface-border); color: var(--text); }
+.btn--danger { background: rgba(225, 82, 61, 0.12); color: var(--danger); }
+.btn--sm { padding: .4em .9em; font-size: .85rem; }
+.btn--full { width: 100%; }
+.file-btn { display: inline-flex; align-items: center; justify-content: center; }
+
+.chip-btn {
+  width: 32px; height: 32px; border-radius: 50%; border: none; font-weight: 700;
+}
+.chip-btn--taken { background: rgba(47,179,128,0.15); color: var(--success); }
+.chip-btn--missed { background: rgba(225,82,61,0.12); color: var(--danger); }
+
+/* =========================================================================
+   Hero / dashboard
+   ========================================================================= */
+.hero-card {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 22px; margin-bottom: 14px;
+}
+.hero-card__eyebrow { color: var(--text-muted); margin: 0; font-size: .85rem; }
+.hero-card h1 { font-size: 1.5rem; margin: .1em 0; }
+.hero-card__sub { margin: 0; color: var(--text-muted); font-size: .85rem; }
+.hero-card__ring { position: relative; display: flex; align-items: center; justify-content: center; }
+.ring-text {
+  position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+.ring-text strong { font-size: 1.2rem; }
+.ring-text span { font-size: .68rem; color: var(--text-muted); }
+.ring-progress { transition: stroke-dashoffset .6s ease; }
+
+.quick-add-row { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; margin-bottom: 16px; scrollbar-width: none; }
+.quick-add-row::-webkit-scrollbar { display: none; }
+.quick-add-chip {
+  flex: 0 0 auto; background: var(--surface-solid); border: 1px solid var(--surface-border);
+  border-radius: 999px; padding: .55em 1em; font-size: .85rem; box-shadow: var(--shadow-sm); white-space: nowrap;
+}
+
+.explore-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 18px;
+}
+.explore-tile {
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  padding: 14px 6px; text-align: center; font-size: .78rem; font-weight: 600;
+}
+.explore-tile span { font-size: 1.4rem; }
+
+.card-section { margin-bottom: 20px; }
+.card-section h2 { font-size: 1.05rem; }
+
+.empty-inline { text-align: center; padding: 18px 10px; }
+.empty-state { text-align: center; padding: 48px 16px; }
+.empty-state__icon { font-size: 2.6rem; margin-bottom: 8px; }
+.empty-state h2 { font-size: 1.1rem; }
+.empty-state p { color: var(--text-muted); max-width: 340px; margin-inline: auto; }
+
+/* Dose list */
+.dose-list { display: flex; flex-direction: column; gap: 8px; }
+.dose-row {
+  display: grid; grid-template-columns: 52px 40px 1fr auto auto; align-items: center; gap: 10px;
+  background: var(--surface-solid); border: 1px solid var(--surface-border); border-radius: var(--radius-md);
+  padding: 10px 12px; box-shadow: var(--shadow-sm);
+}
+.dose-row--taken { opacity: .75; }
+.dose-row__time { font-weight: 700; font-size: .82rem; color: var(--text-muted); }
+.dose-row__avatar { width: 34px; height: 34px; border-radius: 10px; overflow: hidden; background: var(--accent-soft); display: flex; align-items: center; justify-content: center; }
+.dose-row__avatar img { width: 100%; height: 100%; object-fit: cover; }
+.dose-row__info { display: flex; flex-direction: column; min-width: 0; }
+.dose-row__info strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dose-row__info small { color: var(--text-muted); }
+.dose-row__actions { display: flex; gap: 6px; }
+
+.reading-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+.reading-card {
+  background: var(--surface-solid); border: 1px solid var(--surface-border); border-radius: var(--radius-md);
+  padding: 12px 14px; box-shadow: var(--shadow-sm); display: flex; flex-direction: column; gap: 2px;
+}
+.reading-card__label { font-size: .75rem; color: var(--text-muted); }
+.reading-card__value { font-size: 1.3rem; font-weight: 700; font-family: var(--font-display); }
+.reading-card__unit { font-size: .72rem; color: var(--text-muted); }
+
+.note-list { display: flex; flex-direction: column; gap: 8px; }
+.note-item { background: var(--surface-solid); border: 1px solid var(--surface-border); border-radius: var(--radius-md); padding: 10px 12px; }
+.note-item p { margin: 2px 0 0; color: var(--text-muted); font-size: .88rem; }
+
+.install-banner { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 16px; margin-top: 8px; }
+.install-banner p { margin: 0; color: var(--text-muted); font-size: .85rem; }
+
+/* =========================================================================
+   View header
+   ========================================================================= */
+.view-header { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 14px; }
+.view-header h1 { font-size: 1.3rem; }
+
+/* =========================================================================
+   Medicines
+   ========================================================================= */
+.med-card-list { display: flex; flex-direction: column; gap: 12px; }
+.med-card { display: flex; gap: 12px; padding: 14px; }
+.med-card__photo {
+  width: 56px; height: 56px; border-radius: 14px; overflow: hidden; flex-shrink: 0;
+  background: var(--accent-soft); display: flex; align-items: center; justify-content: center; font-size: 1.5rem;
+}
+.med-card__photo img { width: 100%; height: 100%; object-fit: cover; }
+.med-card__body { flex: 1; min-width: 0; }
+.med-card__top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.med-card__actions { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+
+.status-pill {
+  font-size: .68rem; font-weight: 700; padding: .25em .7em; border-radius: 999px;
+  background: var(--accent-soft); color: var(--accent); text-transform: capitalize;
+}
+.status-pill--paused { background: rgba(255,176,32,0.16); color: #B5780A; }
+.status-pill--completed { background: rgba(91,116,129,0.16); color: var(--text-muted); }
+
+.category-pill {
+  font-size: .68rem; font-weight: 600; padding: .25em .7em; border-radius: 999px;
+  background: var(--accent-soft); color: var(--accent); display: inline-block;
+}
+
+/* =========================================================================
+   Vitals
+   ========================================================================= */
+.vitals-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.vitals-tile { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 26px 10px; text-align: center; font-weight: 700; }
+.vitals-tile__icon { font-size: 1.8rem; }
+
+.info-banner { background: var(--accent-soft); color: var(--accent); padding: 10px 14px; border-radius: var(--radius-sm); font-size: .85rem; }
+
+.chart-card { padding: 12px 8px 6px; margin: 12px 0; }
+.chart-empty { text-align: center; color: var(--text-muted); padding: 24px 0; }
+.chart-axis-label { font-size: 9px; fill: var(--text-muted); font-family: var(--font-body); }
+.chart-legend { display: flex; gap: 14px; justify-content: center; padding: 6px 0 2px; }
+.chart-legend-item { display: flex; align-items: center; gap: 6px; font-size: .78rem; color: var(--text-muted); }
+.chart-legend-item i { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+
+.stats-row { display: flex; gap: 8px; margin-bottom: 12px; }
+.stat-pill { flex: 1; background: var(--surface-solid); border: 1px solid var(--surface-border); border-radius: var(--radius-sm); padding: 10px; text-align: center; }
+.stat-pill span { display: block; font-size: .7rem; color: var(--text-muted); }
+.stat-pill strong { font-family: var(--font-display); }
+
+.reading-list, .reading-row { }
+.reading-row {
+  display: flex; align-items: center; gap: 10px; padding: 12px; border-radius: var(--radius-md); margin-bottom: 8px;
+}
+.reading-row > div { flex: 1; min-width: 0; }
+.reading-row__img { width: 44px; height: 44px; border-radius: 10px; object-fit: cover; }
+
+/* =========================================================================
+   Notes / Vault
+   ========================================================================= */
+.note-card-list { display: flex; flex-direction: column; gap: 10px; }
+.note-card { padding: 14px; }
+.note-card__top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+
+.vault-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.vault-card { padding: 10px; position: relative; }
+.vault-card__preview {
+  aspect-ratio: 4/3; border-radius: var(--radius-sm); overflow: hidden; background: var(--accent-soft);
+  display: flex; align-items: center; justify-content: center; font-size: 2rem; margin-bottom: 8px;
+}
+.vault-card__preview img { width: 100%; height: 100%; object-fit: cover; }
+.vault-card button.icon-btn { position: absolute; top: 8px; inset-inline-end: 8px; width: 32px; height: 32px; background: rgba(255,255,255,0.85); }
+
+/* =========================================================================
+   Timeline / calendar
+   ========================================================================= */
+.filter-row { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 6px; margin-bottom: 12px; scrollbar-width: none; }
+.filter-row::-webkit-scrollbar { display: none; }
+.filter-chip {
+  flex: 0 0 auto; border: 1px solid var(--surface-border); background: var(--surface-solid);
+  border-radius: 999px; padding: .45em 1em; font-size: .82rem; white-space: nowrap;
+}
+.filter-chip--active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+.timeline-list { display: flex; flex-direction: column; gap: 4px; position: relative; }
+.timeline-item {
+  display: flex; gap: 12px; padding: 10px 4px; border-inline-start: 2px solid var(--surface-border); padding-inline-start: 16px; position: relative;
+}
+.timeline-item__icon { font-size: 1.1rem; }
+.timeline-item__body { display: flex; flex-direction: column; }
+.timeline-item__body small { color: var(--text-muted); }
+.timeline-list--mini .timeline-item { border: none; padding-inline-start: 4px; }
+
+.cal-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
+.cal-grid--head { margin-bottom: 4px; }
+.cal-grid--head span { text-align: center; font-size: .72rem; color: var(--text-muted); }
+.cal-cell {
+  aspect-ratio: 1; border-radius: 12px; background: var(--surface-solid); border: 1px solid var(--surface-border);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: .85rem; position: relative;
+}
+.cal-cell--empty { background: transparent; border: none; }
+.cal-cell--today { border-color: var(--accent); font-weight: 700; color: var(--accent); }
+.cal-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent-2); position: absolute; bottom: 6px; }
+
+/* =========================================================================
+   Insights
+   ========================================================================= */
+.insight-list { display: flex; flex-direction: column; gap: 10px; }
+.insight-card { padding: 14px 16px; font-size: .92rem; }
+.report-sheet__disclaimer { color: var(--text-muted); font-size: .78rem; margin-top: 10px; }
+.warning-box { background: rgba(255,176,32,0.12); border-radius: var(--radius-md); padding: 14px; }
+
+/* =========================================================================
+   Reports
+   ========================================================================= */
+.report-controls { display: grid; grid-template-columns: 1fr; gap: 10px; padding: 16px; margin-bottom: 16px; }
+.report-controls label { display: flex; flex-direction: column; gap: 4px; font-size: .85rem; color: var(--text-muted); }
+.report-controls select { padding: .6em; border-radius: var(--radius-sm); border: 1px solid var(--surface-border); background: var(--surface-solid); }
+
+.report-sheet { padding: 22px; }
+.report-sheet__header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--surface-border); }
+.report-sheet__header > div:first-child { display: flex; flex-direction: column; }
+.report-sheet__brand { font-family: var(--font-display); font-size: 1.1rem; }
+.report-sheet__meta { text-align: end; font-weight: 600; display: flex; flex-direction: column; }
+.report-block { margin-bottom: 14px; }
+.report-block h3 { font-size: .95rem; color: var(--accent); }
+.report-list li { padding: 3px 0; font-size: .88rem; border-bottom: 1px dashed var(--surface-border); }
+.report-sheet--doctor { background: #fff; color: #111; box-shadow: none; }
+.report-sheet--doctor .report-block h3 { color: #0B2233; }
+.report-actions { display: flex; gap: 10px; margin-top: 12px; }
+
+/* =========================================================================
+   Search
+   ========================================================================= */
+.search-box input {
+  width: 100%; padding: .8em 1em; border-radius: 999px; border: 1px solid var(--surface-border);
+  background: var(--surface-solid); box-shadow: var(--shadow-sm);
+}
+.search-result-list { display: flex; flex-direction: column; gap: 6px; margin-top: 14px; }
+.search-result-list a {
+  display: flex; align-items: center; gap: 12px; background: var(--surface-solid); border: 1px solid var(--surface-border);
+  border-radius: var(--radius-md); padding: 10px 12px;
+}
+.search-result-list small { display: block; color: var(--text-muted); }
+
+/* =========================================================================
+   Settings
+   ========================================================================= */
+.settings-block { padding: 16px; margin-bottom: 14px; }
+.settings-block h2 { font-size: 1rem; }
+.segmented { display: flex; background: var(--accent-soft); border-radius: 999px; padding: 3px; }
+.segmented__btn { flex: 1; padding: .5em; border-radius: 999px; background: transparent; border: none; font-size: .85rem; font-weight: 600; color: var(--accent); }
+.segmented__btn--active { background: var(--surface-solid); box-shadow: var(--shadow-sm); }
+.toggle-list { display: flex; flex-direction: column; gap: 10px; }
+.toggle-row { display: flex; align-items: center; justify-content: space-between; font-size: .9rem; }
+.toggle-row input[type="checkbox"] { width: 20px; height: 20px; accent-color: var(--accent); }
+.form-actions--stack { flex-direction: column; }
+.app-version { text-align: center; padding: 10px 0 30px; font-size: .78rem; }
+
+/* =========================================================================
+   About
+   ========================================================================= */
+.about-hero { text-align: center; padding: 30px 16px; margin-bottom: 16px; }
+.about-hero__logo { font-size: 2.6rem; margin-bottom: 6px; }
+.feature-list { display: flex; flex-direction: column; gap: 6px; }
+.about-developer { text-align: center; }
+
+/* =========================================================================
+   Forms + modal
+   ========================================================================= */
+.modal-backdrop {
+  position: fixed; inset: 0; background: rgba(11, 34, 51, 0.45); z-index: 100;
+  display: flex; align-items: flex-end; justify-content: center; padding: 0;
+  backdrop-filter: blur(3px);
+}
+.modal {
+  background: var(--surface-solid); width: 100%; max-width: 560px; max-height: 92vh; overflow-y: auto;
+  border-radius: 24px 24px 0 0; box-shadow: var(--shadow); animation: modal-up .22s ease;
+}
+.modal--wide { max-width: 640px; }
+@keyframes modal-up { from { transform: translateY(24px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+@media (min-width: 640px) {
+  .modal-backdrop { align-items: center; }
+  .modal { border-radius: 24px; }
+}
+.modal__header { display: flex; align-items: center; justify-content: space-between; padding: 18px 20px; border-bottom: 1px solid var(--surface-border); position: sticky; top: 0; background: var(--surface-solid); z-index: 2; }
+.modal__header h2 { font-size: 1.1rem; margin: 0; }
+.modal__body { padding: 18px 20px 28px; }
+
+.form { display: flex; flex-direction: column; gap: 14px; }
+.form label { display: flex; flex-direction: column; gap: 6px; font-size: .85rem; color: var(--text-muted); font-weight: 600; }
+.form input, .form select, .form textarea {
+  padding: .75em .9em; border-radius: var(--radius-sm); border: 1px solid var(--surface-border);
+  background: var(--bg); color: var(--text); font-size: .95rem;
+}
+.form input[type="file"] { padding: .5em; }
+.form textarea { resize: vertical; min-height: 70px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.checkbox-group { border: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
+.checkbox-group legend { font-size: .85rem; color: var(--text-muted); font-weight: 600; padding: 0 0 4px; }
+.checkbox-pill { flex-direction: row !important; align-items: center; gap: 8px !important; font-weight: 500 !important; }
+.checkbox-pill input { width: 18px; height: 18px; accent-color: var(--accent); }
+.form-photo-preview { width: 90px; height: 90px; object-fit: cover; border-radius: 14px; }
+.form-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 6px; }
+
+.toast {
+  position: fixed; bottom: calc(var(--nav-h) + 16px); left: 50%; transform: translateX(-50%) translateY(20px);
+  background: #0B2233; color: #fff; padding: .7em 1.2em; border-radius: 999px; font-size: .85rem;
+  opacity: 0; pointer-events: none; transition: opacity .25s ease, transform .25s ease; z-index: 200; max-width: 88vw; text-align: center;
+}
+.toast--visible { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* =========================================================================
+   Responsive: tablet / desktop
+   ========================================================================= */
+@media (min-width: 900px) {
+  .app { max-width: 860px; padding-top: 20px; }
+  .bottom-nav { max-width: 860px; left: 50%; transform: translateX(-50%); border-radius: 24px 24px 0 0; border-inline: 1px solid var(--surface-border); }
+  .reading-grid, .vitals-grid, .vault-grid { grid-template-columns: repeat(4, 1fr); }
+  .explore-grid { grid-template-columns: repeat(6, 1fr); }
+}
+
+/* =========================================================================
+   Print (Doctor report)
+   ========================================================================= */
+@media print {
+  .topbar, .bottom-nav, .person-bar, .view-header button, .report-controls, .report-actions, .quick-add-row, .explore-grid, #install-banner { display: none !important; }
+  body { background: #fff; padding: 0; }
+  .app { max-width: 100%; padding: 0; }
+  .report-sheet { box-shadow: none; border: none; backdrop-filter: none; background: #fff; color: #111; }
+}
+
+</style>
 </head>
 <body>
 <a class="skip-link" href="#app">Skip to content</a>
@@ -44,6 +578,1809 @@
   </div>
 </noscript>
 
-<script type="module" src="./js/app.js"></script>
-</body>
-</html>
+<script>
+// ==== db.js ====
+// db.js — tiny promise-based IndexedDB wrapper for MediSaathi.
+// No external dependencies, so the app keeps working fully offline.
+
+const DB_NAME = 'medisaathi-db';
+const DB_VERSION = 1;
+
+const STORES = [
+  { name: 'persons', keyPath: 'id' },
+  { name: 'medicines', keyPath: 'id' },
+  { name: 'doseLogs', keyPath: 'id' },
+  { name: 'vitalsBP', keyPath: 'id' },
+  { name: 'vitalsSugar', keyPath: 'id' },
+  { name: 'vitalsWeight', keyPath: 'id' },
+  { name: 'vitalsOther', keyPath: 'id' },
+  { name: 'notes', keyPath: 'id' },
+  { name: 'vault', keyPath: 'id' },
+  { name: 'settings', keyPath: 'key' }
+];
+
+let dbPromise = null;
+
+function openDB() {
+  if (dbPromise) return dbPromise;
+  dbPromise = new Promise((resolve, reject) => {
+    if (!('indexedDB' in window)) {
+      reject(new Error('IndexedDB is not supported in this browser.'));
+      return;
+    }
+    const req = indexedDB.open(DB_NAME, DB_VERSION);
+    req.onupgradeneeded = () => {
+      const db = req.result;
+      STORES.forEach((s) => {
+        if (!db.objectStoreNames.contains(s.name)) {
+          db.createObjectStore(s.name, { keyPath: s.keyPath });
+        }
+      });
+    };
+    req.onsuccess = () => resolve(req.result);
+    req.onerror = () => reject(req.error);
+  });
+  return dbPromise;
+}
+
+function uid() {
+  return 'id-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 9);
+}
+
+async function tx(storeName, mode = 'readonly') {
+  const db = await openDB();
+  const transaction = db.transaction(storeName, mode);
+  return transaction.objectStore(storeName);
+}
+
+async function getAll(storeName) {
+  try {
+    const store = await tx(storeName);
+    return await new Promise((resolve, reject) => {
+      const req = store.getAll();
+      req.onsuccess = () => resolve(req.result || []);
+      req.onerror = () => reject(req.error);
+    });
+  } catch (err) {
+    console.error('getAll failed for', storeName, err);
+    return [];
+  }
+}
+
+async function get(storeName, key) {
+  try {
+    const store = await tx(storeName);
+    return await new Promise((resolve, reject) => {
+      const req = store.get(key);
+      req.onsuccess = () => resolve(req.result || null);
+      req.onerror = () => reject(req.error);
+    });
+  } catch (err) {
+    console.error('get failed for', storeName, err);
+    return null;
+  }
+}
+
+async function put(storeName, value) {
+  const store = await tx(storeName, 'readwrite');
+  return new Promise((resolve, reject) => {
+    const req = store.put(value);
+    req.onsuccess = () => resolve(value);
+    req.onerror = () => reject(req.error);
+  });
+}
+
+async function remove(storeName, key) {
+  const store = await tx(storeName, 'readwrite');
+  return new Promise((resolve, reject) => {
+    const req = store.delete(key);
+    req.onsuccess = () => resolve(true);
+    req.onerror = () => reject(req.error);
+  });
+}
+
+async function clearStore(storeName) {
+  const store = await tx(storeName, 'readwrite');
+  return new Promise((resolve, reject) => {
+    const req = store.clear();
+    req.onsuccess = () => resolve(true);
+    req.onerror = () => reject(req.error);
+  });
+}
+
+async function clearAllData() {
+  for (const s of STORES) {
+    await clearStore(s.name);
+  }
+}
+
+async function exportAllData() {
+  const data = {};
+  for (const s of STORES) {
+    data[s.name] = await getAll(s.name);
+  }
+  data.__meta = { app: 'MediSaathi', exportedAt: new Date().toISOString(), version: DB_VERSION };
+  return data;
+}
+
+async function importAllData(data) {
+  if (!data || typeof data !== 'object') throw new Error('Invalid backup file.');
+  for (const s of STORES) {
+    if (Array.isArray(data[s.name])) {
+      await clearStore(s.name);
+      const store = await tx(s.name, 'readwrite');
+      for (const item of data[s.name]) {
+        store.put(item);
+      }
+    }
+  }
+  return true;
+}
+
+async function getSetting(key, fallback = null) {
+  const row = await get('settings', key);
+  return row ? row.value : fallback;
+}
+
+async function setSetting(key, value) {
+  return put('settings', { key, value });
+}
+
+const DB = {
+  uid,
+  getAll,
+  get,
+  put,
+  remove,
+  clearStore,
+  clearAllData,
+  exportAllData,
+  importAllData,
+  getSetting,
+  setSetting
+};
+
+// ==== i18n.js ====
+// i18n.js — English + Urdu translations and language/direction handling.
+
+const STRINGS = {
+  en: {
+    appName: 'MediSaathi',
+    tagline: 'Personal Health & Medicine Companion',
+    nav_dashboard: 'Dashboard',
+    nav_medicines: 'Medicines',
+    nav_vitals: 'Vitals',
+    nav_timeline: 'Timeline',
+    nav_calendar: 'Calendar',
+    nav_notes: 'Notes',
+    nav_vault: 'Vault',
+    nav_reports: 'Reports',
+    nav_insights: 'Insights',
+    nav_settings: 'Settings',
+    nav_about: 'About',
+    nav_search: 'Search',
+
+    greeting_morning: 'Good morning',
+    greeting_afternoon: 'Good afternoon',
+    greeting_evening: 'Good evening',
+    greeting_night: 'Good night',
+
+    today: 'Today',
+    yesterday: 'Yesterday',
+    this_week: 'This week',
+    this_month: 'This month',
+
+    dash_todays_medicines: "Today's medicines",
+    dash_upcoming: 'Upcoming',
+    dash_latest_readings: 'Latest readings',
+    dash_quick_add: 'Quick add',
+    dash_monthly_overview: 'Monthly overview',
+    dash_recent_activity: 'Recent activity',
+    dash_no_medicines: 'No medicines scheduled for today.',
+    dash_add_medicine: 'Add a medicine',
+    dash_adherence_today: "Today's adherence",
+
+    person_me: 'Me',
+    person_switch: 'Switch person',
+    person_add: 'Add family member',
+    person_viewing: 'Viewing',
+    person_name: 'Name',
+    person_relation: 'Relation',
+    person_relation_placeholder: 'e.g. Mother, Father, Self',
+
+    med_title: 'Medicines',
+    med_add: 'Add medicine',
+    med_edit: 'Edit medicine',
+    med_name: 'Medicine name',
+    med_photo: 'Photo',
+    med_dosage: 'Dosage',
+    med_unit: 'Unit',
+    med_schedule: 'Schedule',
+    med_morning: 'Morning',
+    med_afternoon: 'Afternoon',
+    med_evening: 'Evening',
+    med_night: 'Night',
+    med_custom_time: 'Custom time',
+    med_frequency: 'Frequency',
+    med_freq_daily: 'Every day',
+    med_freq_specific: 'Specific days',
+    med_start_date: 'Start date',
+    med_end_date: 'End date (optional)',
+    med_instruction: 'Instructions',
+    med_before_food: 'Before food',
+    med_after_food: 'After food',
+    med_with_food: 'With food',
+    med_other: 'Other',
+    med_purpose: 'Purpose / note',
+    med_quantity: 'Quantity remaining',
+    med_refill_at: 'Remind to refill when quantity reaches',
+    med_notes: 'Additional notes',
+    med_status: 'Status',
+    med_status_active: 'Active',
+    med_status_paused: 'Paused',
+    med_status_completed: 'Completed',
+    med_empty: 'No medicines added yet.',
+    med_empty_hint: 'Add your first medicine to start tracking doses and reminders.',
+    med_delete_confirm: 'Delete this medicine and its dose history? This cannot be undone.',
+    med_low_stock: 'Running low — refill soon',
+    med_timeline_title: "Today's timeline",
+    dose_taken: 'Taken',
+    dose_missed: 'Missed',
+    dose_upcoming: 'Upcoming',
+    dose_skipped: 'Skipped',
+    mark_taken: 'Mark taken',
+    mark_missed: 'Mark missed',
+    mark_skipped: 'Skip',
+
+    vitals_title: 'Vitals',
+    vitals_bp: 'Blood pressure',
+    vitals_sugar: 'Blood sugar',
+    vitals_weight: 'Weight',
+    vitals_other: 'Other vitals',
+    bp_systolic: 'Systolic',
+    bp_diastolic: 'Diastolic',
+    bp_pulse: 'Pulse',
+    bp_add: 'Add blood pressure reading',
+    bp_empty: 'No blood pressure readings yet.',
+    bp_average: 'Average',
+    bp_highest: 'Highest',
+    bp_lowest: 'Lowest',
+    bp_info_msg: 'This is informational only. If a reading feels unusual, please discuss it with a healthcare professional.',
+
+    sugar_value: 'Blood sugar value',
+    sugar_before_meal: 'Before meal',
+    sugar_after_meal: 'After meal',
+    sugar_context_other: 'Other',
+    sugar_add: 'Add blood sugar reading',
+    sugar_empty: 'No blood sugar readings yet.',
+
+    weight_value: 'Weight (kg)',
+    weight_add: 'Add weight entry',
+    weight_empty: 'No weight entries yet.',
+    weight_current: 'Current',
+    weight_previous: 'Previous',
+    weight_change: 'Change',
+    weight_trend_7: '7-day trend',
+    weight_trend_30: '30-day trend',
+    weight_trend_90: '3-month trend',
+    weight_trend_365: '1-year trend',
+
+    other_heartrate: 'Heart rate',
+    other_spo2: 'SpO₂',
+    other_temperature: 'Temperature',
+    other_sleep: 'Sleep duration',
+    other_steps: 'Steps / activity',
+    other_custom: 'Custom measurement',
+    other_add: 'Add reading',
+    other_enable_trackers: 'Enable trackers',
+
+    note: 'Note',
+    notes_title: 'Health notes',
+    notes_add: 'Add note',
+    notes_empty: 'No notes yet.',
+    notes_empty_hint: 'Jot down anything about your day or health — a symptom, a question for the doctor, a reminder.',
+    note_title_field: 'Title',
+    note_content_field: 'Note',
+    note_category: 'Category',
+    note_category_general: 'General',
+    note_category_symptom: 'Symptom',
+    note_category_appointment: 'Appointment',
+    note_category_medicine: 'Medicine',
+    note_category_question: 'Question for doctor',
+
+    vault_title: 'Health vault',
+    vault_add: 'Add to vault',
+    vault_empty: 'Your vault is empty.',
+    vault_empty_hint: 'Save prescriptions, lab reports and reading screenshots here, safely on this device.',
+    vault_category_prescription: 'Prescription',
+    vault_category_lab: 'Lab report',
+    vault_category_medicine_photo: 'Medicine photo',
+    vault_category_reading: 'Reading screenshot',
+    vault_category_other: 'Other document',
+    vault_capture: 'Take photo',
+    vault_upload: 'Upload file',
+
+    timeline_title: 'Health timeline',
+    timeline_empty: 'No events recorded yet.',
+    timeline_filter_all: 'All categories',
+
+    calendar_title: 'Calendar',
+    calendar_events_on: 'Events on',
+    calendar_no_events: 'No events on this day.',
+
+    reports_title: 'Monthly report',
+    reports_select_person: 'Person',
+    reports_select_month: 'Month',
+    reports_select_year: 'Year',
+    reports_generate: 'Generate report',
+    reports_no_data: 'No data recorded for this period.',
+    reports_doctor_mode: 'Doctor view',
+    reports_print: 'Print / save as PDF',
+    reports_share: 'Share',
+
+    insights_title: 'Health insights',
+    insights_empty: 'Not enough data yet to show insights. Keep recording, and patterns will appear here.',
+    insights_disclaimer: 'These are informational summaries of your own recorded data, not a medical diagnosis. Please consult a qualified healthcare professional for medical decisions.',
+
+    search_placeholder: 'Search medicines, notes, records…',
+    search_no_results: 'No results found.',
+
+    settings_title: 'Settings',
+    settings_language: 'Language',
+    settings_theme: 'Theme',
+    theme_light: 'Light',
+    theme_dark: 'Dark',
+    theme_medical: 'Medical',
+    settings_trackers: 'Optional trackers',
+    settings_data: 'Your data',
+    settings_export: 'Export data',
+    settings_import: 'Import data',
+    settings_clear: 'Clear all data',
+    settings_clear_confirm: 'This will permanently delete everything stored in MediSaathi on this device. This cannot be undone. Continue?',
+    settings_privacy_title: 'Privacy',
+    settings_privacy_body: 'All your health information stays on this device, stored privately in your browser. Nothing is uploaded anywhere unless you choose to export or share it yourself.',
+    settings_dashboard_sections: 'Dashboard sections',
+    settings_notifications: 'Reminders & notifications',
+    settings_notifications_enable: 'Enable medicine reminders',
+    settings_notifications_unsupported: 'Notifications are not supported in this browser.',
+    settings_notifications_denied: 'Notification permission was denied. You can change this in your browser settings.',
+
+    about_title: 'About MediSaathi',
+    about_body: 'MediSaathi brings everyday medicine reminders, health measurements, notes, documents and monthly health summaries into one organized, private place. It was built to make caring for yourself and your family a little easier — no clutter, no confusion, just the information you need, when you need it.',
+    about_features_title: 'What it does',
+    about_disclaimer: 'MediSaathi is a personal health-management and organization tool. It is not a substitute for professional medical advice, diagnosis or treatment. Always consult a qualified healthcare professional with questions about a medical condition.',
+    about_developer: 'Developer',
+    about_developer_name: 'Muhammad Usman',
+
+    install_title: 'Install MediSaathi',
+    install_body: 'Add MediSaathi to your home screen for quick, app-like access — even offline.',
+    install_button: 'Install app',
+    install_unsupported: 'Installation isn\u2019t available in this browser right now. You can still use MediSaathi normally in your browser tab.',
+
+    common_save: 'Save',
+    common_cancel: 'Cancel',
+    common_delete: 'Delete',
+    common_edit: 'Edit',
+    common_close: 'Close',
+    common_add: 'Add',
+    common_date: 'Date',
+    common_time: 'Time',
+    common_optional: 'optional',
+    common_required_field: 'This field is required.',
+    common_confirm: 'Confirm',
+    common_none: 'None',
+    common_all: 'All',
+    common_person: 'Person',
+    common_category: 'Category',
+    common_view: 'View',
+    common_saved: 'Saved.',
+    common_deleted: 'Deleted.',
+    common_error_generic: 'Something went wrong. Please try again.',
+    common_back: 'Back',
+    weekday_short: ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],
+    month_names: ['January','February','March','April','May','June','July','August','September','October','November','December']
+  },
+
+  ur: {
+    appName: 'میڈی ساتھی',
+    tagline: 'ذاتی صحت اور دوا کا ساتھی',
+    nav_dashboard: 'ڈیش بورڈ',
+    nav_medicines: 'دوائیں',
+    nav_vitals: 'صحت کے اعداد',
+    nav_timeline: 'ٹائم لائن',
+    nav_calendar: 'کیلنڈر',
+    nav_notes: 'نوٹس',
+    nav_vault: 'محفوظ خانہ',
+    nav_reports: 'رپورٹس',
+    nav_insights: 'بصیرت',
+    nav_settings: 'ترتیبات',
+    nav_about: 'تعارف',
+    nav_search: 'تلاش',
+
+    greeting_morning: 'صبح بخیر',
+    greeting_afternoon: 'دوپہر بخیر',
+    greeting_evening: 'شام بخیر',
+    greeting_night: 'شب بخیر',
+
+    today: 'آج',
+    yesterday: 'کل',
+    this_week: 'اس ہفتے',
+    this_month: 'اس مہینے',
+
+    dash_todays_medicines: 'آج کی دوائیں',
+    dash_upcoming: 'آنے والی',
+    dash_latest_readings: 'تازہ ترین ریڈنگز',
+    dash_quick_add: 'فوری اندراج',
+    dash_monthly_overview: 'ماہانہ جائزہ',
+    dash_recent_activity: 'حالیہ سرگرمی',
+    dash_no_medicines: 'آج کے لیے کوئی دوا شیڈول نہیں۔',
+    dash_add_medicine: 'دوا شامل کریں',
+    dash_adherence_today: 'آج کی پابندی',
+
+    person_me: 'میں',
+    person_switch: 'فرد تبدیل کریں',
+    person_add: 'خاندان کا فرد شامل کریں',
+    person_viewing: 'ملاحظہ ہو رہا ہے',
+    person_name: 'نام',
+    person_relation: 'رشتہ',
+    person_relation_placeholder: 'مثلاً والدہ، والد، خود',
+
+    med_title: 'دوائیں',
+    med_add: 'دوا شامل کریں',
+    med_edit: 'دوا میں ترمیم',
+    med_name: 'دوا کا نام',
+    med_photo: 'تصویر',
+    med_dosage: 'خوراک',
+    med_unit: 'اکائی',
+    med_schedule: 'شیڈول',
+    med_morning: 'صبح',
+    med_afternoon: 'دوپہر',
+    med_evening: 'شام',
+    med_night: 'رات',
+    med_custom_time: 'مخصوص وقت',
+    med_frequency: 'تکرار',
+    med_freq_daily: 'روزانہ',
+    med_freq_specific: 'مخصوص دن',
+    med_start_date: 'شروع کی تاریخ',
+    med_end_date: 'ختم ہونے کی تاریخ (اختیاری)',
+    med_instruction: 'ہدایات',
+    med_before_food: 'کھانے سے پہلے',
+    med_after_food: 'کھانے کے بعد',
+    med_with_food: 'کھانے کے ساتھ',
+    med_other: 'دیگر',
+    med_purpose: 'مقصد / نوٹ',
+    med_quantity: 'باقی مقدار',
+    med_refill_at: 'اس مقدار پر دوبارہ منگوانے کی یاد دہانی دیں',
+    med_notes: 'اضافی نوٹس',
+    med_status: 'حیثیت',
+    med_status_active: 'جاری',
+    med_status_paused: 'موقوف',
+    med_status_completed: 'مکمل',
+    med_empty: 'ابھی تک کوئی دوا شامل نہیں کی گئی۔',
+    med_empty_hint: 'خوراکوں اور یاد دہانیوں کو ٹریک کرنے کے لیے اپنی پہلی دوا شامل کریں۔',
+    med_delete_confirm: 'اس دوا اور اس کی خوراک کی تاریخ کو حذف کریں؟ یہ واپس نہیں ہو سکتا۔',
+    med_low_stock: 'مقدار کم ہے — جلد دوبارہ منگوائیں',
+    med_timeline_title: 'آج کی ٹائم لائن',
+    dose_taken: 'لے لی',
+    dose_missed: 'چھوٹ گئی',
+    dose_upcoming: 'آنے والی',
+    dose_skipped: 'چھوڑ دی',
+    mark_taken: 'لی گئی نشان زد کریں',
+    mark_missed: 'چھوٹی نشان زد کریں',
+    mark_skipped: 'چھوڑیں',
+
+    vitals_title: 'صحت کے اعداد',
+    vitals_bp: 'بلڈ پریشر',
+    vitals_sugar: 'بلڈ شوگر',
+    vitals_weight: 'وزن',
+    vitals_other: 'دیگر اعداد',
+    bp_systolic: 'سسٹولک',
+    bp_diastolic: 'ڈائیاسٹولک',
+    bp_pulse: 'نبض',
+    bp_add: 'بلڈ پریشر ریڈنگ شامل کریں',
+    bp_empty: 'ابھی تک کوئی بلڈ پریشر ریڈنگ موجود نہیں۔',
+    bp_average: 'اوسط',
+    bp_highest: 'سب سے زیادہ',
+    bp_lowest: 'سب سے کم',
+    bp_info_msg: 'یہ صرف معلوماتی ہے۔ اگر کوئی ریڈنگ غیرمعمولی لگے تو براہ کرم کسی طبی ماہر سے رجوع کریں۔',
+
+    sugar_value: 'بلڈ شوگر کی قدر',
+    sugar_before_meal: 'کھانے سے پہلے',
+    sugar_after_meal: 'کھانے کے بعد',
+    sugar_context_other: 'دیگر',
+    sugar_add: 'بلڈ شوگر ریڈنگ شامل کریں',
+    sugar_empty: 'ابھی تک کوئی بلڈ شوگر ریڈنگ موجود نہیں۔',
+
+    weight_value: 'وزن (کلوگرام)',
+    weight_add: 'وزن کا اندراج شامل کریں',
+    weight_empty: 'ابھی تک وزن کا کوئی اندراج نہیں۔',
+    weight_current: 'موجودہ',
+    weight_previous: 'پچھلا',
+    weight_change: 'تبدیلی',
+    weight_trend_7: '7 روزہ رجحان',
+    weight_trend_30: '30 روزہ رجحان',
+    weight_trend_90: '3 ماہ کا رجحان',
+    weight_trend_365: '1 سال کا رجحان',
+
+    other_heartrate: 'دل کی دھڑکن',
+    other_spo2: 'SpO₂',
+    other_temperature: 'درجہ حرارت',
+    other_sleep: 'نیند کا دورانیہ',
+    other_steps: 'قدم / سرگرمی',
+    other_custom: 'مخصوص پیمائش',
+    other_add: 'ریڈنگ شامل کریں',
+    other_enable_trackers: 'ٹریکرز فعال کریں',
+
+    note: 'نوٹ',
+    notes_title: 'صحت کے نوٹس',
+    notes_add: 'نوٹ شامل کریں',
+    notes_empty: 'ابھی تک کوئی نوٹ نہیں۔',
+    notes_empty_hint: 'اپنے دن یا صحت سے متعلق کچھ بھی لکھ لیں — کوئی علامت، ڈاکٹر کے لیے سوال، یا یاد دہانی۔',
+    note_title_field: 'عنوان',
+    note_content_field: 'نوٹ',
+    note_category: 'قسم',
+    note_category_general: 'عمومی',
+    note_category_symptom: 'علامت',
+    note_category_appointment: 'اپائنٹمنٹ',
+    note_category_medicine: 'دوا',
+    note_category_question: 'ڈاکٹر کے لیے سوال',
+
+    vault_title: 'صحت کا محفوظ خانہ',
+    vault_add: 'محفوظ خانے میں شامل کریں',
+    vault_empty: 'آپ کا محفوظ خانہ خالی ہے۔',
+    vault_empty_hint: 'نسخے، لیب رپورٹس اور ریڈنگ کی تصاویر یہاں اسی ڈیوائس پر محفوظ کریں۔',
+    vault_category_prescription: 'نسخہ',
+    vault_category_lab: 'لیب رپورٹ',
+    vault_category_medicine_photo: 'دوا کی تصویر',
+    vault_category_reading: 'ریڈنگ اسکرین شاٹ',
+    vault_category_other: 'دیگر دستاویز',
+    vault_capture: 'تصویر لیں',
+    vault_upload: 'فائل اپ لوڈ کریں',
+
+    timeline_title: 'صحت کی ٹائم لائن',
+    timeline_empty: 'ابھی تک کوئی واقعہ درج نہیں۔',
+    timeline_filter_all: 'تمام اقسام',
+
+    calendar_title: 'کیلنڈر',
+    calendar_events_on: 'واقعات بتاریخ',
+    calendar_no_events: 'اس دن کوئی واقعہ نہیں۔',
+
+    reports_title: 'ماہانہ رپورٹ',
+    reports_select_person: 'فرد',
+    reports_select_month: 'مہینہ',
+    reports_select_year: 'سال',
+    reports_generate: 'رپورٹ بنائیں',
+    reports_no_data: 'اس مدت کے لیے کوئی ڈیٹا درج نہیں۔',
+    reports_doctor_mode: 'ڈاکٹر ویو',
+    reports_print: 'پرنٹ / پی ڈی ایف کے طور پر محفوظ کریں',
+    reports_share: 'شیئر کریں',
+
+    insights_title: 'صحت کی بصیرت',
+    insights_empty: 'بصیرت دکھانے کے لیے ابھی کافی ڈیٹا موجود نہیں۔ اندراج جاری رکھیں، رجحانات یہاں ظاہر ہوں گے۔',
+    insights_disclaimer: 'یہ آپ کے اپنے درج شدہ ڈیٹا کا معلوماتی خلاصہ ہے، طبی تشخیص نہیں۔ طبی فیصلوں کے لیے براہ کرم کسی مستند طبی ماہر سے رجوع کریں۔',
+
+    search_placeholder: 'دوائیں، نوٹس، ریکارڈ تلاش کریں…',
+    search_no_results: 'کوئی نتیجہ نہیں ملا۔',
+
+    settings_title: 'ترتیبات',
+    settings_language: 'زبان',
+    settings_theme: 'تھیم',
+    theme_light: 'روشن',
+    theme_dark: 'تاریک',
+    theme_medical: 'طبی',
+    settings_trackers: 'اختیاری ٹریکرز',
+    settings_data: 'آپ کا ڈیٹا',
+    settings_export: 'ڈیٹا ایکسپورٹ کریں',
+    settings_import: 'ڈیٹا امپورٹ کریں',
+    settings_clear: 'تمام ڈیٹا صاف کریں',
+    settings_clear_confirm: 'یہ اس ڈیوائس پر میڈی ساتھی میں محفوظ ہر چیز کو مستقل طور پر حذف کر دے گا۔ یہ واپس نہیں ہو سکتا۔ جاری رکھیں؟',
+    settings_privacy_title: 'رازداری',
+    settings_privacy_body: 'آپ کی تمام صحت کی معلومات اسی ڈیوائس پر، آپ کے براؤزر میں نجی طور پر محفوظ رہتی ہیں۔ جب تک آپ خود ایکسپورٹ یا شیئر نہ کریں، کچھ بھی کہیں اپ لوڈ نہیں ہوتا۔',
+    settings_dashboard_sections: 'ڈیش بورڈ سیکشنز',
+    settings_notifications: 'یاد دہانیاں اور نوٹیفیکیشنز',
+    settings_notifications_enable: 'دوا کی یاد دہانیاں فعال کریں',
+    settings_notifications_unsupported: 'اس براؤزر میں نوٹیفیکیشنز کی سہولت موجود نہیں۔',
+    settings_notifications_denied: 'نوٹیفیکیشن کی اجازت مسترد کر دی گئی۔ آپ اسے اپنے براؤزر کی ترتیبات میں تبدیل کر سکتے ہیں۔',
+
+    about_title: 'میڈی ساتھی کے بارے میں',
+    about_body: 'میڈی ساتھی روزمرہ کی دوا کی یاد دہانیوں، صحت کی پیمائشوں، نوٹس، دستاویزات اور ماہانہ صحت کے خلاصوں کو ایک منظم اور نجی جگہ پر جمع کرتا ہے۔ اسے اس لیے بنایا گیا ہے تاکہ آپ اپنی اور اپنے خاندان کی دیکھ بھال تھوڑی آسانی سے کر سکیں — بغیر الجھن کے، بس وہ معلومات جن کی آپ کو ضرورت ہے، جب آپ کو ضرورت ہو۔',
+    about_features_title: 'یہ کیا کرتا ہے',
+    about_disclaimer: 'میڈی ساتھی ایک ذاتی صحت انتظام اور تنظیم کا آلہ ہے۔ یہ کسی مستند طبی مشورے، تشخیص یا علاج کا متبادل نہیں ہے۔ کسی بھی طبی حالت سے متعلق سوالات کے لیے ہمیشہ کسی مستند طبی ماہر سے رجوع کریں۔',
+    about_developer: 'ڈویلپر',
+    about_developer_name: 'محمد عثمان',
+
+    install_title: 'میڈی ساتھی انسٹال کریں',
+    install_body: 'تیز، ایپ جیسی رسائی کے لیے میڈی ساتھی کو ہوم اسکرین پر شامل کریں — آف لائن بھی۔',
+    install_button: 'ایپ انسٹال کریں',
+    install_unsupported: 'اس براؤزر میں فی الحال انسٹالیشن دستیاب نہیں۔ آپ اب بھی میڈی ساتھی کو براؤزر ٹیب میں معمول کے مطابق استعمال کر سکتے ہیں۔',
+
+    common_save: 'محفوظ کریں',
+    common_cancel: 'منسوخ کریں',
+    common_delete: 'حذف کریں',
+    common_edit: 'ترمیم کریں',
+    common_close: 'بند کریں',
+    common_add: 'شامل کریں',
+    common_date: 'تاریخ',
+    common_time: 'وقت',
+    common_optional: 'اختیاری',
+    common_required_field: 'یہ خانہ لازمی ہے۔',
+    common_confirm: 'تصدیق کریں',
+    common_none: 'کوئی نہیں',
+    common_all: 'تمام',
+    common_person: 'فرد',
+    common_category: 'قسم',
+    common_view: 'دیکھیں',
+    common_saved: 'محفوظ ہو گیا۔',
+    common_deleted: 'حذف ہو گیا۔',
+    common_error_generic: 'کچھ غلط ہو گیا۔ براہ کرم دوبارہ کوشش کریں۔',
+    common_back: 'واپس',
+    weekday_short: ['اتوار','پیر','منگل','بدھ','جمعرات','جمعہ','ہفتہ'],
+    month_names: ['جنوری','فروری','مارچ','اپریل','مئی','جون','جولائی','اگست','ستمبر','اکتوبر','نومبر','دسمبر']
+  }
+};
+
+let currentLang = 'en';
+
+function setLang(lang) {
+  currentLang = STRINGS[lang] ? lang : 'en';
+  document.documentElement.lang = currentLang;
+  document.documentElement.dir = currentLang === 'ur' ? 'rtl' : 'ltr';
+}
+
+function getLang() {
+  return currentLang;
+}
+
+function t(key) {
+  const dict = STRINGS[currentLang] || STRINGS.en;
+  return (key in dict) ? dict[key] : (STRINGS.en[key] || key);
+}
+
+// ==== utils.js ====
+// utils.js — small shared helpers used across the app.
+
+function pad2(n) {
+  return String(n).padStart(2, '0');
+}
+
+function todayISO() {
+  const d = new Date();
+  return `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`;
+}
+
+function nowTimeHM() {
+  const d = new Date();
+  return `${pad2(d.getHours())}:${pad2(d.getMinutes())}`;
+}
+
+function isoFromDate(d) {
+  return `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`;
+}
+
+function parseISO(iso) {
+  const [y, m, d] = iso.split('-').map(Number);
+  return new Date(y, m - 1, d);
+}
+
+function formatDateHuman(iso, lang, monthNames) {
+  if (!iso) return '';
+  const d = parseISO(iso);
+  const month = monthNames[d.getMonth()];
+  return lang === 'ur' ? `${d.getDate()} ${month} ${d.getFullYear()}` : `${month} ${d.getDate()}, ${d.getFullYear()}`;
+}
+
+function daysAgo(n) {
+  const d = new Date();
+  d.setDate(d.getDate() - n);
+  return isoFromDate(d);
+}
+
+function addDays(iso, n) {
+  const d = parseISO(iso);
+  d.setDate(d.getDate() + n);
+  return isoFromDate(d);
+}
+
+function diffDays(isoA, isoB) {
+  const a = parseISO(isoA);
+  const b = parseISO(isoB);
+  return Math.round((a - b) / 86400000);
+}
+
+function timeToMinutes(hm) {
+  if (!hm) return 0;
+  const [h, m] = hm.split(':').map(Number);
+  return h * 60 + m;
+}
+
+function fileToDataURL(file, maxDim = 1280, quality = 0.82) {
+  return new Promise((resolve, reject) => {
+    if (!file) { resolve(null); return; }
+    const reader = new FileReader();
+    reader.onerror = () => reject(reader.error);
+    reader.onload = () => {
+      // Downscale images so IndexedDB doesn't balloon in size.
+      if (!file.type.startsWith('image/')) {
+        resolve({ dataURL: reader.result, type: file.type, isImage: false, name: file.name });
+        return;
+      }
+      const img = new Image();
+      img.onload = () => {
+        let { width, height } = img;
+        if (width > maxDim || height > maxDim) {
+          const scale = maxDim / Math.max(width, height);
+          width = Math.round(width * scale);
+          height = Math.round(height * scale);
+        }
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+        const dataURL = canvas.toDataURL('image/jpeg', quality);
+        resolve({ dataURL, type: 'image/jpeg', isImage: true, name: file.name });
+      };
+      img.onerror = () => resolve({ dataURL: reader.result, type: file.type, isImage: false, name: file.name });
+      img.src = reader.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+function escapeHTML(str) {
+  if (str === null || str === undefined) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function average(nums) {
+  if (!nums.length) return null;
+  return nums.reduce((a, b) => a + b, 0) / nums.length;
+}
+
+function round1(n) {
+  return Math.round(n * 10) / 10;
+}
+
+let toastTimer = null;
+function showToast(message) {
+  let el = document.getElementById('toast');
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'toast';
+    el.className = 'toast';
+    el.setAttribute('role', 'status');
+    el.setAttribute('aria-live', 'polite');
+    document.body.appendChild(el);
+  }
+  el.textContent = message;
+  el.classList.add('toast--visible');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('toast--visible'), 2600);
+}
+
+function confirmDialog(message) {
+  // Wraps window.confirm so behaviour is easy to swap out later if desired.
+  return window.confirm(message);
+}
+
+function debounce(fn, wait = 200) {
+  let t;
+  return (...args) => {
+    clearTimeout(t);
+    t = setTimeout(() => fn(...args), wait);
+  };
+}
+
+const U = { pad2, todayISO, nowTimeHM, isoFromDate, parseISO, formatDateHuman, daysAgo, addDays, diffDays, timeToMinutes, fileToDataURL, escapeHTML, average, round1, showToast, confirmDialog, debounce };
+
+// ==== charts.js ====
+// charts.js — minimal, dependency-free SVG chart renderer.
+// Kept intentionally small: no CDN chart library is loaded, so charts
+// keep working even fully offline on GitHub Pages.
+
+function svgEl(tag, attrs) {
+  const el = document.createElementNS('http://www.w3.org/2000/svg', tag);
+  Object.entries(attrs).forEach(([k, v]) => el.setAttribute(k, v));
+  return el;
+}
+
+/**
+ * Renders a simple line chart into `container`.
+ * series: [{ label, values: [{x:number index, y:number, dateLabel:string}], color }]
+ */
+function renderLineChart(container, { series, yLabelFormatter, emptyText, height = 180 }) {
+  container.innerHTML = '';
+  const allPoints = series.flatMap((s) => s.values);
+  if (!allPoints.length) {
+    container.innerHTML = `<p class="chart-empty">${emptyText}</p>`;
+    return;
+  }
+  const width = Math.max(container.clientWidth || 320, 280);
+  const padding = { top: 16, right: 16, bottom: 28, left: 40 };
+  const ys = allPoints.map((p) => p.y);
+  let min = Math.min(...ys);
+  let max = Math.max(...ys);
+  if (min === max) { min -= 1; max += 1; }
+  const range = max - min;
+  min -= range * 0.1;
+  max += range * 0.1;
+
+  const xCount = Math.max(...series.map((s) => s.values.length), 2);
+  const innerW = width - padding.left - padding.right;
+  const innerH = height - padding.top - padding.bottom;
+
+  const svg = svgEl('svg', { viewBox: `0 0 ${width} ${height}`, width: '100%', height, role: 'img', 'aria-label': 'trend chart' });
+
+  // Gridlines + y labels
+  const gridCount = 4;
+  for (let i = 0; i <= gridCount; i++) {
+    const yVal = min + ((max - min) * i) / gridCount;
+    const yPos = padding.top + innerH - (innerH * i) / gridCount;
+    const line = svgEl('line', {
+      x1: padding.left, x2: width - padding.right, y1: yPos, y2: yPos,
+      stroke: 'var(--chart-grid, rgba(120,140,150,0.18))', 'stroke-width': 1
+    });
+    svg.appendChild(line);
+    const label = svgEl('text', {
+      x: padding.left - 8, y: yPos + 4, 'text-anchor': 'end',
+      class: 'chart-axis-label'
+    });
+    label.textContent = yLabelFormatter ? yLabelFormatter(yVal) : Math.round(yVal);
+    svg.appendChild(label);
+  }
+
+  series.forEach((s) => {
+    if (!s.values.length) return;
+    const points = s.values.map((p, i) => {
+      const x = padding.left + (s.values.length > 1 ? (innerW * i) / (s.values.length - 1) : innerW / 2);
+      const y = padding.top + innerH - ((p.y - min) / (max - min)) * innerH;
+      return { x, y, ...p };
+    });
+    const pathD = points.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join(' ');
+    const path = svgEl('path', { d: pathD, fill: 'none', stroke: s.color || 'var(--accent)', 'stroke-width': 2.5, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' });
+    svg.appendChild(path);
+
+    points.forEach((p) => {
+      const dot = svgEl('circle', { cx: p.x, cy: p.y, r: 3.5, fill: s.color || 'var(--accent)' });
+      const title = svgEl('title', {});
+      title.textContent = `${p.dateLabel || ''}: ${p.y}`;
+      dot.appendChild(title);
+      svg.appendChild(dot);
+    });
+
+    // x-axis labels (first, middle, last only, to avoid clutter)
+    const labelIdxs = new Set([0, points.length - 1, Math.floor(points.length / 2)]);
+    labelIdxs.forEach((idx) => {
+      const p = points[idx];
+      if (!p) return;
+      const label = svgEl('text', { x: p.x, y: height - 6, 'text-anchor': 'middle', class: 'chart-axis-label' });
+      label.textContent = p.dateLabel || '';
+      svg.appendChild(label);
+    });
+  });
+
+  container.appendChild(svg);
+
+  if (series.length > 1) {
+    const legend = document.createElement('div');
+    legend.className = 'chart-legend';
+    series.forEach((s) => {
+      const item = document.createElement('span');
+      item.className = 'chart-legend-item';
+      item.innerHTML = `<i style="background:${s.color || 'var(--accent)'}"></i>${s.label}`;
+      legend.appendChild(item);
+    });
+    container.appendChild(legend);
+  }
+}
+
+/**
+ * Renders a simple vertical bar chart.
+ * bars: [{ label, value, color }]
+ */
+function renderBarChart(container, { bars, emptyText, height = 160, valueFormatter }) {
+  container.innerHTML = '';
+  if (!bars.length || bars.every((b) => !b.value)) {
+    container.innerHTML = `<p class="chart-empty">${emptyText}</p>`;
+    return;
+  }
+  const width = Math.max(container.clientWidth || 320, 280);
+  const padding = { top: 16, right: 12, bottom: 28, left: 12 };
+  const max = Math.max(...bars.map((b) => b.value), 1);
+  const innerW = width - padding.left - padding.right;
+  const innerH = height - padding.top - padding.bottom;
+  const barGap = 10;
+  const barW = Math.max((innerW - barGap * (bars.length - 1)) / bars.length, 8);
+
+  const svg = svgEl('svg', { viewBox: `0 0 ${width} ${height}`, width: '100%', height, role: 'img', 'aria-label': 'bar chart' });
+
+  bars.forEach((b, i) => {
+    const barH = (b.value / max) * innerH;
+    const x = padding.left + i * (barW + barGap);
+    const y = padding.top + innerH - barH;
+    const rect = svgEl('rect', { x, y, width: barW, height: Math.max(barH, 2), rx: 6, fill: b.color || 'var(--accent)' });
+    const title = svgEl('title', {});
+    title.textContent = `${b.label}: ${valueFormatter ? valueFormatter(b.value) : b.value}`;
+    rect.appendChild(title);
+    svg.appendChild(rect);
+
+    const label = svgEl('text', { x: x + barW / 2, y: height - 6, 'text-anchor': 'middle', class: 'chart-axis-label' });
+    label.textContent = b.label;
+    svg.appendChild(label);
+  });
+
+  container.appendChild(svg);
+}
+
+/**
+ * Renders a compact circular progress ring (used for today's adherence).
+ */
+function renderProgressRing(container, { percent, label, sublabel }) {
+  container.innerHTML = '';
+  const size = 108;
+  const stroke = 10;
+  const r = (size - stroke) / 2;
+  const c = 2 * Math.PI * r;
+  const offset = c - (Math.min(Math.max(percent, 0), 100) / 100) * c;
+
+  const svg = svgEl('svg', { viewBox: `0 0 ${size} ${size}`, width: size, height: size, role: 'img', 'aria-label': label });
+  const bg = svgEl('circle', { cx: size / 2, cy: size / 2, r, fill: 'none', stroke: 'var(--ring-track, rgba(120,140,150,0.18))', 'stroke-width': stroke });
+  const fg = svgEl('circle', {
+    cx: size / 2, cy: size / 2, r, fill: 'none', stroke: 'var(--accent)', 'stroke-width': stroke,
+    'stroke-linecap': 'round', 'stroke-dasharray': c, 'stroke-dashoffset': offset,
+    transform: `rotate(-90 ${size / 2} ${size / 2})`
+  });
+  fg.classList.add('ring-progress');
+  svg.appendChild(bg);
+  svg.appendChild(fg);
+  container.appendChild(svg);
+
+  const textWrap = document.createElement('div');
+  textWrap.className = 'ring-text';
+  textWrap.innerHTML = `<strong>${Math.round(percent)}%</strong><span>${sublabel || ''}</span>`;
+  container.appendChild(textWrap);
+}
+
+// ==== app.js ====
+// app.js — MediSaathi application shell, router and view renderers.
+
+// ---------------------------------------------------------------------------
+// Global state
+// ---------------------------------------------------------------------------
+const state = {
+  personId: null,
+  persons: [],
+  theme: 'light',
+  lang: 'en',
+  trackers: { heartrate: true, spo2: true, temperature: false, sleep: false, steps: false },
+  dashboardSections: {
+    todayMeds: true, upcoming: true, readings: true, notes: true, monthly: true, activity: true
+  },
+  deferredInstallPrompt: null,
+  notificationsEnabled: false
+};
+
+const app = document.getElementById('app');
+const navEl = document.getElementById('bottom-nav');
+const personBar = document.getElementById('person-bar');
+const topbarTitle = document.getElementById('topbar-title');
+
+// ---------------------------------------------------------------------------
+// Boot sequence
+// ---------------------------------------------------------------------------
+async function boot() {
+  registerServiceWorker();
+  await loadSettings();
+  await ensurePersonExists();
+  wireGlobalUI();
+  window.addEventListener('hashchange', route);
+  route();
+  setInterval(checkDueReminders, 60 * 1000);
+}
+
+async function loadSettings() {
+  const lang = await DB.getSetting('lang', 'en');
+  const theme = await DB.getSetting('theme', 'light');
+  const trackers = await DB.getSetting('trackers', state.trackers);
+  const dashboardSections = await DB.getSetting('dashboardSections', state.dashboardSections);
+  const notificationsEnabled = await DB.getSetting('notificationsEnabled', false);
+  state.lang = lang;
+  state.theme = theme;
+  state.trackers = trackers;
+  state.dashboardSections = dashboardSections;
+  state.notificationsEnabled = notificationsEnabled;
+  setLang(lang);
+  applyTheme(theme);
+}
+
+async function ensurePersonExists() {
+  state.persons = await DB.getAll('persons');
+  if (!state.persons.length) {
+    const me = { id: DB.uid(), name: t('person_me'), relation: 'self', colorTag: '#0EA5A0', createdAt: Date.now() };
+    await DB.put('persons', me);
+    state.persons = [me];
+  }
+  const savedPersonId = await DB.getSetting('activePersonId', null);
+  state.personId = (savedPersonId && state.persons.find((p) => p.id === savedPersonId)) ? savedPersonId : state.persons[0].id;
+}
+
+function applyTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+}
+
+function currentPerson() {
+  return state.persons.find((p) => p.id === state.personId) || state.persons[0];
+}
+
+// ---------------------------------------------------------------------------
+// Router
+// ---------------------------------------------------------------------------
+const ROUTES = {
+  '': renderDashboard,
+  '#/dashboard': renderDashboard,
+  '#/medicines': renderMedicines,
+  '#/vitals': renderVitalsHub,
+  '#/vitals/bp': (q) => renderVitalDetail('bp', q),
+  '#/vitals/sugar': (q) => renderVitalDetail('sugar', q),
+  '#/vitals/weight': (q) => renderVitalDetail('weight', q),
+  '#/vitals/other': (q) => renderVitalDetail('other', q),
+  '#/timeline': renderTimeline,
+  '#/calendar': renderCalendar,
+  '#/notes': renderNotes,
+  '#/vault': renderVault,
+  '#/reports': renderReports,
+  '#/insights': renderInsights,
+  '#/search': renderSearch,
+  '#/settings': renderSettings,
+  '#/about': renderAbout
+};
+
+function route() {
+  const [path] = window.location.hash.split('?');
+  const handler = ROUTES[path] || ROUTES[window.location.hash] || renderDashboard;
+  document.querySelectorAll('.nav-btn').forEach((b) => {
+    b.classList.toggle('nav-btn--active', b.dataset.route === (path || '#/dashboard'));
+    b.setAttribute('aria-current', b.dataset.route === (path || '#/dashboard') ? 'page' : 'false');
+  });
+  app.setAttribute('aria-busy', 'true');
+  try {
+    handler(window.location.hash);
+  } catch (err) {
+    console.error(err);
+    app.innerHTML = errorState();
+  }
+  app.setAttribute('aria-busy', 'false');
+  app.scrollTop = 0;
+  window.scrollTo(0, 0);
+}
+
+function go(hash) {
+  window.location.hash = hash;
+}
+
+function errorState() {
+  return `<div class="empty-state">
+    <div class="empty-state__icon">⚠️</div>
+    <h2>${t('common_error_generic')}</h2>
+    <button class="btn btn--primary" onclick="location.hash='#/dashboard'">${t('nav_dashboard')}</button>
+  </div>`;
+}
+
+// ---------------------------------------------------------------------------
+// Chrome: top bar, person switcher, bottom nav
+// ---------------------------------------------------------------------------
+function wireGlobalUI() {
+  renderPersonBar();
+  renderBottomNav();
+  document.getElementById('search-trigger').addEventListener('click', () => go('#/search'));
+
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    state.deferredInstallPrompt = e;
+    const btn = document.getElementById('install-btn');
+    if (btn) btn.hidden = false;
+  });
+  window.addEventListener('appinstalled', () => {
+    state.deferredInstallPrompt = null;
+    U.showToast(t('common_saved'));
+  });
+}
+
+function renderBottomNav() {
+  const items = [
+    ['#/dashboard', 'nav_dashboard', '🏠'],
+    ['#/medicines', 'nav_medicines', '💊'],
+    ['#/vitals', 'nav_vitals', '❤️'],
+    ['#/timeline', 'nav_timeline', '🕒'],
+    ['#/settings', 'nav_settings', '⚙️']
+  ];
+  navEl.innerHTML = items.map(([hash, key, icon]) => `
+    <button class="nav-btn" data-route="${hash}" onclick="location.hash='${hash}'" aria-label="${t(key)}">
+      <span class="nav-btn__icon" aria-hidden="true">${icon}</span>
+      <span class="nav-btn__label">${t(key)}</span>
+    </button>
+  `).join('');
+}
+
+function renderPersonBar() {
+  const p = currentPerson();
+  personBar.innerHTML = `
+    <button class="person-chip" id="person-switch-btn" aria-haspopup="true">
+      <span class="person-chip__avatar" style="background:${p.colorTag || '#0EA5A0'}">${(p.name || '?').charAt(0).toUpperCase()}</span>
+      <span class="person-chip__meta">
+        <span class="person-chip__label">${t('person_viewing')}</span>
+        <span class="person-chip__name">${U.escapeHTML(p.name)}</span>
+      </span>
+      <span class="person-chip__chevron" aria-hidden="true">▾</span>
+    </button>
+  `;
+  document.getElementById('person-switch-btn').addEventListener('click', openPersonSwitcher);
+}
+
+function openPersonSwitcher() {
+  const options = state.persons.map((p) => `
+    <button class="person-option ${p.id === state.personId ? 'person-option--active' : ''}" data-id="${p.id}">
+      <span class="person-chip__avatar" style="background:${p.colorTag || '#0EA5A0'}">${(p.name || '?').charAt(0).toUpperCase()}</span>
+      <span>
+        <strong>${U.escapeHTML(p.name)}</strong>
+        <small>${U.escapeHTML(p.relation || '')}</small>
+      </span>
+    </button>
+  `).join('');
+  openModal({
+    title: t('person_switch'),
+    bodyHTML: `<div class="person-list">${options}</div>
+      <button class="btn btn--ghost btn--full" id="add-person-btn">+ ${t('person_add')}</button>`,
+    onOpen: (modal) => {
+      modal.querySelectorAll('.person-option').forEach((btn) => {
+        btn.addEventListener('click', async () => {
+          state.personId = btn.dataset.id;
+          await DB.setSetting('activePersonId', state.personId);
+          closeModal();
+          renderPersonBar();
+          route();
+        });
+      });
+      modal.querySelector('#add-person-btn').addEventListener('click', () => {
+        closeModal();
+        openAddPersonForm();
+      });
+    }
+  });
+}
+
+function openAddPersonForm() {
+  openModal({
+    title: t('person_add'),
+    bodyHTML: `
+      <form id="person-form" class="form">
+        <label>${t('person_name')}<input required name="name" type="text" autocomplete="off"></label>
+        <label>${t('person_relation')}<input name="relation" type="text" placeholder="${t('person_relation_placeholder')}"></label>
+        <div class="form-actions">
+          <button type="button" class="btn btn--ghost" id="cancel-person">${t('common_cancel')}</button>
+          <button type="submit" class="btn btn--primary">${t('common_save')}</button>
+        </div>
+      </form>`,
+    onOpen: (modal) => {
+      modal.querySelector('#cancel-person').addEventListener('click', closeModal);
+      modal.querySelector('#person-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const fd = new FormData(e.target);
+        const colors = ['#0EA5A0', '#6C63FF', '#FF8A5B', '#3D8BFD', '#E9578C', '#2FB380'];
+        const person = {
+          id: DB.uid(),
+          name: fd.get('name').trim() || t('person_me'),
+          relation: fd.get('relation').trim(),
+          colorTag: colors[state.persons.length % colors.length],
+          createdAt: Date.now()
+        };
+        await DB.put('persons', person);
+        state.persons.push(person);
+        state.personId = person.id;
+        await DB.setSetting('activePersonId', person.id);
+        closeModal();
+        renderPersonBar();
+        U.showToast(t('common_saved'));
+        route();
+      });
+    }
+  });
+}
+
+// ---------------------------------------------------------------------------
+// Modal system
+// ---------------------------------------------------------------------------
+const modalRoot = document.getElementById('modal-root');
+
+function openModal({ title, bodyHTML, onOpen, wide }) {
+  modalRoot.innerHTML = `
+    <div class="modal-backdrop" id="modal-backdrop">
+      <div class="modal ${wide ? 'modal--wide' : ''}" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <div class="modal__header">
+          <h2 id="modal-title">${title}</h2>
+          <button class="icon-btn" id="modal-close" aria-label="${t('common_close')}">✕</button>
+        </div>
+        <div class="modal__body">${bodyHTML}</div>
+      </div>
+    </div>`;
+  const backdrop = document.getElementById('modal-backdrop');
+  const modal = backdrop.querySelector('.modal');
+  document.getElementById('modal-close').addEventListener('click', closeModal);
+  backdrop.addEventListener('click', (e) => { if (e.target === backdrop) closeModal(); });
+  document.addEventListener('keydown', escCloseOnce);
+  if (onOpen) onOpen(modal);
+  const firstInput = modal.querySelector('input, textarea, select, button');
+  if (firstInput) firstInput.focus();
+}
+
+function escCloseOnce(e) {
+  if (e.key === 'Escape') closeModal();
+}
+
+function closeModal() {
+  modalRoot.innerHTML = '';
+  document.removeEventListener('keydown', escCloseOnce);
+}
+
+// ---------------------------------------------------------------------------
+// Dashboard
+// ---------------------------------------------------------------------------
+async function renderDashboard() {
+  topbarTitle.textContent = t('appName');
+  const person = currentPerson();
+  const [medicines, doseLogs, bp, sugar, weight, other, notes] = await Promise.all([
+    DB.getAll('medicines'), DB.getAll('doseLogs'), DB.getAll('vitalsBP'),
+    DB.getAll('vitalsSugar'), DB.getAll('vitalsWeight'), DB.getAll('vitalsOther'), DB.getAll('notes')
+  ]);
+  const myMeds = medicines.filter((m) => m.personId === person.id && m.status !== 'completed');
+  const today = U.todayISO();
+  const todaysDoses = buildTodaysDoseList(myMeds, doseLogs, today);
+  const takenCount = todaysDoses.filter((d) => d.status === 'taken').length;
+  const adherence = todaysDoses.length ? Math.round((takenCount / todaysDoses.length) * 100) : 0;
+
+  const greeting = getGreetingKey();
+  const s = state.dashboardSections;
+
+  app.innerHTML = `
+    <section class="hero-card glass">
+      <div class="hero-card__text">
+        <p class="hero-card__eyebrow">${t(greeting)}</p>
+        <h1>${U.escapeHTML(person.name)}</h1>
+        <p class="hero-card__sub">${t('dash_adherence_today')}</p>
+      </div>
+      <div class="hero-card__ring" id="adherence-ring"></div>
+    </section>
+
+    <div class="quick-add-row" aria-label="${t('dash_quick_add')}">
+      <button class="quick-add-chip" data-action="add-med">💊 ${t('med_add')}</button>
+      <button class="quick-add-chip" data-action="add-bp">🩺 ${t('vitals_bp')}</button>
+      <button class="quick-add-chip" data-action="add-sugar">🩸 ${t('vitals_sugar')}</button>
+      <button class="quick-add-chip" data-action="add-weight">⚖️ ${t('vitals_weight')}</button>
+      <button class="quick-add-chip" data-action="add-note">📝 ${t('note')}</button>
+    </div>
+
+    <div class="explore-grid">
+      <a class="explore-tile glass" href="#/calendar"><span>📅</span>${t('nav_calendar')}</a>
+      <a class="explore-tile glass" href="#/notes"><span>📝</span>${t('nav_notes')}</a>
+      <a class="explore-tile glass" href="#/vault"><span>🗂️</span>${t('nav_vault')}</a>
+      <a class="explore-tile glass" href="#/reports"><span>📄</span>${t('nav_reports')}</a>
+      <a class="explore-tile glass" href="#/insights"><span>📊</span>${t('nav_insights')}</a>
+      <a class="explore-tile glass" href="#/about"><span>ℹ️</span>${t('nav_about')}</a>
+    </div>
+
+    ${s.todayMeds ? `<section class="card-section">
+      <h2>${t('dash_todays_medicines')}</h2>
+      ${todaysDoses.length ? `<ul class="dose-list">${todaysDoses.map(doseRowHTML).join('')}</ul>` : emptyInline(t('dash_no_medicines'), t('dash_add_medicine'), 'add-med')}
+    </section>` : ''}
+
+    ${s.readings ? `<section class="card-section">
+      <h2>${t('dash_latest_readings')}</h2>
+      <div class="reading-grid">
+        ${latestReadingCard('vitals_bp', bp.filter(v=>v.personId===person.id), (v)=>`${v.systolic}/${v.diastolic}`, 'mmHg', '#/vitals/bp')}
+        ${latestReadingCard('vitals_sugar', sugar.filter(v=>v.personId===person.id), (v)=>`${v.value}`, 'mg/dL', '#/vitals/sugar')}
+        ${latestReadingCard('vitals_weight', weight.filter(v=>v.personId===person.id), (v)=>`${v.value}`, 'kg', '#/vitals/weight')}
+        ${latestReadingCard('other_heartrate', other.filter(v=>v.personId===person.id && v.type==='heartrate'), (v)=>`${v.value}`, 'bpm', '#/vitals/other')}
+      </div>
+    </section>` : ''}
+
+    ${s.notes ? `<section class="card-section">
+      <h2>${t('nav_notes')}</h2>
+      ${renderRecentNotes(notes.filter((n) => n.personId === person.id))}
+    </section>` : ''}
+
+    ${s.activity ? `<section class="card-section">
+      <h2>${t('dash_recent_activity')}</h2>
+      ${renderMiniTimeline(await buildTimelineEvents(person.id, 6))}
+    </section>` : ''}
+
+    <div class="install-banner glass" id="install-banner" hidden>
+      <div>
+        <strong>${t('install_title')}</strong>
+        <p>${t('install_body')}</p>
+      </div>
+      <button class="btn btn--primary" id="install-btn-dash">${t('install_button')}</button>
+    </div>
+  `;
+
+  renderProgressRing(document.getElementById('adherence-ring'), {
+    percent: adherence, label: t('dash_adherence_today'),
+    sublabel: `${takenCount}/${todaysDoses.length || 0}`
+  });
+
+  app.querySelectorAll('[data-action]').forEach((btn) => {
+    btn.addEventListener('click', () => dashboardQuickAction(btn.dataset.action));
+  });
+  app.querySelectorAll('[data-mark]').forEach((btn) => {
+    btn.addEventListener('click', () => markDose(btn.dataset.medId, btn.dataset.time, btn.dataset.mark, today));
+  });
+
+  if (state.deferredInstallPrompt) {
+    const banner = document.getElementById('install-banner');
+    banner.hidden = false;
+    document.getElementById('install-btn-dash').addEventListener('click', triggerInstall);
+  }
+}
+
+function getGreetingKey() {
+  const h = new Date().getHours();
+  if (h < 12) return 'greeting_morning';
+  if (h < 17) return 'greeting_afternoon';
+  if (h < 21) return 'greeting_evening';
+  return 'greeting_night';
+}
+
+function emptyInline(message, actionLabel, action) {
+  return `<div class="empty-inline">
+    <p>${message}</p>
+    ${actionLabel ? `<button class="btn btn--soft" data-action="${action}">+ ${actionLabel}</button>` : ''}
+  </div>`;
+}
+
+function latestReadingCard(labelKey, items, formatter, unit, link) {
+  const sorted = [...items].sort((a, b) => (b.date + (b.time || '')).localeCompare(a.date + (a.time || '')));
+  const latest = sorted[0];
+  return `<a class="reading-card" href="${link}">
+    <span class="reading-card__label">${t(labelKey)}</span>
+    <span class="reading-card__value">${latest ? formatter(latest) : '—'}</span>
+    <span class="reading-card__unit">${latest ? unit : t('common_none')}</span>
+  </a>`;
+}
+
+function renderRecentNotes(notes) {
+  const today = U.todayISO();
+  const todays = notes.filter((n) => n.date === today).sort((a, b) => b.createdAt - a.createdAt);
+  if (!todays.length) return emptyInline(t('notes_empty'), t('notes_add'), 'add-note');
+  return `<ul class="note-list">${todays.slice(0, 4).map((n) => `
+    <li class="note-item">
+      <strong>${U.escapeHTML(n.title || t('note'))}</strong>
+      <p>${U.escapeHTML((n.content || '').slice(0, 90))}${n.content && n.content.length > 90 ? '…' : ''}</p>
+    </li>`).join('')}</ul>`;
+}
+
+function renderMiniTimeline(events) {
+  if (!events.length) return `<p class="muted">${t('timeline_empty')}</p>`;
+  return `<ul class="timeline-list timeline-list--mini">${events.map(timelineItemHTML).join('')}</ul>`;
+}
+
+async function dashboardQuickAction(action) {
+  switch (action) {
+    case 'add-med': openMedicineForm(); break;
+    case 'add-bp': openVitalForm('bp'); break;
+    case 'add-sugar': openVitalForm('sugar'); break;
+    case 'add-weight': openVitalForm('weight'); break;
+    case 'add-note': openNoteForm(); break;
+    default: break;
+  }
+}
+
+function triggerInstall() {
+  if (!state.deferredInstallPrompt) return;
+  state.deferredInstallPrompt.prompt();
+  state.deferredInstallPrompt.userChoice.finally(() => {
+    state.deferredInstallPrompt = null;
+    const btn = document.getElementById('install-btn');
+    if (btn) btn.hidden = true;
+  });
+}
+
+// ---------------------------------------------------------------------------
+// Dose helpers (medicines <-> today's timeline)
+// ---------------------------------------------------------------------------
+function scheduleTimesForMedicine(med) {
+  const slotTimes = { morning: '08:00', afternoon: '13:00', evening: '18:00', night: '21:30' };
+  const times = [];
+  (med.schedule || []).forEach((slot) => {
+    if (slotTimes[slot]) times.push(slotTimes[slot]);
+  });
+  (med.customTimes || []).forEach((ct) => { if (ct) times.push(ct); });
+  return [...new Set(times)].sort();
+}
+
+function isMedicineActiveOn(med, iso) {
+  if (med.status === 'paused') return false;
+  if (med.startDate && iso < med.startDate) return false;
+  if (med.endDate && iso > med.endDate) return false;
+  return true;
+}
+
+function buildTodaysDoseList(meds, doseLogs, iso) {
+  const rows = [];
+  meds.forEach((med) => {
+    if (!isMedicineActiveOn(med, iso)) return;
+    scheduleTimesForMedicine(med).forEach((time) => {
+      const log = doseLogs.find((l) => l.medicineId === med.id && l.date === iso && l.time === time);
+      let status = log ? log.status : 'upcoming';
+      if (!log && U.timeToMinutes(time) < U.timeToMinutes(U.nowTimeHM()) - 30) status = 'upcoming';
+      rows.push({ medId: med.id, medName: med.name, medPhoto: med.photo, time, status, dosage: med.dosage, unit: med.unit });
+    });
+  });
+  return rows.sort((a, b) => a.time.localeCompare(b.time));
+}
+
+function doseRowHTML(row) {
+  const statusIcon = { taken: '✅', missed: '⚠️', skipped: '⏭️', upcoming: '🕒' };
+  return `<li class="dose-row dose-row--${row.status}">
+    <span class="dose-row__time">${row.time}</span>
+    <span class="dose-row__avatar">${row.medPhoto ? `<img src="${row.medPhoto}" alt="">` : '💊'}</span>
+    <span class="dose-row__info">
+      <strong>${U.escapeHTML(row.medName)}</strong>
+      <small>${U.escapeHTML(row.dosage || '')} ${U.escapeHTML(row.unit || '')}</small>
+    </span>
+    <span class="dose-row__status" title="${t('dose_' + row.status)}">${statusIcon[row.status]}</span>
+    <span class="dose-row__actions">
+      ${row.status !== 'taken' ? `<button class="chip-btn chip-btn--taken" data-mark="taken" data-med-id="${row.medId}" data-time="${row.time}" aria-label="${t('mark_taken')}">✓</button>` : ''}
+      ${row.status !== 'missed' && row.status !== 'taken' ? `<button class="chip-btn chip-btn--missed" data-mark="missed" data-med-id="${row.medId}" data-time="${row.time}" aria-label="${t('mark_missed')}">✕</button>` : ''}
+    </span>
+  </li>`;
+}
+
+async function markDose(medId, time, status, iso) {
+  const logs = await DB.getAll('doseLogs');
+  const existing = logs.find((l) => l.medicineId === medId && l.date === iso && l.time === time);
+  const entry = existing || { id: DB.uid(), medicineId: medId, personId: state.personId, date: iso, time };
+  entry.status = status;
+  entry.loggedAt = Date.now();
+  await DB.put('doseLogs', entry);
+  U.showToast(t('common_saved'));
+  route();
+}
+
+// ---------------------------------------------------------------------------
+// Medicines
+// ---------------------------------------------------------------------------
+async function renderMedicines() {
+  topbarTitle.textContent = t('nav_medicines');
+  const person = currentPerson();
+  const meds = (await DB.getAll('medicines')).filter((m) => m.personId === person.id)
+    .sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+
+  app.innerHTML = `
+    <div class="view-header">
+      <h1>${t('med_title')}</h1>
+      <button class="btn btn--primary" id="add-med-btn">+ ${t('med_add')}</button>
+    </div>
+    ${meds.length ? `<ul class="med-card-list">${meds.map(medCardHTML).join('')}</ul>` : `
+      <div class="empty-state">
+        <div class="empty-state__icon">💊</div>
+        <h2>${t('med_empty')}</h2>
+        <p>${t('med_empty_hint')}</p>
+        <button class="btn btn--primary" id="add-med-btn-2">+ ${t('med_add')}</button>
+      </div>`}
+  `;
+  const addBtn = document.getElementById('add-med-btn');
+  if (addBtn) addBtn.addEventListener('click', () => openMedicineForm());
+  const addBtn2 = document.getElementById('add-med-btn-2');
+  if (addBtn2) addBtn2.addEventListener('click', () => openMedicineForm());
+
+  app.querySelectorAll('[data-edit-med]').forEach((btn) => btn.addEventListener('click', () => openMedicineForm(btn.dataset.editMed)));
+  app.querySelectorAll('[data-delete-med]').forEach((btn) => btn.addEventListener('click', () => deleteMedicine(btn.dataset.deleteMed)));
+  app.querySelectorAll('[data-toggle-med]').forEach((btn) => btn.addEventListener('click', () => toggleMedicineStatus(btn.dataset.toggleMed)));
+}
+
+function medCardHTML(med) {
+  const low = med.quantityRemaining !== '' && med.quantityRemaining !== undefined && med.refillAt !== '' && med.refillAt !== undefined
+    && Number(med.quantityRemaining) <= Number(med.refillAt);
+  const times = scheduleTimesForMedicine(med).join(' · ');
+  return `<li class="med-card glass">
+    <div class="med-card__photo">${med.photo ? `<img src="${med.photo}" alt="">` : '💊'}</div>
+    <div class="med-card__body">
+      <div class="med-card__top">
+        <strong>${U.escapeHTML(med.name)}</strong>
+        <span class="status-pill status-pill--${med.status}">${t('med_status_' + med.status)}</span>
+      </div>
+      <p class="muted">${U.escapeHTML(med.dosage || '')} ${U.escapeHTML(med.unit || '')} · ${times || '—'}</p>
+      ${med.purpose ? `<p class="muted">${U.escapeHTML(med.purpose)}</p>` : ''}
+      ${low ? `<p class="warning-text">⚠️ ${t('med_low_stock')}</p>` : ''}
+      <div class="med-card__actions">
+        <button class="btn btn--soft btn--sm" data-edit-med="${med.id}">${t('common_edit')}</button>
+        <button class="btn btn--soft btn--sm" data-toggle-med="${med.id}">${med.status === 'paused' ? t('med_status_active') : t('med_status_paused')}</button>
+        <button class="btn btn--danger btn--sm" data-delete-med="${med.id}">${t('common_delete')}</button>
+      </div>
+    </div>
+  </li>`;
+}
+
+async function toggleMedicineStatus(id) {
+  const med = await DB.get('medicines', id);
+  if (!med) return;
+  med.status = med.status === 'paused' ? 'active' : 'paused';
+  await DB.put('medicines', med);
+  route();
+}
+
+async function deleteMedicine(id) {
+  if (!U.confirmDialog(t('med_delete_confirm'))) return;
+  await DB.remove('medicines', id);
+  const logs = await DB.getAll('doseLogs');
+  for (const l of logs.filter((l) => l.medicineId === id)) await DB.remove('doseLogs', l.id);
+  U.showToast(t('common_deleted'));
+  route();
+}
+
+function openMedicineForm(editId) {
+  buildMedicineFormModal(editId);
+}
+
+async function buildMedicineFormModal(editId) {
+  const med = editId ? await DB.get('medicines', editId) : null;
+  const schedule = med?.schedule || [];
+  openModal({
+    title: med ? t('med_edit') : t('med_add'),
+    wide: true,
+    bodyHTML: `
+      <form id="med-form" class="form">
+        <label>${t('med_name')}<input required name="name" type="text" value="${U.escapeHTML(med?.name || '')}"></label>
+        <label>${t('med_photo')} <span class="muted">(${t('common_optional')})</span><input name="photo" type="file" accept="image/*" capture="environment"></label>
+        ${med?.photo ? `<img class="form-photo-preview" src="${med.photo}" alt="">` : ''}
+        <div class="form-row">
+          <label>${t('med_dosage')}<input name="dosage" type="text" value="${U.escapeHTML(med?.dosage || '')}" placeholder="e.g. 500"></label>
+          <label>${t('med_unit')}<input name="unit" type="text" value="${U.escapeHTML(med?.unit || '')}" placeholder="mg / tablet / ml"></label>
+        </div>
+        <fieldset class="checkbox-group">
+          <legend>${t('med_schedule')}</legend>
+          ${['morning', 'afternoon', 'evening', 'night'].map((slot) => `
+            <label class="checkbox-pill"><input type="checkbox" name="schedule" value="${slot}" ${schedule.includes(slot) ? 'checked' : ''}> ${t('med_' + slot)}</label>
+          `).join('')}
+        </fieldset>
+        <label>${t('med_custom_time')} <span class="muted">(${t('common_optional')})</span><input name="customTime" type="time" value="${med?.customTimes?.[0] || ''}"></label>
+        <div class="form-row">
+          <label>${t('med_start_date')}<input name="startDate" type="date" value="${med?.startDate || U.todayISO()}"></label>
+          <label>${t('med_end_date')}<input name="endDate" type="date" value="${med?.endDate || ''}"></label>
+        </div>
+        <label>${t('med_instruction')}
+          <select name="instruction">
+            <option value="before_food" ${med?.instruction === 'before_food' ? 'selected' : ''}>${t('med_before_food')}</option>
+            <option value="after_food" ${med?.instruction === 'after_food' ? 'selected' : ''}>${t('med_after_food')}</option>
+            <option value="with_food" ${med?.instruction === 'with_food' ? 'selected' : ''}>${t('med_with_food')}</option>
+            <option value="other" ${med?.instruction === 'other' ? 'selected' : ''}>${t('med_other')}</option>
+          </select>
+        </label>
+        <label>${t('med_purpose')}<input name="purpose" type="text" value="${U.escapeHTML(med?.purpose || '')}"></label>
+        <div class="form-row">
+          <label>${t('med_quantity')}<input name="quantityRemaining" type="number" min="0" value="${med?.quantityRemaining ?? ''}"></label>
+          <label>${t('med_refill_at')}<input name="refillAt" type="number" min="0" value="${med?.refillAt ?? ''}"></label>
+        </div>
+        <label>${t('med_notes')}<textarea name="notes" rows="2">${U.escapeHTML(med?.notes || '')}</textarea></label>
+        <div class="form-actions">
+          <button type="button" class="btn btn--ghost" id="cancel-med">${t('common_cancel')}</button>
+          <button type="submit" class="btn btn--primary">${t('common_save')}</button>
+        </div>
+      </form>`,
+    onOpen: (modal) => {
+      modal.querySelector('#cancel-med').addEventListener('click', closeModal);
+      modal.querySelector('#med-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const fd = new FormData(e.target);
+        if (!fd.get('name').trim()) { U.showToast(t('common_required_field')); return; }
+        let photo = med?.photo || null;
+        const file = fd.get('photo');
+        if (file && file.size) {
+          const result = await U.fileToDataURL(file);
+          if (result) photo = result.dataURL;
+        }
+        const record = {
+          id: med?.id || DB.uid(),
+          personId: state.personId,
+          name: fd.get('name').trim(),
+          photo,
+          dosage: fd.get('dosage').trim(),
+          unit: fd.get('unit').trim(),
+          schedule: fd.getAll('schedule'),
+          customTimes: fd.get('customTime') ? [fd.get('customTime')] : [],
+          frequency: 'daily',
+          startDate: fd.get('startDate') || U.todayISO(),
+          endDate: fd.get('endDate') || '',
+          instruction: fd.get('instruction'),
+          purpose: fd.get('purpose').trim(),
+          quantityRemaining: fd.get('quantityRemaining'),
+          refillAt: fd.get('refillAt'),
+          notes: fd.get('notes').trim(),
+          status: med?.status || 'active',
+          createdAt: med?.createdAt || Date.now()
+        };
+        await DB.put('medicines', record);
+        closeModal();
+        U.showToast(t('common_saved'));
+        route();
+      });
+    }
+  });
+}
+
+// ---------------------------------------------------------------------------
+// Vitals hub + shared vital form
+// ---------------------------------------------------------------------------
+async function renderVitalsHub() {
+  topbarTitle.textContent = t('vitals_title');
+  const cards = [
+    ['vitals_bp', '#/vitals/bp', '🩺'],
+    ['vitals_sugar', '#/vitals/sugar', '🩸'],
+    ['vitals_weight', '#/vitals/weight', '⚖️'],
+    ['vitals_other', '#/vitals/other', '📈']
+  ];
+  app.innerHTML = `
+    <div class="view-header"><h1>${t('vitals_title')}</h1></div>
+    <div class="vitals-grid">
+      ${cards.map(([key, href, icon]) => `
+        <a class="vitals-tile glass" href="${href}">
+          <span class="vitals-tile__icon">${icon}</span>
+          <strong>${t(key)}</strong>
+        </a>
+      `).join('')}
+    </div>
+  `;
+}
+
+const VITAL_CONFIG = {
+  bp: { store: 'vitalsBP', titleKey: 'vitals_bp', emptyKey: 'bp_empty' },
+  sugar: { store: 'vitalsSugar', titleKey: 'vitals_sugar', emptyKey: 'sugar_empty' },
+  weight: { store: 'vitalsWeight', titleKey: 'vitals_weight', emptyKey: 'weight_empty' },
+  other: { store: 'vitalsOther', titleKey: 'vitals_other', emptyKey: 'weight_empty' }
+};
+
+async function renderVitalDetail(kind) {
+  const cfg = VITAL_CONFIG[kind];
+  topbarTitle.textContent = t(cfg.titleKey);
+  const person = currentPerson();
+  const all = (await DB.getAll(cfg.store)).filter((v) => v.personId === person.id)
+    .sort((a, b) => (b.date + (b.time || '')).localeCompare(a.date + (a.time || '')));
+
+  app.innerHTML = `
+    <div class="view-header">
+      <h1>${t(cfg.titleKey)}</h1>
+      <button class="btn btn--primary" id="add-vital-btn">+ ${t('common_add')}</button>
+    </div>
+    ${kind === 'bp' ? `<p class="info-banner">${t('bp_info_msg')}</p>` : ''}
+    <div id="vital-chart" class="chart-card glass"></div>
+    ${all.length ? statsRowHTML(kind, all) : ''}
+    ${all.length ? `<ul class="reading-list">${all.map((v) => vitalRowHTML(kind, v)).join('')}</ul>` : `
+      <div class="empty-state">
+        <div class="empty-state__icon">📋</div>
+        <h2>${t(cfg.emptyKey)}</h2>
+        <button class="btn btn--primary" id="add-vital-btn-2">+ ${t('common_add')}</button>
+      </div>`}
+  `;
+
+  renderVitalChart(kind, all);
+
+  document.getElementById('add-vital-btn')?.addEventListener('click', () => openVitalForm(kind));
+  document.getElementById('add-vital-btn-2')?.addEventListener('click', () => openVitalForm(kind));
+  app.querySelectorAll('[data-delete-vital]').forEach((btn) => btn.addEventListener('click', () => deleteVital(cfg.store, btn.dataset.deleteVital)));
+}
+
+function statsRowHTML(kind, all) {
+  if (kind === 'bp') {
+    const sys = all.map((v) => Number(v.systolic));
+    const dia = all.map((v) => Number(v.diastolic));
+    return `<div class="stats-row">
+      <div class="stat-pill"><span>${t('bp_average')}</span><strong>${Math.round(U.average(sys))}/${Math.round(U.average(dia))}</strong></div>
+      <div class="stat-pill"><span>${t('bp_highest')}</span><strong>${Math.max(...sys)}/${Math.max(...dia)}</strong></div>
+      <div class="stat-pill"><span>${t('bp_lowest')}</span><strong>${Math.min(...sys)}/${Math.min(...dia)}</strong></div>
+    </div>`;
+  }
+  if (kind === 'weight' && all.length) {
+    const sorted = [...all].sort((a, b) => (a.date + a.time).localeCompare(b.date + b.time));
+    const current = Number(sorted[sorted.length - 1].value);
+    const prev = sorted.length > 1 ? Number(sorted[sorted.length - 2].value) : current;
+    const change = U.round1(current - prev);
+    return `<div class="stats-row">
+      <div class="stat-pill"><span>${t('weight_current')}</span><strong>${current} kg</strong></div>
+      <div class="stat-pill"><span>${t('weight_previous')}</span><strong>${prev} kg</strong></div>
+      <div class="stat-pill"><span>${t('weight_change')}</span><strong class="${change > 0 ? 'up' : change < 0 ? 'down' : ''}">${change > 0 ? '+' : ''}${change} kg</strong></div>
+    </div>`;
+  }
+  if (kind === 'sugar') {
+    const vals = all.map((v) => Number(v.value));
+    return `<div class="stats-row">
+      <div class="stat-pill"><span>${t('bp_average')}</span><strong>${Math.round(U.average(vals))} mg/dL</strong></div>
+      <div class="stat-pill"><span>${t('bp_highest')}</span><strong>${Math.max(...vals)}</strong></div>
+      <div class="stat-pill"><span>${t('bp_lowest')}</span><strong>${Math.min(...vals)}</strong></div>
+    </div>`;
+  }
+  return '';
+}
+
+function renderVitalChart(kind, all) {
+  const container = document.getElementById('vital-chart');
+  const sorted = [...all].sort((a, b) => (a.date + (a.time || '')).localeCompare(b.date + (b.time || ''))).slice(-20);
+  if (kind === 'bp') {
+    renderLineChart(container, {
+      emptyText: t(VITAL_CONFIG.bp.emptyKey),
+      series: [
+        { label: t('bp_systolic'), color: '#0EA5A0', values: sorted.map((v, i) => ({ x: i, y: Number(v.systolic), dateLabel: v.date.slice(5) })) },
+        { label: t('bp_diastolic'), color: '#FF8A5B', values: sorted.map((v, i) => ({ x: i, y: Number(v.diastolic), dateLabel: v.date.slice(5) })) }
+      ]
+    });
+  } else if (kind === 'sugar') {
+    renderLineChart(container, {
+      emptyText: t(VITAL_CONFIG.sugar.emptyKey),
+      series: [{ label: t('vitals_sugar'), color: '#6C63FF', values: sorted.map((v, i) => ({ x: i, y: Number(v.value), dateLabel: v.date.slice(5) })) }]
+    });
+  } else if (kind === 'weight') {
+    renderLineChart(container, {
+      emptyText: t(VITAL_CONFIG.weight.emptyKey),
+      series: [{ label: t('vitals_weight'), color: '#2FB380', values: sorted.map((v, i) => ({ x: i, y: Number(v.value), dateLabel: v.date.slice(5) })) }]
+    });
+  } else {
+    const grouped = {};
+    sorted.forEach((v) => { (grouped[v.type] = grouped[v.type] || []).push(v); });
+    const first = Object.keys(grouped)[0];
+    if (!first) { container.innerHTML = `<p class="chart-empty">${t('weight_empty')}</p>`; return; }
+    renderLineChart(container, {
+      emptyText: t('weight_empty'),
+      series: [{ label: t('other_' + first) || first, color: '#3D8BFD', values: grouped[first].map((v, i) => ({ x: i, y: Number(v.value), dateLabel: v.date.slice(5) })) }]
+    });
+  }
+}
+
+function vitalRowHTML(kind, v) {
+  let valueText = '';
+  if (kind === 'bp') valueText = `${v.systolic}/${v.diastolic} mmHg${v.pulse ? ` · ${v.pulse} bpm` : ''}`;
+  else if (kind === 'sugar') valueText = `${v.value} mg/dL — ${t('sugar_' + (v.context || 'other').replace('before', 'before_meal').replace('after', 'after_meal'))}`;
+  else if (kind === 'weight') valueText = `${v.value} kg`;
+  else valueText = `${v.value} ${v.unit || ''} — ${t('other_' + v.type) || v.type}`;
+
+  return `<li class="reading-row glass">
+    <div>
+      <strong>${valueText}</strong>
+      <p class="muted">${v.date} ${v.time || ''} ${v.period ? '· ' + t('med_' + v.period) : ''}</p>
+      ${v.note ? `<p class="muted">${U.escapeHTML(v.note)}</p>` : ''}
+    </div>
+    ${v.image ? `<img class="reading-row__img" src="${v.image}" alt="">` : ''}
+    <button class="icon-btn" data-delete-vital="${v.id}" aria-label="${t('common_delete')}">🗑️</button>
+  </li>`;
+}
+
+async function deleteVital(store, id) {
+  if (!U.confirmDialog(t('med_delete_confirm'))) return;
+  await DB.remove(store, id);
+  U.showToast(t('common_deleted'));
+  route();
+}
+
+function openVitalForm(kind) {
+  const cfg = VITAL_CONFIG[kind];
+  let fields = '';
+  if (kind === 'bp') {
+    fields = `
+      <div class="form-row">
+        <label>${t('bp_systolic')}<input required name="systolic" type="number" min="1"></label>
+        <label>${t('bp_diastolic')}<input required name="diastolic" type="number" min="1"></label>
+      </div>
+      <label>${t('bp_pulse')} <span class="muted">(${t('common_optional')})</span><input name="pulse" type="number" min="1"></label>
+      <label>${t('med_schedule')}
+        <select name="period">
+          <option value="morning">${t('med_morning')}</option>
+          <option value="afternoon">${t('med_afternoon')}</option>
+          <option value="evening">${t('med_evening')}</option>
+          <option value="night">${t('med_night')}</option>
+        </select>
+      </label>`;
+  } else if (kind === 'sugar') {
+    fields = `
+   
