@@ -27,33 +27,38 @@
 :root {
   --accent: #0EA5A0;
   --accent-2: #6C63FF;
+  --accent-3: #FF8A5B;
   --accent-soft: #E3F6F4;
   --success: #2FB380;
   --warning: #FFB020;
   --danger: #E1523D;
 
-  --bg: #EEF6F5;
-  --bg-grad: radial-gradient(1200px 600px at 10% -10%, #DFF3F0 0%, transparent 60%),
-             radial-gradient(1000px 500px at 110% 10%, #EDE9FF 0%, transparent 55%),
-             #F3F8F7;
-  --surface: rgba(255, 255, 255, 0.62);
-  --surface-solid: #FFFFFF;
-  --surface-border: rgba(255, 255, 255, 0.55);
+  --bg: #EAF3F4;
+  --bg-grad:
+    radial-gradient(1000px 620px at -10% -15%, rgba(14,165,160,0.28) 0%, transparent 55%),
+    radial-gradient(900px 560px at 115% -5%, rgba(108,99,255,0.24) 0%, transparent 55%),
+    radial-gradient(800px 500px at 100% 100%, rgba(255,138,91,0.16) 0%, transparent 50%),
+    radial-gradient(900px 700px at 0% 100%, rgba(14,165,160,0.14) 0%, transparent 55%),
+    linear-gradient(180deg, #F1F8F8 0%, #EAF2F4 55%, #EEF0F9 100%);
+  --surface: rgba(255, 255, 255, 0.50);
+  --surface-solid: rgba(255, 255, 255, 0.86);
+  --surface-border: rgba(255, 255, 255, 0.65);
   --text: #0B2233;
   --text-muted: #5B7481;
-  --shadow: 0 10px 30px rgba(15, 60, 60, 0.10);
-  --shadow-sm: 0 4px 14px rgba(15, 60, 60, 0.08);
-  --radius-lg: 26px;
-  --radius-md: 18px;
-  --radius-sm: 12px;
+  --shadow: 0 16px 40px rgba(15, 60, 60, 0.14), 0 2px 8px rgba(15,60,60,0.06);
+  --shadow-sm: 0 6px 18px rgba(15, 60, 60, 0.10);
+  --radius-lg: 28px;
+  --radius-md: 20px;
+  --radius-sm: 14px;
   --chart-grid: rgba(91, 116, 129, 0.16);
   --ring-track: rgba(91, 116, 129, 0.14);
-  --blur: 18px;
+  --blur: 24px;
+  --sheen: linear-gradient(135deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.08) 30%, rgba(255,255,255,0) 60%);
 
   --font-display: 'Outfit', 'Segoe UI', system-ui, sans-serif;
   --font-body: 'Inter', 'Segoe UI', system-ui, sans-serif;
 
-  --nav-h: 74px;
+  --nav-h: 76px;
   --topbar-h: auto;
 }
 
@@ -62,36 +67,50 @@
   --font-body: 'Noto Sans Urdu', 'Inter', system-ui, sans-serif;
 }
 
+/* Noto Sans Urdu renders visually smaller and tighter than Latin faces at
+   the same px size, which is what reads as "cramped / old-desktop" — so RTL
+   gets slightly larger type and more generous line-height everywhere. */
+:root[dir="rtl"] body { font-size: 1.04em; }
+:root[dir="rtl"] p, :root[dir="rtl"] .form label, :root[dir="rtl"] .muted { line-height: 1.85; }
+:root[dir="rtl"] h1, :root[dir="rtl"] h2, :root[dir="rtl"] h3 { line-height: 1.5; }
+:root[dir="rtl"] .btn, :root[dir="rtl"] .nav-btn__label, :root[dir="rtl"] .status-pill,
+:root[dir="rtl"] .category-pill, :root[dir="rtl"] .filter-chip { letter-spacing: 0; }
+
 [data-theme="dark"] {
-  --bg: #0B1220;
-  --bg-grad: radial-gradient(1200px 600px at 10% -10%, rgba(14,165,160,0.16) 0%, transparent 60%),
-             radial-gradient(1000px 500px at 110% 10%, rgba(108,99,255,0.14) 0%, transparent 55%),
-             #0B1220;
-  --surface: rgba(255, 255, 255, 0.06);
-  --surface-solid: #111a2b;
-  --surface-border: rgba(255, 255, 255, 0.10);
+  --bg: #0A0F1A;
+  --bg-grad:
+    radial-gradient(1000px 620px at -10% -15%, rgba(14,165,160,0.22) 0%, transparent 55%),
+    radial-gradient(900px 560px at 115% -5%, rgba(108,99,255,0.20) 0%, transparent 55%),
+    radial-gradient(800px 600px at 50% 110%, rgba(255,138,91,0.10) 0%, transparent 55%),
+    linear-gradient(180deg, #0A0F1A 0%, #0B1220 100%);
+  --surface: rgba(255, 255, 255, 0.07);
+  --surface-solid: rgba(22, 30, 46, 0.82);
+  --surface-border: rgba(255, 255, 255, 0.12);
   --text: #EAF2F3;
   --text-muted: #93A6B0;
-  --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-  --shadow-sm: 0 4px 14px rgba(0, 0, 0, 0.3);
+  --shadow: 0 16px 40px rgba(0, 0, 0, 0.45), 0 2px 8px rgba(0,0,0,0.3);
+  --shadow-sm: 0 6px 18px rgba(0, 0, 0, 0.35);
   --chart-grid: rgba(255, 255, 255, 0.10);
   --ring-track: rgba(255, 255, 255, 0.10);
+  --sheen: linear-gradient(135deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.02) 30%, rgba(255,255,255,0) 60%);
 }
 
 [data-theme="medical"] {
   --accent: #0B7C86;
   --accent-2: #2C6EF2;
+  --accent-3: #E1523D;
   --accent-soft: #E4F1F3;
-  --bg: #F4F8FA;
-  --bg-grad: radial-gradient(1100px 550px at 8% -10%, #E1F1F4 0%, transparent 55%),
-             radial-gradient(900px 500px at 105% 5%, #E7EEFC 0%, transparent 55%),
-             #F6FAFB;
-  --surface: rgba(255, 255, 255, 0.72);
-  --surface-solid: #FFFFFF;
-  --surface-border: rgba(11, 124, 134, 0.14);
+  --bg: #F2F7F9;
+  --bg-grad:
+    radial-gradient(1000px 600px at -10% -15%, rgba(11,124,134,0.18) 0%, transparent 55%),
+    radial-gradient(900px 560px at 115% -5%, rgba(44,110,242,0.16) 0%, transparent 55%),
+    linear-gradient(180deg, #F5FAFB 0%, #F0F5FA 100%);
+  --surface: rgba(255, 255, 255, 0.62);
+  --surface-solid: rgba(255, 255, 255, 0.92);
+  --surface-border: rgba(11, 124, 134, 0.16);
   --text: #0B2233;
   --text-muted: #4E6672;
-  --shadow: 0 10px 26px rgba(11, 60, 70, 0.10);
+  --shadow: 0 16px 36px rgba(11, 60, 70, 0.12);
 }
 
 /* =========================================================================
@@ -142,13 +161,22 @@ button { cursor: pointer; }
    Glass surface
    ========================================================================= */
 .glass {
+  position: relative;
   background: var(--surface);
   border: 1px solid var(--surface-border);
-  backdrop-filter: blur(var(--blur));
-  -webkit-backdrop-filter: blur(var(--blur));
+  backdrop-filter: blur(var(--blur)) saturate(150%);
+  -webkit-backdrop-filter: blur(var(--blur)) saturate(150%);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow);
+  overflow: hidden;
 }
+.glass::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: var(--sheen);
+  pointer-events: none;
+}
+.glass > * { position: relative; z-index: 1; }
 
 /* =========================================================================
    Layout shell
@@ -161,7 +189,9 @@ button { cursor: pointer; }
   border-bottom: 1px solid var(--surface-border);
 }
 .topbar__row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-.topbar__title { font-size: 1.15rem; font-weight: 700; margin: 0; }
+.topbar__title-group { display: flex; flex-direction: column; }
+.topbar__title { font-size: 1.15rem; font-weight: 700; margin: 0; line-height: 1.15; }
+.topbar__brand-sub { font-size: .66rem; color: var(--text-muted); font-weight: 500; margin-top: 1px; }
 
 .app {
   max-width: 720px;
@@ -178,9 +208,10 @@ button { cursor: pointer; }
   display: flex; justify-content: space-around;
   height: var(--nav-h);
   padding-bottom: env(safe-area-inset-bottom);
-  background: var(--surface-solid);
+  background: var(--surface-solid); backdrop-filter: blur(var(--blur)) saturate(160%); -webkit-backdrop-filter: blur(var(--blur)) saturate(160%);
   border-top: 1px solid var(--surface-border);
-  box-shadow: 0 -6px 20px rgba(0,0,0,0.05);
+  border-radius: 22px 22px 0 0;
+  box-shadow: 0 -10px 30px rgba(15,60,60,0.10);
 }
 .nav-btn {
   background: none; border: none; flex: 1;
@@ -191,6 +222,11 @@ button { cursor: pointer; }
 .nav-btn__icon { font-size: 1.3rem; }
 .nav-btn--active { color: var(--accent); }
 .nav-btn--active .nav-btn__icon { transform: translateY(-1px) scale(1.08); }
+.nav-btn--active .nav-btn__icon { position: relative; }
+.nav-btn--active .nav-btn__icon::after {
+  content: ''; position: absolute; inset: -6px; z-index: -1; border-radius: 12px;
+  background: var(--accent-soft);
+}
 
 .icon-btn {
   background: var(--surface); border: 1px solid var(--surface-border);
@@ -200,6 +236,16 @@ button { cursor: pointer; }
 }
 
 /* Person bar */
+.topbar__actions { display: flex; align-items: center; gap: 8px; }
+.lang-toggle {
+  display: flex; align-items: center; background: var(--surface); border: 1px solid var(--surface-border);
+  border-radius: 999px; padding: 3px; backdrop-filter: blur(var(--blur)); -webkit-backdrop-filter: blur(var(--blur));
+}
+.lang-toggle__btn {
+  background: transparent; border: none; padding: .35em .7em; border-radius: 999px; font-size: .78rem; font-weight: 700; color: var(--text-muted);
+}
+.lang-toggle__btn--active { background: var(--accent); color: #fff; }
+
 .person-bar { margin-top: 8px; }
 .person-chip {
   display: flex; align-items: center; gap: 10px;
@@ -266,7 +312,7 @@ button { cursor: pointer; }
 .quick-add-row { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; margin-bottom: 16px; scrollbar-width: none; }
 .quick-add-row::-webkit-scrollbar { display: none; }
 .quick-add-chip {
-  flex: 0 0 auto; background: var(--surface-solid); border: 1px solid var(--surface-border);
+  flex: 0 0 auto; background: var(--surface-solid); backdrop-filter: blur(calc(var(--blur) * 0.55)); -webkit-backdrop-filter: blur(calc(var(--blur) * 0.55)); border: 1px solid var(--surface-border);
   border-radius: 999px; padding: .55em 1em; font-size: .85rem; box-shadow: var(--shadow-sm); white-space: nowrap;
 }
 
@@ -278,6 +324,11 @@ button { cursor: pointer; }
   padding: 14px 6px; text-align: center; font-size: .78rem; font-weight: 600;
 }
 .explore-tile span { font-size: 1.4rem; }
+
+.dashboard-footer-credit {
+  text-align: center; color: var(--text-muted); font-size: .78rem;
+  margin: 18px 0 6px; opacity: .85;
+}
 
 .card-section { margin-bottom: 20px; }
 .card-section h2 { font-size: 1.05rem; }
@@ -292,7 +343,7 @@ button { cursor: pointer; }
 .dose-list { display: flex; flex-direction: column; gap: 8px; }
 .dose-row {
   display: grid; grid-template-columns: 52px 40px 1fr auto auto; align-items: center; gap: 10px;
-  background: var(--surface-solid); border: 1px solid var(--surface-border); border-radius: var(--radius-md);
+  background: var(--surface-solid); backdrop-filter: blur(calc(var(--blur) * 0.55)); -webkit-backdrop-filter: blur(calc(var(--blur) * 0.55)); border: 1px solid var(--surface-border); border-radius: var(--radius-md);
   padding: 10px 12px; box-shadow: var(--shadow-sm);
 }
 .dose-row--taken { opacity: .75; }
@@ -306,7 +357,7 @@ button { cursor: pointer; }
 
 .reading-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
 .reading-card {
-  background: var(--surface-solid); border: 1px solid var(--surface-border); border-radius: var(--radius-md);
+  background: var(--surface-solid); backdrop-filter: blur(calc(var(--blur) * 0.55)); -webkit-backdrop-filter: blur(calc(var(--blur) * 0.55)); border: 1px solid var(--surface-border); border-radius: var(--radius-md);
   padding: 12px 14px; box-shadow: var(--shadow-sm); display: flex; flex-direction: column; gap: 2px;
 }
 .reading-card__label { font-size: .75rem; color: var(--text-muted); }
@@ -314,7 +365,7 @@ button { cursor: pointer; }
 .reading-card__unit { font-size: .72rem; color: var(--text-muted); }
 
 .note-list { display: flex; flex-direction: column; gap: 8px; }
-.note-item { background: var(--surface-solid); border: 1px solid var(--surface-border); border-radius: var(--radius-md); padding: 10px 12px; }
+.note-item { background: var(--surface-solid); backdrop-filter: blur(calc(var(--blur) * 0.55)); -webkit-backdrop-filter: blur(calc(var(--blur) * 0.55)); border: 1px solid var(--surface-border); border-radius: var(--radius-md); padding: 10px 12px; }
 .note-item p { margin: 2px 0 0; color: var(--text-muted); font-size: .88rem; }
 
 .install-banner { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 16px; margin-top: 8px; }
@@ -369,7 +420,7 @@ button { cursor: pointer; }
 .chart-legend-item i { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
 
 .stats-row { display: flex; gap: 8px; margin-bottom: 12px; }
-.stat-pill { flex: 1; background: var(--surface-solid); border: 1px solid var(--surface-border); border-radius: var(--radius-sm); padding: 10px; text-align: center; }
+.stat-pill { flex: 1; background: var(--surface-solid); backdrop-filter: blur(calc(var(--blur) * 0.55)); -webkit-backdrop-filter: blur(calc(var(--blur) * 0.55)); border: 1px solid var(--surface-border); border-radius: var(--radius-sm); padding: 10px; text-align: center; }
 .stat-pill span { display: block; font-size: .7rem; color: var(--text-muted); }
 .stat-pill strong { font-family: var(--font-display); }
 
@@ -403,7 +454,7 @@ button { cursor: pointer; }
 .filter-row { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 6px; margin-bottom: 12px; scrollbar-width: none; }
 .filter-row::-webkit-scrollbar { display: none; }
 .filter-chip {
-  flex: 0 0 auto; border: 1px solid var(--surface-border); background: var(--surface-solid);
+  flex: 0 0 auto; border: 1px solid var(--surface-border); background: var(--surface-solid); backdrop-filter: blur(calc(var(--blur) * 0.55)); -webkit-backdrop-filter: blur(calc(var(--blur) * 0.55));
   border-radius: 999px; padding: .45em 1em; font-size: .82rem; white-space: nowrap;
 }
 .filter-chip--active { background: var(--accent); color: #fff; border-color: var(--accent); }
@@ -425,7 +476,7 @@ button { cursor: pointer; }
 .cal-grid--head { margin-bottom: 4px; }
 .cal-grid--head span { text-align: center; font-size: .72rem; color: var(--text-muted); }
 .cal-cell {
-  aspect-ratio: 1; border-radius: 12px; background: var(--surface-solid); border: 1px solid var(--surface-border);
+  aspect-ratio: 1; border-radius: 12px; background: var(--surface-solid); backdrop-filter: blur(calc(var(--blur) * 0.55)); -webkit-backdrop-filter: blur(calc(var(--blur) * 0.55)); border: 1px solid var(--surface-border);
   display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: .85rem; position: relative;
 }
 .cal-cell--empty { background: transparent; border: none; }
@@ -445,7 +496,7 @@ button { cursor: pointer; }
    ========================================================================= */
 .report-controls { display: grid; grid-template-columns: 1fr; gap: 10px; padding: 16px; margin-bottom: 16px; }
 .report-controls label { display: flex; flex-direction: column; gap: 4px; font-size: .85rem; color: var(--text-muted); }
-.report-controls select { padding: .6em; border-radius: var(--radius-sm); border: 1px solid var(--surface-border); background: var(--surface-solid); }
+.report-controls select { padding: .6em; border-radius: var(--radius-sm); border: 1px solid var(--surface-border); background: var(--surface-solid); backdrop-filter: blur(calc(var(--blur) * 0.55)); -webkit-backdrop-filter: blur(calc(var(--blur) * 0.55)); }
 
 .report-sheet { padding: 22px; }
 .report-sheet__header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--surface-border); }
@@ -464,11 +515,11 @@ button { cursor: pointer; }
    ========================================================================= */
 .search-box input {
   width: 100%; padding: .8em 1em; border-radius: 999px; border: 1px solid var(--surface-border);
-  background: var(--surface-solid); box-shadow: var(--shadow-sm);
+  background: var(--surface-solid); backdrop-filter: blur(calc(var(--blur) * 0.55)); -webkit-backdrop-filter: blur(calc(var(--blur) * 0.55)); box-shadow: var(--shadow-sm);
 }
 .search-result-list { display: flex; flex-direction: column; gap: 6px; margin-top: 14px; }
 .search-result-list a {
-  display: flex; align-items: center; gap: 12px; background: var(--surface-solid); border: 1px solid var(--surface-border);
+  display: flex; align-items: center; gap: 12px; background: var(--surface-solid); backdrop-filter: blur(calc(var(--blur) * 0.55)); -webkit-backdrop-filter: blur(calc(var(--blur) * 0.55)); border: 1px solid var(--surface-border);
   border-radius: var(--radius-md); padding: 10px 12px;
 }
 .search-result-list small { display: block; color: var(--text-muted); }
@@ -480,7 +531,7 @@ button { cursor: pointer; }
 .settings-block h2 { font-size: 1rem; }
 .segmented { display: flex; background: var(--accent-soft); border-radius: 999px; padding: 3px; }
 .segmented__btn { flex: 1; padding: .5em; border-radius: 999px; background: transparent; border: none; font-size: .85rem; font-weight: 600; color: var(--accent); }
-.segmented__btn--active { background: var(--surface-solid); box-shadow: var(--shadow-sm); }
+.segmented__btn--active { background: var(--surface-solid); backdrop-filter: blur(calc(var(--blur) * 0.55)); -webkit-backdrop-filter: blur(calc(var(--blur) * 0.55)); box-shadow: var(--shadow-sm); }
 .toggle-list { display: flex; flex-direction: column; gap: 10px; }
 .toggle-row { display: flex; align-items: center; justify-content: space-between; font-size: .9rem; }
 .toggle-row input[type="checkbox"] { width: 20px; height: 20px; accent-color: var(--accent); }
@@ -568,7 +619,7 @@ button { cursor: pointer; }
 .feeling-row { display: flex; gap: 8px; }
 .feeling-btn {
   flex: 1; padding: 12px 6px; border-radius: var(--radius-md); border: 1px solid var(--surface-border);
-  background: var(--surface-solid); font-size: .82rem; font-weight: 600; display: flex; flex-direction: column; align-items: center; gap: 4px;
+  background: var(--surface-solid); backdrop-filter: blur(calc(var(--blur) * 0.55)); -webkit-backdrop-filter: blur(calc(var(--blur) * 0.55)); font-size: .82rem; font-weight: 600; display: flex; flex-direction: column; align-items: center; gap: 4px;
 }
 .feeling-btn__icon { font-size: 1.3rem; }
 .feeling-btn--active { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
@@ -593,7 +644,7 @@ button { cursor: pointer; }
 
 .list-row {
   display: flex; align-items: center; justify-content: space-between; gap: 10px;
-  background: var(--surface-solid); border: 1px solid var(--surface-border); border-radius: var(--radius-md);
+  background: var(--surface-solid); backdrop-filter: blur(calc(var(--blur) * 0.55)); -webkit-backdrop-filter: blur(calc(var(--blur) * 0.55)); border: 1px solid var(--surface-border); border-radius: var(--radius-md);
   padding: 12px 14px; margin-bottom: 8px;
 }
 
@@ -637,21 +688,38 @@ button { cursor: pointer; }
 </head>
 <body>
 <a class="skip-link" href="#app">Skip to content</a>
+
 <header class="topbar">
   <div class="topbar__row">
-    <h1 id="topbar-title" class="topbar__title">MediSaathi</h1>
-    <button id="search-trigger" class="icon-btn" aria-label="Search">🔍</button>
+    <div class="topbar__title-group">
+      <h1 id="topbar-title" class="topbar__title">MediSaathi</h1>
+      <span id="topbar-brand-sub" class="topbar__brand-sub">Muhammad Usman Channa</span>
+    </div>
+    <div class="topbar__actions">
+      <div class="lang-toggle" id="topbar-lang-toggle">
+        <button class="lang-toggle__btn" data-lang="en">EN</button>
+        <button class="lang-toggle__btn" data-lang="ur">اردو</button>
+      </div>
+      <button id="search-trigger" class="icon-btn" aria-label="Search">🔍</button>
+    </div>
   </div>
   <div id="person-bar" class="person-bar"></div>
 </header>
+
 <main id="app" class="app" aria-busy="false"></main>
+
 <nav id="bottom-nav" class="bottom-nav" aria-label="Primary"></nav>
+
 <div id="modal-root"></div>
+
 <noscript>
   <div style="padding:2rem;text-align:center;font-family:sans-serif;">
     MediSaathi needs JavaScript enabled to run. Please enable JavaScript in your browser settings.
   </div>
 </noscript>
+
+
+
 <script>
 // ==== db.js ====
 // db.js — tiny promise-based IndexedDB wrapper for MediSaathi.
@@ -1962,7 +2030,6 @@ const ROUTES = {
   '#/search': renderSearch,
   '#/settings': renderSettings,
   '#/about': renderAbout,
-  '#/more': renderMore,
   '#/activity': renderActivity,
   '#/water': renderWater,
   '#/sleep': renderSleep,
@@ -2010,6 +2077,7 @@ function errorState() {
 function wireGlobalUI() {
   renderPersonBar();
   renderBottomNav();
+  renderTopbarLangToggle();
   document.getElementById('search-trigger').addEventListener('click', () => go('#/search'));
 
   window.addEventListener('beforeinstallprompt', (e) => {
@@ -2022,6 +2090,29 @@ function wireGlobalUI() {
     state.deferredInstallPrompt = null;
     U.showToast(t('common_saved'));
   });
+}
+
+async function switchLanguage(lang) {
+  if (state.lang === lang) return;
+  state.lang = lang;
+  setLang(lang);
+  await DB.setSetting('lang', lang);
+  forceRepaint();
+  renderPersonBar();
+  renderBottomNav();
+  renderTopbarLangToggle();
+  route();
+}
+
+function renderTopbarLangToggle() {
+  const el = document.getElementById('topbar-lang-toggle');
+  if (!el) return;
+  el.querySelectorAll('.lang-toggle__btn').forEach((btn) => {
+    btn.classList.toggle('lang-toggle__btn--active', btn.dataset.lang === state.lang);
+    btn.onclick = () => switchLanguage(btn.dataset.lang);
+  });
+  const sub = document.getElementById('topbar-brand-sub');
+  if (sub) sub.textContent = t('about_developer_name');
 }
 
 function renderBottomNav() {
@@ -2203,7 +2294,15 @@ async function renderDashboard() {
       <a class="explore-tile glass" href="#/vault"><span>🗂️</span>${t('nav_vault')}</a>
       <a class="explore-tile glass" href="#/reports"><span>📄</span>${t('nav_reports')}</a>
       <a class="explore-tile glass" href="#/insights"><span>📊</span>${t('nav_insights')}</a>
-      <a class="explore-tile glass" href="#/more"><span>➕</span>${t('nav_more')}</a>
+      <a class="explore-tile glass" href="#/activity"><span>🚶</span>${t('activity_title')}</a>
+      <a class="explore-tile glass" href="#/water"><span>💧</span>${t('water_title')}</a>
+      <a class="explore-tile glass" href="#/sleep"><span>😴</span>${t('sleep_title')}</a>
+      <a class="explore-tile glass" href="#/trackers"><span>📈</span>${t('tracker_title')}</a>
+      <a class="explore-tile glass" href="#/doctor-questions"><span>❓</span>${t('dq_title')}</a>
+      <a class="explore-tile glass" href="#/doctor-visit"><span>🏥</span>${t('doctor_visit_title')}</a>
+      <a class="explore-tile glass" href="#/emergency-card"><span>🆘</span>${t('ec_title')}</a>
+      <a class="explore-tile glass" href="#/food-guide"><span>🥗</span>${t('food_title')}</a>
+      <a class="explore-tile glass" href="#/about"><span>ℹ️</span>${t('nav_about')}</a>
     </div>
 
     <section class="card-section">
@@ -2252,6 +2351,8 @@ async function renderDashboard() {
       </div>
       <button class="btn btn--primary" id="install-btn-dash">${t('install_button')}</button>
     </div>
+
+    <p class="dashboard-footer-credit">${t('appName')} · ${t('about_developer_name')}</p>
   `;
 
   renderProgressRing(document.getElementById('adherence-ring'), {
@@ -2268,2065 +2369,4 @@ async function renderDashboard() {
 
   const feelings = await DB.getAll('feelings');
   const todaysFeeling = feelings.find((f) => f.personId === person.id && f.date === today);
-  if (todaysFeeling) {
-    document.querySelectorAll('.feeling-btn').forEach((b) => b.classList.toggle('feeling-btn--active', b.dataset.feel === todaysFeeling.feeling));
-  }
-  document.getElementById('feeling-row').addEventListener('click', async (e) => {
-    const btn = e.target.closest('.feeling-btn');
-    if (!btn) return;
-    const record = todaysFeeling || { id: DB.uid(), personId: person.id, date: today };
-    record.feeling = btn.dataset.feel;
-    record.updatedAt = Date.now();
-    await DB.put('feelings', record);
-    document.querySelectorAll('.feeling-btn').forEach((b) => b.classList.toggle('feeling-btn--active', b === btn));
-    U.showToast(t('common_saved'));
-  });
-
-  if (state.deferredInstallPrompt) {
-    const banner = document.getElementById('install-banner');
-    banner.hidden = false;
-    document.getElementById('install-btn-dash').addEventListener('click', triggerInstall);
-  }
-}
-
-// ---------------------------------------------------------------------------
-// Health tips (static, curated, offline) + food guide content
-// ---------------------------------------------------------------------------
-const HEALTH_TIPS = {
-  en: [
-    'Take medicines according to the schedule provided by your healthcare professional.',
-    'Keep a regular record of your important health measurements.',
-    'Stay physically active according to your abilities and health needs.',
-    'Maintain a consistent sleep routine, even on weekends.',
-    'Remember to stay hydrated throughout the day.',
-    'Include a variety of colourful vegetables and fruits in your meals.',
-    'Take a short walk after meals if your doctor has advised it.',
-    'Keep your medicine list updated and share it with your doctor.',
-    'Small, consistent habits often matter more than big occasional efforts.',
-    'If you feel unwell for more than a couple of days, consider consulting a doctor.'
-  ],
-  ur: [
-    'اپنے طبی ماہر کی بتائی گئی ترتیب کے مطابق دوائیں لیں۔',
-    'اپنی اہم صحت کی پیمائشوں کا باقاعدہ ریکارڈ رکھیں۔',
-    'اپنی صلاحیت اور صحت کی ضرورت کے مطابق جسمانی طور پر متحرک رہیں۔',
-    'ہفتے کے آخر میں بھی نیند کا وقت متوازن رکھیں۔',
-    'دن بھر پانی پیتے رہنا نہ بھولیں۔',
-    'اپنے کھانوں میں رنگ برنگی سبزیاں اور پھل شامل کریں۔',
-    'اگر ڈاکٹر نے مشورہ دیا ہو تو کھانے کے بعد تھوڑی واک کریں۔',
-    'اپنی دواؤں کی فہرست اپ ڈیٹ رکھیں اور ڈاکٹر کو دکھائیں۔',
-    'چھوٹی مگر مستقل عادتیں اکثر بڑی کوششوں سے زیادہ کارگر ہوتی ہیں۔',
-    'اگر طبیعت دو دن سے زیادہ ناساز رہے تو ڈاکٹر سے رجوع کرنے پر غور کریں۔'
-  ]
-};
-
-function dayOfYear() {
-  const now = new Date();
-  const start = new Date(now.getFullYear(), 0, 0);
-  return Math.floor((now - start) / 86400000);
-}
-
-function getTodaysTip() {
-  const list = HEALTH_TIPS[getLang()] || HEALTH_TIPS.en;
-  return list[dayOfYear() % list.length];
-}
-
-const FOOD_TIPS = {
-  en: [
-    'Add a serving of vegetables to one of your meals today.',
-    'Try swapping a sugary drink for water or buttermilk today.',
-    'Add a piece of fruit as a snack instead of packaged snacks.',
-    'Use a little less salt than usual when cooking today.',
-    'Include a handful of nuts or seeds in your day.',
-    'Choose a whole grain option if you have the choice today.'
-  ],
-  ur: [
-    'آج اپنے کسی ایک کھانے میں سبزیوں کی ایک سرونگ شامل کریں۔',
-    'آج میٹھے مشروب کی بجائے پانی یا لسی آزمائیں۔',
-    'پیکٹ والے اسنیک کی بجائے پھل کھائیں۔',
-    'آج کھانا پکاتے وقت معمول سے تھوڑا کم نمک استعمال کریں۔',
-    'اپنے دن میں مٹھی بھر میوے یا بیج شامل کریں۔',
-    'اگر موقع ملے تو آج ہول گرین آپشن منتخب کریں۔'
-  ]
-};
-
-function getTodaysFoodTip() {
-  const list = FOOD_TIPS[getLang()] || FOOD_TIPS.en;
-  return list[dayOfYear() % list.length];
-}
-
-const FOOD_GUIDE = {
-  en: {
-    food_vegetables: ['Spinach', 'Carrots', 'Bottle gourd', 'Okra', 'Tomatoes', 'Broccoli', 'Bell peppers'],
-    food_fruits: ['Apples', 'Bananas', 'Oranges', 'Papaya', 'Guava', 'Pomegranate', 'Berries'],
-    food_whole_foods: ['Whole wheat', 'Brown rice', 'Oats', 'Lentils (daal)', 'Chickpeas', 'Nuts', 'Seeds'],
-    food_hydration: ['Water', 'Coconut water', 'Buttermilk (lassi, unsweetened)', 'Herbal tea', 'Soups'],
-    food_low_sodium: ['Fresh fruit', 'Unsalted nuts', 'Home-cooked meals with less added salt', 'Herbs & spices instead of extra salt']
-  },
-  ur: {
-    food_vegetables: ['پالک', 'گاجر', 'لوکی', 'بھنڈی', 'ٹماٹر', 'بروکلی', 'شملہ مرچ'],
-    food_fruits: ['سیب', 'کیلا', 'مالٹا', 'پپیتا', 'امرود', 'انار', 'بیریز'],
-    food_whole_foods: ['گندم کا آٹا', 'براؤن چاول', 'جئی', 'دال', 'چنے', 'میوے', 'بیج'],
-    food_hydration: ['پانی', 'ناریل پانی', 'لسی (بغیر میٹھے کے)', 'جڑی بوٹیوں والی چائے', 'سوپ'],
-    food_low_sodium: ['تازہ پھل', 'بغیر نمک کے میوے', 'گھر کا کھانا کم نمک کے ساتھ', 'اضافی نمک کی بجائے مصالحے و جڑی بوٹیاں']
-  }
-};
-
-// ---------------------------------------------------------------------------
-// Informational clinical-range feedback (never a diagnosis — see disclaimers)
-// ---------------------------------------------------------------------------
-function feedbackPillHTML(level) {
-  const map = {
-    ok: ['feedback_within_range', 'feedback-pill--ok'],
-    watch: ['feedback_above_range', 'feedback-pill--watch'],
-    low: ['feedback_below_range', 'feedback-pill--watch'],
-    attention: ['feedback_needs_attention', 'feedback-pill--attention']
-  };
-  const [labelKey, cls] = map[level] || map.ok;
-  return `<span class="feedback-pill ${cls}">${t(labelKey)}</span>`;
-}
-
-function bpFeedback(systolic, diastolic) {
-  const s = Number(systolic), d = Number(diastolic);
-  if (s >= 180 || d >= 120) return 'attention';
-  if (s >= 130 || d >= 80) return 'watch';
-  if (s < 90 || d < 60) return 'low';
-  return 'ok';
-}
-
-function sugarFeedback(value, context) {
-  const v = Number(value);
-  if (context === 'before') {
-    if (v >= 126) return 'attention';
-    if (v >= 100) return 'watch';
-    if (v < 70) return 'low';
-    return 'ok';
-  }
-  if (v >= 200) return 'attention';
-  if (v >= 140) return 'watch';
-  if (v < 70) return 'low';
-  return 'ok';
-}
-
-function heartRateFeedback(bpm) {
-  const v = Number(bpm);
-  if (v > 130 || v < 40) return 'attention';
-  if (v > 100) return 'watch';
-  if (v < 60) return 'low';
-  return 'ok';
-}
-
-function spo2Feedback(pct) {
-  const v = Number(pct);
-  if (v < 90) return 'attention';
-  if (v < 95) return 'watch';
-  return 'ok';
-}
-
-function temperatureFeedback(celsius) {
-  const v = Number(celsius);
-  if (v >= 39) return 'attention';
-  if (v >= 38 || v < 35) return 'watch';
-  return 'ok';
-}
-
-function getGreetingKey() {
-  const h = new Date().getHours();
-  if (h < 12) return 'greeting_morning';
-  if (h < 17) return 'greeting_afternoon';
-  if (h < 21) return 'greeting_evening';
-  return 'greeting_night';
-}
-
-function emptyInline(message, actionLabel, action) {
-  return `<div class="empty-inline">
-    <p>${message}</p>
-    ${actionLabel ? `<button class="btn btn--soft" data-action="${action}">+ ${actionLabel}</button>` : ''}
-  </div>`;
-}
-
-function latestReadingCard(labelKey, items, formatter, unit, link) {
-  const sorted = [...items].sort((a, b) => (b.date + (b.time || '')).localeCompare(a.date + (a.time || '')));
-  const latest = sorted[0];
-  return `<a class="reading-card" href="${link}">
-    <span class="reading-card__label">${t(labelKey)}</span>
-    <span class="reading-card__value">${latest ? formatter(latest) : '—'}</span>
-    <span class="reading-card__unit">${latest ? unit : t('common_none')}</span>
-  </a>`;
-}
-
-function renderRecentNotes(notes) {
-  const today = U.todayISO();
-  const todays = notes.filter((n) => n.date === today).sort((a, b) => b.createdAt - a.createdAt);
-  if (!todays.length) return emptyInline(t('notes_empty'), t('notes_add'), 'add-note');
-  return `<ul class="note-list">${todays.slice(0, 4).map((n) => `
-    <li class="note-item">
-      <strong>${U.escapeHTML(n.title || t('note'))}</strong>
-      <p>${U.escapeHTML((n.content || '').slice(0, 90))}${n.content && n.content.length > 90 ? '…' : ''}</p>
-    </li>`).join('')}</ul>`;
-}
-
-function renderMiniTimeline(events) {
-  if (!events.length) return `<p class="muted">${t('timeline_empty')}</p>`;
-  return `<ul class="timeline-list timeline-list--mini">${events.map(timelineItemHTML).join('')}</ul>`;
-}
-
-async function dashboardQuickAction(action) {
-  switch (action) {
-    case 'add-med': openMedicineForm(); break;
-    case 'add-bp': openVitalForm('bp'); break;
-    case 'add-sugar': openVitalForm('sugar'); break;
-    case 'add-weight': openVitalForm('weight'); break;
-    case 'add-note': openNoteForm(); break;
-    default: break;
-  }
-}
-
-function triggerInstall() {
-  if (!state.deferredInstallPrompt) return;
-  state.deferredInstallPrompt.prompt();
-  state.deferredInstallPrompt.userChoice.finally(() => {
-    state.deferredInstallPrompt = null;
-    const btn = document.getElementById('install-btn');
-    if (btn) btn.hidden = true;
-  });
-}
-
-// ---------------------------------------------------------------------------
-// Dose helpers (medicines <-> today's timeline)
-// ---------------------------------------------------------------------------
-function scheduleTimesForMedicine(med) {
-  const slotTimes = { morning: '08:00', afternoon: '13:00', evening: '18:00', night: '21:30' };
-  const times = [];
-  (med.schedule || []).forEach((slot) => {
-    if (slotTimes[slot]) times.push(slotTimes[slot]);
-  });
-  (med.customTimes || []).forEach((ct) => { if (ct) times.push(ct); });
-  return [...new Set(times)].sort();
-}
-
-function isMedicineActiveOn(med, iso) {
-  if (med.status === 'paused') return false;
-  if (med.startDate && iso < med.startDate) return false;
-  if (med.endDate && iso > med.endDate) return false;
-  return true;
-}
-
-function buildTodaysDoseList(meds, doseLogs, iso) {
-  const rows = [];
-  meds.forEach((med) => {
-    if (!isMedicineActiveOn(med, iso)) return;
-    scheduleTimesForMedicine(med).forEach((time) => {
-      const log = doseLogs.find((l) => l.medicineId === med.id && l.date === iso && l.time === time);
-      let status = log ? log.status : 'upcoming';
-      if (!log && U.timeToMinutes(time) < U.timeToMinutes(U.nowTimeHM()) - 30) status = 'upcoming';
-      rows.push({ medId: med.id, medName: med.name, medPhoto: med.photo, time, status, dosage: med.dosage, unit: med.unit });
-    });
-  });
-  return rows.sort((a, b) => a.time.localeCompare(b.time));
-}
-
-function doseRowHTML(row) {
-  const statusIcon = { taken: '✅', missed: '⚠️', skipped: '⏭️', upcoming: '🕒' };
-  return `<li class="dose-row dose-row--${row.status}">
-    <span class="dose-row__time">${row.time}</span>
-    <span class="dose-row__avatar">${row.medPhoto ? `<img src="${row.medPhoto}" alt="">` : '💊'}</span>
-    <span class="dose-row__info">
-      <strong>${U.escapeHTML(row.medName)}</strong>
-      <small>${U.escapeHTML(row.dosage || '')} ${U.escapeHTML(row.unit || '')}</small>
-    </span>
-    <span class="dose-row__status" title="${t('dose_' + row.status)}">${statusIcon[row.status]}</span>
-    <span class="dose-row__actions">
-      ${row.status !== 'taken' ? `<button class="chip-btn chip-btn--taken" data-mark="taken" data-med-id="${row.medId}" data-time="${row.time}" aria-label="${t('mark_taken')}">✓</button>` : ''}
-      ${row.status !== 'missed' && row.status !== 'taken' ? `<button class="chip-btn chip-btn--missed" data-mark="missed" data-med-id="${row.medId}" data-time="${row.time}" aria-label="${t('mark_missed')}">✕</button>` : ''}
-    </span>
-  </li>`;
-}
-
-async function markDose(medId, time, status, iso) {
-  const logs = await DB.getAll('doseLogs');
-  const existing = logs.find((l) => l.medicineId === medId && l.date === iso && l.time === time);
-  const entry = existing || { id: DB.uid(), medicineId: medId, personId: state.personId, date: iso, time };
-  entry.status = status;
-  entry.loggedAt = Date.now();
-  await DB.put('doseLogs', entry);
-  U.showToast(t('common_saved'));
-  route();
-}
-
-// ---------------------------------------------------------------------------
-// Medicines
-// ---------------------------------------------------------------------------
-async function renderMedicines() {
-  topbarTitle.textContent = t('nav_medicines');
-  const person = currentPerson();
-  const meds = (await DB.getAll('medicines')).filter((m) => m.personId === person.id)
-    .sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
-
-  app.innerHTML = `
-    <div class="view-header">
-      <h1>${t('med_title')}</h1>
-      <button class="btn btn--primary" id="add-med-btn">+ ${t('med_add')}</button>
-    </div>
-    ${meds.length ? `<ul class="med-card-list">${meds.map(medCardHTML).join('')}</ul>` : `
-      <div class="empty-state">
-        <div class="empty-state__icon">💊</div>
-        <h2>${t('med_empty')}</h2>
-        <p>${t('med_empty_hint')}</p>
-        <button class="btn btn--primary" id="add-med-btn-2">+ ${t('med_add')}</button>
-      </div>`}
-  `;
-  const addBtn = document.getElementById('add-med-btn');
-  if (addBtn) addBtn.addEventListener('click', () => openMedicineForm());
-  const addBtn2 = document.getElementById('add-med-btn-2');
-  if (addBtn2) addBtn2.addEventListener('click', () => openMedicineForm());
-
-  app.querySelectorAll('[data-edit-med]').forEach((btn) => btn.addEventListener('click', () => openMedicineForm(btn.dataset.editMed)));
-  app.querySelectorAll('[data-delete-med]').forEach((btn) => btn.addEventListener('click', () => deleteMedicine(btn.dataset.deleteMed)));
-  app.querySelectorAll('[data-toggle-med]').forEach((btn) => btn.addEventListener('click', () => toggleMedicineStatus(btn.dataset.toggleMed)));
-}
-
-function medCardHTML(med) {
-  const low = med.quantityRemaining !== '' && med.quantityRemaining !== undefined && med.refillAt !== '' && med.refillAt !== undefined
-    && Number(med.quantityRemaining) <= Number(med.refillAt);
-  const times = scheduleTimesForMedicine(med).join(' · ');
-  return `<li class="med-card glass">
-    <div class="med-card__photo">${med.photo ? `<img src="${med.photo}" alt="">` : '💊'}</div>
-    <div class="med-card__body">
-      <div class="med-card__top">
-        <strong>${U.escapeHTML(med.name)}</strong>
-        <span class="status-pill status-pill--${med.status}">${t('med_status_' + med.status)}</span>
-      </div>
-      <p class="muted">${U.escapeHTML(med.dosage || '')} ${U.escapeHTML(med.unit || '')} · ${times || '—'}</p>
-      ${med.purpose ? `<p class="muted">${U.escapeHTML(med.purpose)}</p>` : ''}
-      ${low ? `<p class="warning-text">⚠️ ${t('med_low_stock')}</p>` : ''}
-      <div class="med-card__actions">
-        <button class="btn btn--soft btn--sm" data-edit-med="${med.id}">${t('common_edit')}</button>
-        <button class="btn btn--soft btn--sm" data-toggle-med="${med.id}">${med.status === 'paused' ? t('med_status_active') : t('med_status_paused')}</button>
-        <button class="btn btn--danger btn--sm" data-delete-med="${med.id}">${t('common_delete')}</button>
-      </div>
-    </div>
-  </li>`;
-}
-
-async function toggleMedicineStatus(id) {
-  const med = await DB.get('medicines', id);
-  if (!med) return;
-  med.status = med.status === 'paused' ? 'active' : 'paused';
-  await DB.put('medicines', med);
-  route();
-}
-
-async function deleteMedicine(id) {
-  if (!U.confirmDialog(t('med_delete_confirm'))) return;
-  await DB.remove('medicines', id);
-  const logs = await DB.getAll('doseLogs');
-  for (const l of logs.filter((l) => l.medicineId === id)) await DB.remove('doseLogs', l.id);
-  U.showToast(t('common_deleted'));
-  route();
-}
-
-function openMedicineForm(editId) {
-  buildMedicineFormModal(editId);
-}
-
-async function buildMedicineFormModal(editId) {
-  const med = editId ? await DB.get('medicines', editId) : null;
-  const schedule = med?.schedule || [];
-  openModal({
-    title: med ? t('med_edit') : t('med_add'),
-    wide: true,
-    bodyHTML: `
-      <form id="med-form" class="form">
-        <label>${t('med_name')}<input required name="name" type="text" value="${U.escapeHTML(med?.name || '')}"></label>
-        <div class="form-group-label">${t('med_photo')} <span class="muted">(${t('common_optional')})</span></div>
-        <div class="photo-preview-row" id="med-photo-preview-row">
-          ${med?.photo ? `<img class="form-photo-preview" src="${med.photo}" alt="">` : ''}
-        </div>
-        <div class="photo-picker-row">
-          <button type="button" class="btn btn--soft" id="med-take-photo-btn">📷 ${t('photo_take')}</button>
-          <button type="button" class="btn btn--soft" id="med-gallery-photo-btn">🖼️ ${t('photo_gallery')}</button>
-          <button type="button" class="btn btn--danger" id="med-remove-photo-btn" ${med?.photo ? '' : 'hidden'}>${t('photo_remove')}</button>
-        </div>
-        <input name="photoCamera" type="file" accept="image/*" capture="environment" hidden>
-        <input name="photoGallery" type="file" accept="image/*" hidden>
-        <div class="form-row">
-          <label>${t('med_dosage')}<input name="dosage" type="text" value="${U.escapeHTML(med?.dosage || '')}" placeholder="e.g. 500"></label>
-          <label>${t('med_unit')}<input name="unit" type="text" value="${U.escapeHTML(med?.unit || '')}" placeholder="mg / tablet / ml"></label>
-        </div>
-        <fieldset class="checkbox-group">
-          <legend>${t('med_schedule')}</legend>
-          ${['morning', 'afternoon', 'evening', 'night'].map((slot) => `
-            <label class="checkbox-pill"><input type="checkbox" name="schedule" value="${slot}" ${schedule.includes(slot) ? 'checked' : ''}> ${t('med_' + slot)}</label>
-          `).join('')}
-        </fieldset>
-        <label>${t('med_custom_time')} <span class="muted">(${t('common_optional')})</span><input name="customTime" type="time" value="${med?.customTimes?.[0] || ''}"></label>
-        <div class="form-row">
-          <label>${t('med_start_date')}<input name="startDate" type="date" value="${med?.startDate || U.todayISO()}"></label>
-          <label>${t('med_end_date')}<input name="endDate" type="date" value="${med?.endDate || ''}"></label>
-        </div>
-        <label>${t('med_instruction')}
-          <select name="instruction">
-            <option value="before_food" ${med?.instruction === 'before_food' ? 'selected' : ''}>${t('med_before_food')}</option>
-            <option value="after_food" ${med?.instruction === 'after_food' ? 'selected' : ''}>${t('med_after_food')}</option>
-            <option value="with_food" ${med?.instruction === 'with_food' ? 'selected' : ''}>${t('med_with_food')}</option>
-            <option value="other" ${med?.instruction === 'other' ? 'selected' : ''}>${t('med_other')}</option>
-          </select>
-        </label>
-        <label>${t('med_purpose')}<input name="purpose" type="text" value="${U.escapeHTML(med?.purpose || '')}"></label>
-        <div class="form-row">
-          <label>${t('med_quantity')}<input name="quantityRemaining" type="number" min="0" value="${med?.quantityRemaining ?? ''}"></label>
-          <label>${t('med_refill_at')}<input name="refillAt" type="number" min="0" value="${med?.refillAt ?? ''}"></label>
-        </div>
-        <label>${t('med_notes')}<textarea name="notes" rows="2">${U.escapeHTML(med?.notes || '')}</textarea></label>
-        <div class="form-actions">
-          <button type="button" class="btn btn--ghost" id="cancel-med">${t('common_cancel')}</button>
-          <button type="submit" class="btn btn--primary">${t('common_save')}</button>
-        </div>
-      </form>`,
-    onOpen: (modal) => {
-      let currentPhoto = med?.photo || null;
-      const cameraInput = modal.querySelector('input[name=photoCamera]');
-      const galleryInput = modal.querySelector('input[name=photoGallery]');
-      const previewRow = modal.querySelector('#med-photo-preview-row');
-      const removeBtn = modal.querySelector('#med-remove-photo-btn');
-
-      const updatePreview = () => {
-        previewRow.innerHTML = currentPhoto ? `<img class="form-photo-preview" src="${currentPhoto}" alt="">` : '';
-        removeBtn.hidden = !currentPhoto;
-      };
-      const handlePicked = async (file) => {
-        if (!file || !file.size) return;
-        const result = await U.fileToDataURL(file);
-        if (result) { currentPhoto = result.dataURL; updatePreview(); }
-      };
-      modal.querySelector('#med-take-photo-btn').addEventListener('click', () => cameraInput.click());
-      modal.querySelector('#med-gallery-photo-btn').addEventListener('click', () => galleryInput.click());
-      cameraInput.addEventListener('change', (e) => handlePicked(e.target.files[0]));
-      galleryInput.addEventListener('change', (e) => handlePicked(e.target.files[0]));
-      removeBtn.addEventListener('click', () => { currentPhoto = null; updatePreview(); });
-
-      modal.querySelector('#cancel-med').addEventListener('click', closeModal);
-      modal.querySelector('#med-form').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const fd = new FormData(e.target);
-        if (!fd.get('name').trim()) { U.showToast(t('common_required_field')); return; }
-        const record = {
-          id: med?.id || DB.uid(),
-          personId: state.personId,
-          name: fd.get('name').trim(),
-          photo: currentPhoto,
-          dosage: fd.get('dosage').trim(),
-          unit: fd.get('unit').trim(),
-          schedule: fd.getAll('schedule'),
-          customTimes: fd.get('customTime') ? [fd.get('customTime')] : [],
-          frequency: 'daily',
-          startDate: fd.get('startDate') || U.todayISO(),
-          endDate: fd.get('endDate') || '',
-          instruction: fd.get('instruction'),
-          purpose: fd.get('purpose').trim(),
-          quantityRemaining: fd.get('quantityRemaining'),
-          refillAt: fd.get('refillAt'),
-          notes: fd.get('notes').trim(),
-          status: med?.status || 'active',
-          createdAt: med?.createdAt || Date.now()
-        };
-        await DB.put('medicines', record);
-        closeModal();
-        U.showToast(t('common_saved'));
-        route();
-      });
-    }
-  });
-}
-
-// ---------------------------------------------------------------------------
-// Vitals hub + shared vital form
-// ---------------------------------------------------------------------------
-async function renderVitalsHub() {
-  topbarTitle.textContent = t('vitals_title');
-  const cards = [
-    ['vitals_bp', '#/vitals/bp', '🩺'],
-    ['vitals_sugar', '#/vitals/sugar', '🩸'],
-    ['vitals_weight', '#/vitals/weight', '⚖️'],
-    ['vitals_other', '#/vitals/other', '📈']
-  ];
-  app.innerHTML = `
-    <div class="view-header"><h1>${t('vitals_title')}</h1></div>
-    <div class="vitals-grid">
-      ${cards.map(([key, href, icon]) => `
-        <a class="vitals-tile glass" href="${href}">
-          <span class="vitals-tile__icon">${icon}</span>
-          <strong>${t(key)}</strong>
-        </a>
-      `).join('')}
-    </div>
-  `;
-}
-
-const VITAL_CONFIG = {
-  bp: { store: 'vitalsBP', titleKey: 'vitals_bp', emptyKey: 'bp_empty' },
-  sugar: { store: 'vitalsSugar', titleKey: 'vitals_sugar', emptyKey: 'sugar_empty' },
-  weight: { store: 'vitalsWeight', titleKey: 'vitals_weight', emptyKey: 'weight_empty' },
-  other: { store: 'vitalsOther', titleKey: 'vitals_other', emptyKey: 'weight_empty' }
-};
-
-async function renderVitalDetail(kind) {
-  const cfg = VITAL_CONFIG[kind];
-  topbarTitle.textContent = t(cfg.titleKey);
-  const person = currentPerson();
-  const all = (await DB.getAll(cfg.store)).filter((v) => v.personId === person.id)
-    .sort((a, b) => (b.date + (b.time || '')).localeCompare(a.date + (a.time || '')));
-
-  app.innerHTML = `
-    <div class="view-header">
-      <h1>${t(cfg.titleKey)}</h1>
-      <button class="btn btn--primary" id="add-vital-btn">+ ${t('common_add')}</button>
-    </div>
-    ${kind === 'bp' ? `<p class="info-banner">${t('bp_info_msg')}</p>` : ''}
-    <div id="vital-chart" class="chart-card glass"></div>
-    ${all.length ? statsRowHTML(kind, all) : ''}
-    ${all.length ? `<ul class="reading-list">${all.map((v) => vitalRowHTML(kind, v)).join('')}</ul>` : `
-      <div class="empty-state">
-        <div class="empty-state__icon">📋</div>
-        <h2>${t(cfg.emptyKey)}</h2>
-        <button class="btn btn--primary" id="add-vital-btn-2">+ ${t('common_add')}</button>
-      </div>`}
-  `;
-
-  renderVitalChart(kind, all);
-
-  document.getElementById('add-vital-btn')?.addEventListener('click', () => openVitalForm(kind));
-  document.getElementById('add-vital-btn-2')?.addEventListener('click', () => openVitalForm(kind));
-  app.querySelectorAll('[data-delete-vital]').forEach((btn) => btn.addEventListener('click', () => deleteVital(cfg.store, btn.dataset.deleteVital)));
-}
-
-function statsRowHTML(kind, all) {
-  if (kind === 'bp') {
-    const sys = all.map((v) => Number(v.systolic));
-    const dia = all.map((v) => Number(v.diastolic));
-    return `<div class="stats-row">
-      <div class="stat-pill"><span>${t('bp_average')}</span><strong>${Math.round(U.average(sys))}/${Math.round(U.average(dia))}</strong></div>
-      <div class="stat-pill"><span>${t('bp_highest')}</span><strong>${Math.max(...sys)}/${Math.max(...dia)}</strong></div>
-      <div class="stat-pill"><span>${t('bp_lowest')}</span><strong>${Math.min(...sys)}/${Math.min(...dia)}</strong></div>
-    </div>`;
-  }
-  if (kind === 'weight' && all.length) {
-    const sorted = [...all].sort((a, b) => (a.date + a.time).localeCompare(b.date + b.time));
-    const current = Number(sorted[sorted.length - 1].value);
-    const prev = sorted.length > 1 ? Number(sorted[sorted.length - 2].value) : current;
-    const change = U.round1(current - prev);
-    return `<div class="stats-row">
-      <div class="stat-pill"><span>${t('weight_current')}</span><strong>${current} kg</strong></div>
-      <div class="stat-pill"><span>${t('weight_previous')}</span><strong>${prev} kg</strong></div>
-      <div class="stat-pill"><span>${t('weight_change')}</span><strong class="${change > 0 ? 'up' : change < 0 ? 'down' : ''}">${change > 0 ? '+' : ''}${change} kg</strong></div>
-    </div>`;
-  }
-  if (kind === 'sugar') {
-    const vals = all.map((v) => Number(v.value));
-    return `<div class="stats-row">
-      <div class="stat-pill"><span>${t('bp_average')}</span><strong>${Math.round(U.average(vals))} mg/dL</strong></div>
-      <div class="stat-pill"><span>${t('bp_highest')}</span><strong>${Math.max(...vals)}</strong></div>
-      <div class="stat-pill"><span>${t('bp_lowest')}</span><strong>${Math.min(...vals)}</strong></div>
-    </div>`;
-  }
-  return '';
-}
-
-function renderVitalChart(kind, all) {
-  const container = document.getElementById('vital-chart');
-  const sorted = [...all].sort((a, b) => (a.date + (a.time || '')).localeCompare(b.date + (b.time || ''))).slice(-20);
-  if (kind === 'bp') {
-    renderLineChart(container, {
-      emptyText: t(VITAL_CONFIG.bp.emptyKey),
-      series: [
-        { label: t('bp_systolic'), color: '#0EA5A0', values: sorted.map((v, i) => ({ x: i, y: Number(v.systolic), dateLabel: v.date.slice(5) })) },
-        { label: t('bp_diastolic'), color: '#FF8A5B', values: sorted.map((v, i) => ({ x: i, y: Number(v.diastolic), dateLabel: v.date.slice(5) })) }
-      ]
-    });
-  } else if (kind === 'sugar') {
-    renderLineChart(container, {
-      emptyText: t(VITAL_CONFIG.sugar.emptyKey),
-      series: [{ label: t('vitals_sugar'), color: '#6C63FF', values: sorted.map((v, i) => ({ x: i, y: Number(v.value), dateLabel: v.date.slice(5) })) }]
-    });
-  } else if (kind === 'weight') {
-    renderLineChart(container, {
-      emptyText: t(VITAL_CONFIG.weight.emptyKey),
-      series: [{ label: t('vitals_weight'), color: '#2FB380', values: sorted.map((v, i) => ({ x: i, y: Number(v.value), dateLabel: v.date.slice(5) })) }]
-    });
-  } else {
-    const grouped = {};
-    sorted.forEach((v) => { (grouped[v.type] = grouped[v.type] || []).push(v); });
-    const first = Object.keys(grouped)[0];
-    if (!first) { container.innerHTML = `<p class="chart-empty">${t('weight_empty')}</p>`; return; }
-    renderLineChart(container, {
-      emptyText: t('weight_empty'),
-      series: [{ label: t('other_' + first) || first, color: '#3D8BFD', values: grouped[first].map((v, i) => ({ x: i, y: Number(v.value), dateLabel: v.date.slice(5) })) }]
-    });
-  }
-}
-
-function vitalRowHTML(kind, v) {
-  let valueText = '';
-  let feedback = null;
-  if (kind === 'bp') {
-    valueText = `${v.systolic}/${v.diastolic} mmHg${v.pulse ? ` · ${v.pulse} bpm` : ''}`;
-    feedback = bpFeedback(v.systolic, v.diastolic);
-  } else if (kind === 'sugar') {
-    valueText = `${v.value} mg/dL — ${t('sugar_' + (v.context || 'other').replace('before', 'before_meal').replace('after', 'after_meal'))}`;
-    feedback = sugarFeedback(v.value, v.context);
-  } else if (kind === 'weight') {
-    valueText = `${v.value} kg`;
-  } else {
-    valueText = `${v.value} ${v.unit || ''} — ${t('other_' + v.type) || v.type}`;
-    if (v.type === 'heartrate') feedback = heartRateFeedback(v.value);
-    else if (v.type === 'spo2') feedback = spo2Feedback(v.value);
-    else if (v.type === 'temperature') feedback = temperatureFeedback(v.value);
-  }
-
-  return `<li class="reading-row glass">
-    <div>
-      <strong>${valueText}</strong>
-      <p class="muted">${v.date} ${v.time || ''} ${v.period ? '· ' + t('med_' + v.period) : ''}</p>
-      ${feedback ? feedbackPillHTML(feedback) : ''}
-      ${v.note ? `<p class="muted">${U.escapeHTML(v.note)}</p>` : ''}
-    </div>
-    ${v.image ? `<img class="reading-row__img" src="${v.image}" alt="">` : ''}
-    <button class="icon-btn" data-delete-vital="${v.id}" aria-label="${t('common_delete')}">🗑️</button>
-  </li>`;
-}
-
-async function deleteVital(store, id) {
-  if (!U.confirmDialog(t('med_delete_confirm'))) return;
-  await DB.remove(store, id);
-  U.showToast(t('common_deleted'));
-  route();
-}
-
-function openVitalForm(kind) {
-  const cfg = VITAL_CONFIG[kind];
-  let fields = '';
-  if (kind === 'bp') {
-    fields = `
-      <p class="info-banner">${t('feedback_disclaimer')}</p>
-      <div class="form-row">
-        <label>${t('bp_systolic')}<input required name="systolic" type="number" min="1"></label>
-        <label>${t('bp_diastolic')}<input required name="diastolic" type="number" min="1"></label>
-      </div>
-      <label>${t('bp_pulse')} <span class="muted">(${t('common_optional')})</span><input name="pulse" type="number" min="1"></label>
-      <label>${t('med_schedule')}
-        <select name="period">
-          <option value="morning">${t('med_morning')}</option>
-          <option value="afternoon">${t('med_afternoon')}</option>
-          <option value="evening">${t('med_evening')}</option>
-          <option value="night">${t('med_night')}</option>
-        </select>
-      </label>`;
-  } else if (kind === 'sugar') {
-    fields = `
-      <label>${t('sugar_value')}<input required name="value" type="number" min="1"></label>
-      <label>${t('med_schedule')}
-        <select name="context">
-          <option value="before">${t('sugar_before_meal')}</option>
-          <option value="after">${t('sugar_after_meal')}</option>
-          <option value="other">${t('sugar_context_other')}</option>
-        </select>
-      </label>`;
-  } else if (kind === 'weight') {
-    fields = `<label>${t('weight_value')}<input required name="value" type="number" step="0.1" min="1"></label>`;
-  } else {
-    fields = `
-      <p class="info-banner">${t('feedback_disclaimer')}</p>
-      <label>${t('common_category')}
-        <select name="type">
-          ${['heartrate', 'spo2', 'temperature', 'sleep', 'steps', 'custom'].filter((k) => state.trackers[k] !== false).map((k) => `<option value="${k}">${t('other_' + k)}</option>`).join('')}
-        </select>
-      </label>
-      <div class="form-row">
-        <label>${t('common_add')}<input required name="value" type="number" step="0.1"></label>
-        <label>${t('med_unit')}<input name="unit" type="text" placeholder="bpm / % / °C"></label>
-      </div>`;
-  }
-
-  openModal({
-    title: t(kind === 'bp' ? 'bp_add' : kind === 'sugar' ? 'sugar_add' : kind === 'weight' ? 'weight_add' : 'other_add'),
-    bodyHTML: `
-      <form id="vital-form" class="form">
-        ${fields}
-        <div class="form-row">
-          <label>${t('common_date')}<input name="date" type="date" value="${U.todayISO()}"></label>
-          <label>${t('common_time')}<input name="time" type="time" value="${U.nowTimeHM()}"></label>
-        </div>
-        <label>${t('note')} <span class="muted">(${t('common_optional')})</span><textarea name="note" rows="2"></textarea></label>
-        <label>${t('vault_category_reading')} <span class="muted">(${t('common_optional')})</span><input name="image" type="file" accept="image/*" capture="environment"></label>
-        <div class="form-actions">
-          <button type="button" class="btn btn--ghost" id="cancel-vital">${t('common_cancel')}</button>
-          <button type="submit" class="btn btn--primary">${t('common_save')}</button>
-        </div>
-      </form>`,
-    onOpen: (modal) => {
-      modal.querySelector('#cancel-vital').addEventListener('click', closeModal);
-      modal.querySelector('#vital-form').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const fd = new FormData(e.target);
-        let image = null;
-        const file = fd.get('image');
-        if (file && file.size) {
-          const result = await U.fileToDataURL(file);
-          if (result) image = result.dataURL;
-        }
-        const base = {
-          id: DB.uid(), personId: state.personId,
-          date: fd.get('date') || U.todayISO(), time: fd.get('time') || U.nowTimeHM(),
-          note: (fd.get('note') || '').trim(), image, createdAt: Date.now()
-        };
-        let record;
-        if (kind === 'bp') record = { ...base, systolic: fd.get('systolic'), diastolic: fd.get('diastolic'), pulse: fd.get('pulse'), period: fd.get('period') };
-        else if (kind === 'sugar') record = { ...base, value: fd.get('value'), context: fd.get('context') };
-        else if (kind === 'weight') record = { ...base, value: fd.get('value') };
-        else record = { ...base, value: fd.get('value'), unit: fd.get('unit'), type: fd.get('type') };
-        await DB.put(cfg.store, record);
-        closeModal();
-        U.showToast(t('common_saved'));
-        route();
-      });
-    }
-  });
-}
-
-// ---------------------------------------------------------------------------
-// More menu (secondary features, kept off the main dashboard)
-// ---------------------------------------------------------------------------
-function renderMore() {
-  topbarTitle.textContent = t('nav_more');
-  const items = [
-    ['#/activity', 'activity_title', '🚶'],
-    ['#/water', 'water_title', '💧'],
-    ['#/sleep', 'sleep_title', '😴'],
-    ['#/trackers', 'tracker_title', '📈'],
-    ['#/doctor-questions', 'dq_title', '❓'],
-    ['#/doctor-visit', 'doctor_visit_title', '🏥'],
-    ['#/emergency-card', 'ec_title', '🆘'],
-    ['#/food-guide', 'food_title', '🥗'],
-    ['#/about', 'nav_about', 'ℹ️']
-  ];
-  app.innerHTML = `
-    <div class="view-header"><h1>${t('nav_more')}</h1></div>
-    <div class="explore-grid">
-      ${items.map(([href, key, icon]) => `<a class="explore-tile glass" href="${href}"><span>${icon}</span>${t(key)}</a>`).join('')}
-    </div>
-  `;
-}
-
-// ---------------------------------------------------------------------------
-// Activity (walking)
-// ---------------------------------------------------------------------------
-function formatDuration(ms) {
-  const totalSec = Math.floor(ms / 1000);
-  const h = Math.floor(totalSec / 3600);
-  const m = Math.floor((totalSec % 3600) / 60);
-  const s = totalSec % 60;
-  return h > 0 ? `${U.pad2(h)}:${U.pad2(m)}:${U.pad2(s)}` : `${U.pad2(m)}:${U.pad2(s)}`;
-}
-
-let activityTimerInterval = null;
-
-async function renderActivity() {
-  topbarTitle.textContent = t('activity_title');
-  const person = currentPerson();
-  const entries = (await DB.getAll('activity')).filter((a) => a.personId === person.id).sort((a, b) => b.createdAt - a.createdAt);
-
-  app.innerHTML = `
-    <div class="view-header"><h1>${t('activity_title')} — ${t('activity_walk')}</h1></div>
-    <div class="activity-hero glass">
-      <div class="activity-hero__timer" id="activity-timer">00:00</div>
-      <div class="activity-hero__controls" id="activity-controls"></div>
-    </div>
-    <p class="report-sheet__disclaimer">${t('activity_estimate_note')}</p>
-    <button class="btn btn--soft btn--full" id="activity-manual-btn">+ ${t('activity_manual_add')}</button>
-    <section class="card-section" style="margin-top:16px;">
-      <h2>${t('dash_recent_activity')}</h2>
-      ${entries.length ? entries.map(activityRowHTML).join('') : `<p class="muted">${t('activity_empty')}</p>`}
-    </section>
-  `;
-
-  renderActivityControls();
-  document.getElementById('activity-manual-btn').addEventListener('click', () => openActivityManualForm());
-  app.querySelectorAll('[data-delete-activity]').forEach((btn) => btn.addEventListener('click', async () => {
-    if (!U.confirmDialog(t('med_delete_confirm'))) return;
-    await DB.remove('activity', btn.dataset.deleteActivity);
-    route();
-  }));
-
-  clearInterval(activityTimerInterval);
-  activityTimerInterval = setInterval(updateActivityTimerDisplay, 1000);
-  updateActivityTimerDisplay();
-}
-
-function activityRowHTML(a) {
-  return `<div class="list-row">
-    <div>
-      <strong>${a.durationLabel || formatDuration(a.durationMs || 0)}</strong>
-      <p class="muted">${a.date} ${a.distanceKm ? `· ${a.distanceKm} km` : ''} ${a.steps ? `· ${a.steps} ${t('activity_steps').toLowerCase()}` : ''}</p>
-      ${a.note ? `<p class="muted">${U.escapeHTML(a.note)}</p>` : ''}
-    </div>
-    <button class="icon-btn" data-delete-activity="${a.id}" aria-label="${t('common_delete')}">🗑️</button>
-  </div>`;
-}
-
-function updateActivityTimerDisplay() {
-  const el = document.getElementById('activity-timer');
-  if (!el) { clearInterval(activityTimerInterval); return; }
-  const walk = state.activeWalk;
-  if (!walk) { el.textContent = '00:00'; return; }
-  const elapsed = walk.status === 'running' ? (walk.elapsedMs + (Date.now() - walk.startTs)) : walk.elapsedMs;
-  el.textContent = formatDuration(elapsed);
-}
-
-function renderActivityControls() {
-  const el = document.getElementById('activity-controls');
-  if (!el) return;
-  const walk = state.activeWalk;
-  if (!walk) {
-    el.innerHTML = `<button class="btn btn--primary" id="walk-start">▶ ${t('activity_start')}</button>`;
-    el.querySelector('#walk-start').addEventListener('click', () => {
-      state.activeWalk = { status: 'running', startTs: Date.now(), elapsedMs: 0 };
-      renderActivityControls();
-    });
-  } else if (walk.status === 'running') {
-    el.innerHTML = `
-      <button class="btn btn--soft" id="walk-pause">⏸ ${t('common_pause')}</button>
-      <button class="btn btn--danger" id="walk-stop">⏹ ${t('common_stop')}</button>`;
-    el.querySelector('#walk-pause').addEventListener('click', () => {
-      walk.elapsedMs += Date.now() - walk.startTs;
-      walk.status = 'paused';
-      renderActivityControls();
-    });
-    el.querySelector('#walk-stop').addEventListener('click', () => stopWalk());
-  } else {
-    el.innerHTML = `
-      <button class="btn btn--primary" id="walk-resume">▶ ${t('common_resume')}</button>
-      <button class="btn btn--danger" id="walk-stop">⏹ ${t('common_stop')}</button>`;
-    el.querySelector('#walk-resume').addEventListener('click', () => {
-      walk.startTs = Date.now();
-      walk.status = 'running';
-      renderActivityControls();
-    });
-    el.querySelector('#walk-stop').addEventListener('click', () => stopWalk());
-  }
-}
-
-async function stopWalk() {
-  const walk = state.activeWalk;
-  if (!walk) return;
-  const totalMs = walk.status === 'running' ? walk.elapsedMs + (Date.now() - walk.startTs) : walk.elapsedMs;
-  state.activeWalk = null;
-  const record = {
-    id: DB.uid(), personId: state.personId, date: U.todayISO(), durationMs: totalMs,
-    durationLabel: formatDuration(totalMs), createdAt: Date.now()
-  };
-  await DB.put('activity', record);
-  U.showToast(t('common_saved'));
-  route();
-}
-
-function openActivityManualForm() {
-  openModal({
-    title: t('activity_manual_add'),
-    bodyHTML: `
-      <form id="activity-form" class="form">
-        <div class="form-row">
-          <label>${t('common_date')}<input name="date" type="date" value="${U.todayISO()}"></label>
-          <label>${t('activity_duration')} (${t('common_optional')})<input name="minutes" type="number" min="1" placeholder="minutes"></label>
-        </div>
-        <div class="form-row">
-          <label>${t('activity_distance')} <span class="muted">(${t('common_optional')})</span><input name="distanceKm" type="number" step="0.1" min="0"></label>
-          <label>${t('activity_steps')} <span class="muted">(${t('common_optional')})</span><input name="steps" type="number" min="0"></label>
-        </div>
-        <label>${t('note')} <span class="muted">(${t('common_optional')})</span><textarea name="note" rows="2"></textarea></label>
-        <div class="form-actions">
-          <button type="button" class="btn btn--ghost" id="cancel-activity">${t('common_cancel')}</button>
-          <button type="submit" class="btn btn--primary">${t('common_save')}</button>
-        </div>
-      </form>`,
-    onOpen: (modal) => {
-      modal.querySelector('#cancel-activity').addEventListener('click', closeModal);
-      modal.querySelector('#activity-form').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const fd = new FormData(e.target);
-        const minutes = Number(fd.get('minutes')) || 0;
-        const record = {
-          id: DB.uid(), personId: state.personId, date: fd.get('date') || U.todayISO(),
-          durationMs: minutes * 60000, durationLabel: minutes ? formatDuration(minutes * 60000) : '—',
-          distanceKm: fd.get('distanceKm') || '', steps: fd.get('steps') || '',
-          note: (fd.get('note') || '').trim(), createdAt: Date.now()
-        };
-        await DB.put('activity', record);
-        closeModal();
-        U.showToast(t('common_saved'));
-        route();
-      });
-    }
-  });
-}
-
-// ---------------------------------------------------------------------------
-// Water
-// ---------------------------------------------------------------------------
-async function renderWater() {
-  topbarTitle.textContent = t('water_title');
-  const person = currentPerson();
-  const today = U.todayISO();
-  const entries = (await DB.getAll('water')).filter((w) => w.personId === person.id && w.date === today).sort((a, b) => b.createdAt - a.createdAt);
-  const total = entries.reduce((sum, e) => sum + Number(e.amountMl || 0), 0);
-  const pct = Math.min(100, Math.round((total / (state.waterTarget || 2000)) * 100));
-
-  app.innerHTML = `
-    <div class="view-header"><h1>${t('water_title')}</h1></div>
-    <div class="water-hero glass">
-      <div class="water-hero__total">${total} ml</div>
-      <p class="muted">${t('water_today_total')} · ${t('common_target')}: ${state.waterTarget} ml</p>
-      <div class="water-progress-track"><div class="water-progress-fill" style="width:${pct}%"></div></div>
-      <div class="water-quick-row">
-        <button class="quick-add-chip" data-water="250">${t('water_add_250')}</button>
-        <button class="quick-add-chip" data-water="500">${t('water_add_500')}</button>
-        <button class="quick-add-chip" data-water="750">${t('water_add_750')}</button>
-        <button class="quick-add-chip" id="water-custom-btn">+ ${t('water_custom_add')}</button>
-      </div>
-    </div>
-    <button class="btn btn--ghost btn--full" id="water-target-btn" style="margin:12px 0;">🎯 ${t('water_set_target')}</button>
-    <section class="card-section">
-      ${entries.length ? entries.map((e) => `
-        <div class="list-row">
-          <div><strong>${e.amountMl} ml</strong><p class="muted">${new Date(e.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p></div>
-          <button class="icon-btn" data-delete-water="${e.id}" aria-label="${t('common_delete')}">🗑️</button>
-        </div>`).join('') : `<p class="muted">${t('water_empty')}</p>`}
-    </section>
-  `;
-
-  app.querySelectorAll('[data-water]').forEach((btn) => btn.addEventListener('click', () => addWater(Number(btn.dataset.water))));
-  document.getElementById('water-custom-btn').addEventListener('click', () => {
-    const val = prompt(t('water_custom_add') + ' (ml)');
-    const n = Number(val);
-    if (n > 0) addWater(n);
-  });
-  document.getElementById('water-target-btn').addEventListener('click', async () => {
-    const val = prompt(t('water_set_target') + ' (ml)', state.waterTarget);
-    const n = Number(val);
-    if (n > 0) { state.waterTarget = n; await DB.setSetting('waterTarget', n); route(); }
-  });
-  app.querySelectorAll('[data-delete-water]').forEach((btn) => btn.addEventListener('click', async () => {
-    await DB.remove('water', btn.dataset.deleteWater);
-    route();
-  }));
-}
-
-async function addWater(amountMl) {
-  await DB.put('water', { id: DB.uid(), personId: state.personId, date: U.todayISO(), amountMl, createdAt: Date.now() });
-  U.showToast(t('common_saved'));
-  route();
-}
-
-// ---------------------------------------------------------------------------
-// Sleep
-// ---------------------------------------------------------------------------
-function sleepDurationLabel(bed, wake) {
-  if (!bed || !wake) return '';
-  let bedMin = U.timeToMinutes(bed);
-  let wakeMin = U.timeToMinutes(wake);
-  if (wakeMin <= bedMin) wakeMin += 24 * 60;
-  const diff = wakeMin - bedMin;
-  return `${Math.floor(diff / 60)}h ${diff % 60}m`;
-}
-
-async function renderSleep() {
-  topbarTitle.textContent = t('sleep_title');
-  const person = currentPerson();
-  const entries = (await DB.getAll('sleep')).filter((s) => s.personId === person.id).sort((a, b) => b.date.localeCompare(a.date));
-
-  app.innerHTML = `
-    <div class="view-header"><h1>${t('sleep_title')}</h1><button class="btn btn--primary" id="add-sleep-btn">+ ${t('sleep_add')}</button></div>
-    <div id="sleep-chart" class="chart-card glass"></div>
-    ${entries.length ? entries.map((s) => `
-      <div class="list-row">
-        <div><strong>${sleepDurationLabel(s.bedtime, s.wake)}</strong><p class="muted">${s.date} · ${t('sleep_bedtime')} ${s.bedtime || '—'} → ${t('sleep_wake')} ${s.wake || '—'}</p></div>
-        <button class="icon-btn" data-delete-sleep="${s.id}" aria-label="${t('common_delete')}">🗑️</button>
-      </div>`).join('') : `<p class="muted">${t('sleep_empty')}</p>`}
-  `;
-
-  const sorted = [...entries].sort((a, b) => a.date.localeCompare(b.date)).slice(-14);
-  renderLineChart(document.getElementById('sleep-chart'), {
-    emptyText: t('sleep_empty'),
-    series: [{ label: t('sleep_duration'), color: '#6C63FF', values: sorted.map((s, i) => {
-      let bedMin = U.timeToMinutes(s.bedtime), wakeMin = U.timeToMinutes(s.wake);
-      if (wakeMin <= bedMin) wakeMin += 24 * 60;
-      return { x: i, y: Math.round(((wakeMin - bedMin) / 60) * 10) / 10, dateLabel: s.date.slice(5) };
-    }) }]
-  });
-
-  document.getElementById('add-sleep-btn').addEventListener('click', () => openSleepForm());
-  app.querySelectorAll('[data-delete-sleep]').forEach((btn) => btn.addEventListener('click', async () => {
-    await DB.remove('sleep', btn.dataset.deleteSleep);
-    route();
-  }));
-}
-
-function openSleepForm() {
-  openModal({
-    title: t('sleep_add'),
-    bodyHTML: `
-      <form id="sleep-form" class="form">
-        <label>${t('common_date')}<input name="date" type="date" value="${U.todayISO()}"></label>
-        <div class="form-row">
-          <label>${t('sleep_bedtime')}<input required name="bedtime" type="time" value="22:30"></label>
-          <label>${t('sleep_wake')}<input required name="wake" type="time" value="06:30"></label>
-        </div>
-        <label>${t('note')} <span class="muted">(${t('common_optional')})</span><textarea name="note" rows="2"></textarea></label>
-        <div class="form-actions">
-          <button type="button" class="btn btn--ghost" id="cancel-sleep">${t('common_cancel')}</button>
-          <button type="submit" class="btn btn--primary">${t('common_save')}</button>
-        </div>
-      </form>`,
-    onOpen: (modal) => {
-      modal.querySelector('#cancel-sleep').addEventListener('click', closeModal);
-      modal.querySelector('#sleep-form').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const fd = new FormData(e.target);
-        await DB.put('sleep', {
-          id: DB.uid(), personId: state.personId, date: fd.get('date') || U.todayISO(),
-          bedtime: fd.get('bedtime'), wake: fd.get('wake'), note: (fd.get('note') || '').trim(), createdAt: Date.now()
-        });
-        closeModal();
-        U.showToast(t('common_saved'));
-        route();
-      });
-    }
-  });
-}
-
-// ---------------------------------------------------------------------------
-// Custom trackers
-// ---------------------------------------------------------------------------
-async function renderTrackers() {
-  topbarTitle.textContent = t('tracker_title');
-  const person = currentPerson();
-  const entries = (await DB.getAll('customEntries')).filter((e) => e.personId === person.id).sort((a, b) => b.createdAt - a.createdAt);
-  const grouped = {};
-  entries.forEach((e) => { (grouped[e.name] = grouped[e.name] || []).push(e); });
-  const names = Object.keys(grouped);
-
-  app.innerHTML = `
-    <div class="view-header"><h1>${t('tracker_title')}</h1><button class="btn btn--primary" id="add-tracker-btn">+ ${t('tracker_add_reading')}</button></div>
-    ${names.length ? names.map((name) => {
-      const list = grouped[name];
-      const unit = list[0].unit || '';
-      return `<section class="card-section">
-        <h2>${U.escapeHTML(name)}</h2>
-        ${list.slice(0, 5).map((e) => `
-          <div class="list-row">
-            <div><strong>${e.value} ${U.escapeHTML(unit)}</strong><p class="muted">${e.date} ${e.time || ''}</p></div>
-            <button class="icon-btn" data-delete-tracker="${e.id}" aria-label="${t('common_delete')}">🗑️</button>
-          </div>`).join('')}
-      </section>`;
-    }).join('') : `
-      <div class="empty-state"><div class="empty-state__icon">📈</div><h2>${t('tracker_empty')}</h2><p>${t('tracker_empty_hint')}</p></div>`}
-  `;
-  document.getElementById('add-tracker-btn').addEventListener('click', () => openTrackerForm());
-  app.querySelectorAll('[data-delete-tracker]').forEach((btn) => btn.addEventListener('click', async () => {
-    await DB.remove('customEntries', btn.dataset.deleteTracker);
-    route();
-  }));
-}
-
-function openTrackerForm() {
-  openModal({
-    title: t('tracker_add'),
-    bodyHTML: `
-      <form id="tracker-form" class="form">
-        <label>${t('tracker_name')}<input required name="name" type="text" placeholder="e.g. Cholesterol"></label>
-        <div class="form-row">
-          <label>${t('common_add')}<input required name="value" type="number" step="0.01"></label>
-          <label>${t('tracker_unit')}<input name="unit" type="text" placeholder="mg/dL"></label>
-        </div>
-        <div class="form-row">
-          <label>${t('common_date')}<input name="date" type="date" value="${U.todayISO()}"></label>
-          <label>${t('common_time')}<input name="time" type="time" value="${U.nowTimeHM()}"></label>
-        </div>
-        <label>${t('note')} <span class="muted">(${t('common_optional')})</span><textarea name="note" rows="2"></textarea></label>
-        <div class="form-actions">
-          <button type="button" class="btn btn--ghost" id="cancel-tracker">${t('common_cancel')}</button>
-          <button type="submit" class="btn btn--primary">${t('common_save')}</button>
-        </div>
-      </form>`,
-    onOpen: (modal) => {
-      modal.querySelector('#cancel-tracker').addEventListener('click', closeModal);
-      modal.querySelector('#tracker-form').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const fd = new FormData(e.target);
-        if (!fd.get('name').trim()) { U.showToast(t('common_required_field')); return; }
-        await DB.put('customEntries', {
-          id: DB.uid(), personId: state.personId, name: fd.get('name').trim(), unit: fd.get('unit').trim(),
-          value: fd.get('value'), date: fd.get('date') || U.todayISO(), time: fd.get('time') || U.nowTimeHM(),
-          note: (fd.get('note') || '').trim(), createdAt: Date.now()
-        });
-        closeModal();
-        U.showToast(t('common_saved'));
-        route();
-      });
-    }
-  });
-}
-
-// ---------------------------------------------------------------------------
-// Doctor questions
-// ---------------------------------------------------------------------------
-async function renderDoctorQuestions() {
-  topbarTitle.textContent = t('dq_title');
-  const person = currentPerson();
-  const items = (await DB.getAll('doctorQuestions')).filter((q) => q.personId === person.id).sort((a, b) => (a.answered - b.answered) || (b.createdAt - a.createdAt));
-
-  app.innerHTML = `
-    <div class="view-header"><h1>${t('dq_title')}</h1><button class="btn btn--primary" id="add-dq-btn">+ ${t('dq_add')}</button></div>
-    ${items.length ? items.map((q) => `
-      <div class="list-row">
-        <div>
-          <strong style="${q.answered ? 'text-decoration:line-through;opacity:.6;' : ''}">${U.escapeHTML(q.text)}</strong>
-          <p class="muted">${q.answered ? '✅ ' + t('dq_answered') : '⏳ ' + t('dq_unanswered')}</p>
-        </div>
-        <div style="display:flex;gap:6px;">
-          <button class="chip-btn chip-btn--taken" data-toggle-dq="${q.id}" aria-label="${t('common_mark_done')}">${q.answered ? '↺' : '✓'}</button>
-          <button class="icon-btn" data-delete-dq="${q.id}" aria-label="${t('common_delete')}">🗑️</button>
-        </div>
-      </div>`).join('') : `
-      <div class="empty-state"><div class="empty-state__icon">❓</div><h2>${t('dq_empty')}</h2><p>${t('dq_empty_hint')}</p></div>`}
-  `;
-  document.getElementById('add-dq-btn').addEventListener('click', () => openDoctorQuestionForm());
-  app.querySelectorAll('[data-toggle-dq]').forEach((btn) => btn.addEventListener('click', async () => {
-    const q = await DB.get('doctorQuestions', btn.dataset.toggleDq);
-    q.answered = !q.answered;
-    await DB.put('doctorQuestions', q);
-    route();
-  }));
-  app.querySelectorAll('[data-delete-dq]').forEach((btn) => btn.addEventListener('click', async () => {
-    await DB.remove('doctorQuestions', btn.dataset.deleteDq);
-    route();
-  }));
-}
-
-function openDoctorQuestionForm() {
-  openModal({
-    title: t('dq_add'),
-    bodyHTML: `
-      <form id="dq-form" class="form">
-        <label>${t('dq_add')}<textarea required name="text" rows="3"></textarea></label>
-        <div class="form-actions">
-          <button type="button" class="btn btn--ghost" id="cancel-dq">${t('common_cancel')}</button>
-          <button type="submit" class="btn btn--primary">${t('common_save')}</button>
-        </div>
-      </form>`,
-    onOpen: (modal) => {
-      modal.querySelector('#cancel-dq').addEventListener('click', closeModal);
-      modal.querySelector('#dq-form').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const fd = new FormData(e.target);
-        if (!fd.get('text').trim()) return;
-        await DB.put('doctorQuestions', { id: DB.uid(), personId: state.personId, text: fd.get('text').trim(), answered: false, createdAt: Date.now() });
-        closeModal();
-        U.showToast(t('common_saved'));
-        route();
-      });
-    }
-  });
-}
-
-// ---------------------------------------------------------------------------
-// Doctor visit summary (range-based, extends the monthly report concept)
-// ---------------------------------------------------------------------------
-async function renderDoctorVisit() {
-  topbarTitle.textContent = t('doctor_visit_title');
-  app.innerHTML = `
-    <div class="view-header"><h1>${t('doctor_visit_title')}</h1></div>
-    <div class="report-controls glass">
-      <label>${t('reports_select_person')}
-        <select id="dv-person">${state.persons.map((p) => `<option value="${p.id}" ${p.id === state.personId ? 'selected' : ''}>${U.escapeHTML(p.name)}</option>`).join('')}</select>
-      </label>
-      <label>${t('common_view')}
-        <select id="dv-range">
-          <option value="7">${t('doctor_visit_range_7')}</option>
-          <option value="30" selected>${t('doctor_visit_range_30')}</option>
-          <option value="90">${t('doctor_visit_range_90')}</option>
-        </select>
-      </label>
-      <button class="btn btn--primary" id="dv-generate">${t('reports_generate')}</button>
-    </div>
-    <div id="dv-output"></div>
-  `;
-  document.getElementById('dv-generate').addEventListener('click', generateDoctorVisit);
-  generateDoctorVisit();
-}
-
-async function generateDoctorVisit() {
-  const personId = document.getElementById('dv-person').value;
-  const days = Number(document.getElementById('dv-range').value);
-  const person = state.persons.find((p) => p.id === personId);
-  const startISO = U.daysAgo(days);
-  const inRange = (d) => d >= startISO;
-
-  const [doseLogs, bp, sugar, weight, activity, water, sleep, dq] = await Promise.all([
-    DB.getAll('doseLogs'), DB.getAll('vitalsBP'), DB.getAll('vitalsSugar'), DB.getAll('vitalsWeight'),
-    DB.getAll('activity'), DB.getAll('water'), DB.getAll('sleep'), DB.getAll('doctorQuestions')
-  ]);
-  const myLogs = doseLogs.filter((l) => l.personId === personId && inRange(l.date));
-  const taken = myLogs.filter((l) => l.status === 'taken').length;
-  const myBP = bp.filter((v) => v.personId === personId && inRange(v.date));
-  const mySugar = sugar.filter((v) => v.personId === personId && inRange(v.date));
-  const myWeight = weight.filter((v) => v.personId === personId && inRange(v.date)).sort((a, b) => a.date.localeCompare(b.date));
-  const myActivity = activity.filter((a) => a.personId === personId && inRange(a.date));
-  const myWater = water.filter((w) => w.personId === personId && inRange(w.date));
-  const mySleep = sleep.filter((s) => s.personId === personId && inRange(s.date));
-  const myQuestions = dq.filter((q) => q.personId === personId);
-  const noData = `<p class="muted">${t('reports_no_data')}</p>`;
-  const section = (titleKey, bodyHTML) => `<div class="report-block"><h3>${t(titleKey)}</h3>${bodyHTML}</div>`;
-
-  document.getElementById('dv-output').innerHTML = `
-    <div class="report-sheet glass" id="dv-sheet">
-      <div class="report-sheet__header">
-        <div><strong class="report-sheet__brand">${t('appName')}</strong><span>${t('tagline')}</span></div>
-        <div class="report-sheet__meta"><span>${U.escapeHTML(person?.name || '')}</span><span>${t('doctor_visit_range_' + days) || days + ' days'}</span></div>
-      </div>
-      ${section('med_title', myLogs.length ? `<p>${taken}/${myLogs.length} ${t('dose_taken').toLowerCase()}</p>` : noData)}
-      ${section('vitals_bp', myBP.length ? `<p>${t('bp_average')}: ${Math.round(U.average(myBP.map(v=>Number(v.systolic))))}/${Math.round(U.average(myBP.map(v=>Number(v.diastolic))))} mmHg (${myBP.length})</p>` : noData)}
-      ${section('vitals_sugar', mySugar.length ? `<p>${t('bp_average')}: ${Math.round(U.average(mySugar.map(v=>Number(v.value))))} mg/dL (${mySugar.length})</p>` : noData)}
-      ${section('vitals_weight', myWeight.length ? `<p>${t('weight_current')}: ${myWeight[myWeight.length-1].value} kg — ${t('weight_change')}: ${U.round1(Number(myWeight[myWeight.length-1].value) - Number(myWeight[0].value))} kg</p>` : noData)}
-      ${section('activity_title', myActivity.length ? `<p>${myActivity.length} ${t('activity_walk').toLowerCase()}</p>` : noData)}
-      ${section('water_title', myWater.length ? `<p>${t('bp_average')}: ${Math.round(U.average(Object.values(myWater.reduce((acc,w)=>{acc[w.date]=(acc[w.date]||0)+Number(w.amountMl);return acc;},{}))))} ml/${t('today')}</p>` : noData)}
-      ${section('sleep_title', mySleep.length ? `<p>${mySleep.length} ${t('sleep_title').toLowerCase()}</p>` : noData)}
-      ${section('dq_title', myQuestions.length ? `<ul class="report-list">${myQuestions.map(q=>`<li>${q.answered ? '✅' : '⏳'} ${U.escapeHTML(q.text)}</li>`).join('')}</ul>` : noData)}
-      <p class="report-sheet__disclaimer">${t('insights_disclaimer')}</p>
-    </div>
-    <div class="report-actions">
-      <button class="btn btn--soft" id="dv-doctor-mode">${t('reports_doctor_mode')}</button>
-      <button class="btn btn--primary" id="dv-print">🖨️ ${t('reports_print')}</button>
-    </div>
-  `;
-  document.getElementById('dv-print').addEventListener('click', () => window.print());
-  document.getElementById('dv-doctor-mode').addEventListener('click', () => document.getElementById('dv-sheet').classList.toggle('report-sheet--doctor'));
-}
-
-// ---------------------------------------------------------------------------
-// Emergency health card
-// ---------------------------------------------------------------------------
-async function renderEmergencyCard() {
-  topbarTitle.textContent = t('ec_title');
-  const person = currentPerson();
-  const card = await DB.get('emergencyCards', person.id);
-
-  app.innerHTML = `
-    <div class="view-header"><h1>${t('ec_title')}</h1><button class="btn btn--primary" id="edit-ec-btn">${t('common_edit')}</button></div>
-    <p class="info-banner">${t('ec_private_note')}</p>
-    ${card ? `
-      <div class="ec-sheet glass">
-        <div class="ec-row"><span>${t('ec_name')}</span><span>${U.escapeHTML(card.name || '—')}</span></div>
-        <div class="ec-row"><span>${t('ec_blood_group')}</span><span>${U.escapeHTML(card.bloodGroup || '—')}</span></div>
-        <div class="ec-row"><span>${t('ec_allergies')}</span><span>${U.escapeHTML(card.allergies || '—')}</span></div>
-        <div class="ec-row"><span>${t('ec_medicines')}</span><span>${U.escapeHTML(card.medicines || '—')}</span></div>
-        <div class="ec-row"><span>${t('ec_notes')}</span><span>${U.escapeHTML(card.notes || '—')}</span></div>
-        <div class="ec-row"><span>${t('ec_contact')}</span><span>${U.escapeHTML(card.contact || '—')}</span></div>
-      </div>
-    ` : `<div class="empty-state"><div class="empty-state__icon">🆘</div><h2>${t('ec_empty')}</h2><p>${t('ec_empty_hint')}</p></div>`}
-  `;
-  document.getElementById('edit-ec-btn').addEventListener('click', () => openEmergencyCardForm(card));
-}
-
-function openEmergencyCardForm(card) {
-  openModal({
-    title: t('ec_title'),
-    bodyHTML: `
-      <form id="ec-form" class="form">
-        <label>${t('ec_name')}<input name="name" type="text" value="${U.escapeHTML(card?.name || '')}"></label>
-        <label>${t('ec_blood_group')}<input name="bloodGroup" type="text" value="${U.escapeHTML(card?.bloodGroup || '')}" placeholder="e.g. O+"></label>
-        <label>${t('ec_allergies')}<textarea name="allergies" rows="2">${U.escapeHTML(card?.allergies || '')}</textarea></label>
-        <label>${t('ec_medicines')}<textarea name="medicines" rows="2">${U.escapeHTML(card?.medicines || '')}</textarea></label>
-        <label>${t('ec_notes')}<textarea name="notes" rows="2">${U.escapeHTML(card?.notes || '')}</textarea></label>
-        <label>${t('ec_contact')}<input name="contact" type="text" value="${U.escapeHTML(card?.contact || '')}" placeholder="Name — phone number"></label>
-        <div class="form-actions">
-          <button type="button" class="btn btn--ghost" id="cancel-ec">${t('common_cancel')}</button>
-          <button type="submit" class="btn btn--primary">${t('common_save')}</button>
-        </div>
-      </form>`,
-    onOpen: (modal) => {
-      modal.querySelector('#cancel-ec').addEventListener('click', closeModal);
-      modal.querySelector('#ec-form').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const fd = new FormData(e.target);
-        await DB.put('emergencyCards', {
-          id: state.personId, personId: state.personId,
-          name: fd.get('name').trim(), bloodGroup: fd.get('bloodGroup').trim(),
-          allergies: fd.get('allergies').trim(), medicines: fd.get('medicines').trim(),
-          notes: fd.get('notes').trim(), contact: fd.get('contact').trim(), updatedAt: Date.now()
-        });
-        closeModal();
-        U.showToast(t('common_saved'));
-        route();
-      });
-    }
-  });
-}
-
-// ---------------------------------------------------------------------------
-// Food & natural guidelines (static, educational)
-// ---------------------------------------------------------------------------
-function renderFoodGuide() {
-  topbarTitle.textContent = t('food_title');
-  const data = FOOD_GUIDE[getLang()] || FOOD_GUIDE.en;
-  const categories = ['food_vegetables', 'food_fruits', 'food_whole_foods', 'food_hydration', 'food_low_sodium'];
-  app.innerHTML = `
-    <div class="view-header"><h1>${t('food_title')}</h1></div>
-    <div class="tip-card glass" style="margin-bottom:14px;">
-      <span class="tip-card__icon">🥗</span>
-      <div><strong>${t('food_todays_choice')}</strong><p class="muted">${getTodaysFoodTip()}</p></div>
-    </div>
-    ${categories.map((catKey) => `
-      <div class="food-category glass">
-        <h3>${t(catKey)}</h3>
-        <ul>${(data[catKey] || []).map((item) => `<li>${U.escapeHTML(item)}</li>`).join('')}</ul>
-      </div>
-    `).join('')}
-    <p class="report-sheet__disclaimer">${t('food_disclaimer')}</p>
-  `;
-}
-
-// ---------------------------------------------------------------------------
-// Notes
-// ---------------------------------------------------------------------------
-async function renderNotes() {
-  topbarTitle.textContent = t('notes_title');
-  const person = currentPerson();
-  const notes = (await DB.getAll('notes')).filter((n) => n.personId === person.id).sort((a, b) => b.createdAt - a.createdAt);
-  app.innerHTML = `
-    <div class="view-header"><h1>${t('notes_title')}</h1><button class="btn btn--primary" id="add-note-btn">+ ${t('notes_add')}</button></div>
-    ${notes.length ? `<ul class="note-card-list">${notes.map(noteCardHTML).join('')}</ul>` : `
-      <div class="empty-state"><div class="empty-state__icon">📝</div><h2>${t('notes_empty')}</h2><p>${t('notes_empty_hint')}</p>
-      <button class="btn btn--primary" id="add-note-btn-2">+ ${t('notes_add')}</button></div>`}
-  `;
-  document.getElementById('add-note-btn')?.addEventListener('click', () => openNoteForm());
-  document.getElementById('add-note-btn-2')?.addEventListener('click', () => openNoteForm());
-  app.querySelectorAll('[data-edit-note]').forEach((btn) => btn.addEventListener('click', () => openNoteForm(btn.dataset.editNote)));
-  app.querySelectorAll('[data-delete-note]').forEach((btn) => btn.addEventListener('click', () => deleteNote(btn.dataset.deleteNote)));
-}
-
-function noteCardHTML(n) {
-  return `<li class="note-card glass">
-    <div class="note-card__top">
-      <span class="category-pill">${t('note_category_' + (n.category || 'general'))}</span>
-      <span class="muted">${n.date}</span>
-    </div>
-    <strong>${U.escapeHTML(n.title || t('note'))}</strong>
-    <p>${U.escapeHTML(n.content || '')}</p>
-    <div class="med-card__actions">
-      <button class="btn btn--soft btn--sm" data-edit-note="${n.id}">${t('common_edit')}</button>
-      <button class="btn btn--danger btn--sm" data-delete-note="${n.id}">${t('common_delete')}</button>
-    </div>
-  </li>`;
-}
-
-function openNoteForm(editId) {
-  buildNoteForm(editId);
-}
-
-async function buildNoteForm(editId) {
-  const note = editId ? await DB.get('notes', editId) : null;
-  openModal({
-    title: note ? t('common_edit') : t('notes_add'),
-    bodyHTML: `
-      <form id="note-form" class="form">
-        <label>${t('note_title_field')}<input name="title" type="text" value="${U.escapeHTML(note?.title || '')}"></label>
-        <label>${t('note_content_field')}<textarea required name="content" rows="4">${U.escapeHTML(note?.content || '')}</textarea></label>
-        <label>${t('note_category')}
-          <select name="category">
-            ${['general', 'symptom', 'appointment', 'medicine', 'question'].map((c) => `<option value="${c}" ${note?.category === c ? 'selected' : ''}>${t('note_category_' + c)}</option>`).join('')}
-          </select>
-        </label>
-        <label>${t('common_date')}<input name="date" type="date" value="${note?.date || U.todayISO()}"></label>
-        <div class="form-actions">
-          <button type="button" class="btn btn--ghost" id="cancel-note">${t('common_cancel')}</button>
-          <button type="submit" class="btn btn--primary">${t('common_save')}</button>
-        </div>
-      </form>`,
-    onOpen: (modal) => {
-      modal.querySelector('#cancel-note').addEventListener('click', closeModal);
-      modal.querySelector('#note-form').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const fd = new FormData(e.target);
-        if (!fd.get('content').trim()) { U.showToast(t('common_required_field')); return; }
-        const record = {
-          id: note?.id || DB.uid(), personId: state.personId,
-          title: fd.get('title').trim(), content: fd.get('content').trim(),
-          category: fd.get('category'), date: fd.get('date') || U.todayISO(),
-          createdAt: note?.createdAt || Date.now()
-        };
-        await DB.put('notes', record);
-        closeModal();
-        U.showToast(t('common_saved'));
-        route();
-      });
-    }
-  });
-}
-
-async function deleteNote(id) {
-  if (!U.confirmDialog(t('med_delete_confirm'))) return;
-  await DB.remove('notes', id);
-  U.showToast(t('common_deleted'));
-  route();
-}
-
-// ---------------------------------------------------------------------------
-// Vault
-// ---------------------------------------------------------------------------
-async function renderVault() {
-  topbarTitle.textContent = t('vault_title');
-  const person = currentPerson();
-  const items = (await DB.getAll('vault')).filter((v) => v.personId === person.id).sort((a, b) => b.createdAt - a.createdAt);
-  app.innerHTML = `
-    <div class="view-header"><h1>${t('vault_title')}</h1><button class="btn btn--primary" id="add-vault-btn">+ ${t('vault_add')}</button></div>
-    ${items.length ? `<div class="vault-grid">${items.map(vaultCardHTML).join('')}</div>` : `
-      <div class="empty-state"><div class="empty-state__icon">🗂️</div><h2>${t('vault_empty')}</h2><p>${t('vault_empty_hint')}</p>
-      <button class="btn btn--primary" id="add-vault-btn-2">+ ${t('vault_add')}</button></div>`}
-  `;
-  document.getElementById('add-vault-btn')?.addEventListener('click', () => openVaultForm());
-  document.getElementById('add-vault-btn-2')?.addEventListener('click', () => openVaultForm());
-  app.querySelectorAll('[data-delete-vault]').forEach((btn) => btn.addEventListener('click', () => deleteVaultItem(btn.dataset.deleteVault)));
-}
-
-function vaultCardHTML(v) {
-  const isImage = v.fileType && v.fileType.startsWith('image/');
-  return `<div class="vault-card glass">
-    <div class="vault-card__preview">${isImage ? `<img src="${v.fileDataURL}" alt="">` : '📄'}</div>
-    <div class="vault-card__body">
-      <strong>${U.escapeHTML(v.title)}</strong>
-      <span class="category-pill">${t('vault_category_' + v.category)}</span>
-      <p class="muted">${v.date}</p>
-      ${v.note ? `<p class="muted">${U.escapeHTML(v.note)}</p>` : ''}
-    </div>
-    <button class="icon-btn" data-delete-vault="${v.id}" aria-label="${t('common_delete')}">🗑️</button>
-  </div>`;
-}
-
-function openVaultForm() {
-  openModal({
-    title: t('vault_add'),
-    bodyHTML: `
-      <form id="vault-form" class="form">
-        <label>${t('note_title_field')}<input required name="title" type="text"></label>
-        <label>${t('common_category')}
-          <select name="category">
-            ${['prescription', 'lab', 'medicine_photo', 'reading', 'other'].map((c) => `<option value="${c}">${t('vault_category_' + c)}</option>`).join('')}
-          </select>
-        </label>
-        <label>${t('common_date')}<input name="date" type="date" value="${U.todayISO()}"></label>
-        <label>${t('vault_upload')} / ${t('vault_capture')}<input required name="file" type="file" accept="image/*,application/pdf" capture="environment"></label>
-        <label>${t('note')} <span class="muted">(${t('common_optional')})</span><textarea name="note" rows="2"></textarea></label>
-        <div class="form-actions">
-          <button type="button" class="btn btn--ghost" id="cancel-vault">${t('common_cancel')}</button>
-          <button type="submit" class="btn btn--primary">${t('common_save')}</button>
-        </div>
-      </form>`,
-    onOpen: (modal) => {
-      modal.querySelector('#cancel-vault').addEventListener('click', closeModal);
-      modal.querySelector('#vault-form').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const fd = new FormData(e.target);
-        const file = fd.get('file');
-        if (!file || !file.size) { U.showToast(t('common_required_field')); return; }
-        const result = await U.fileToDataURL(file);
-        const record = {
-          id: DB.uid(), personId: state.personId, title: fd.get('title').trim(),
-          category: fd.get('category'), date: fd.get('date') || U.todayISO(),
-          note: (fd.get('note') || '').trim(), fileDataURL: result?.dataURL, fileType: result?.type || file.type,
-          createdAt: Date.now()
-        };
-        await DB.put('vault', record);
-        closeModal();
-        U.showToast(t('common_saved'));
-        route();
-      });
-    }
-  });
-}
-
-async function deleteVaultItem(id) {
-  if (!U.confirmDialog(t('med_delete_confirm'))) return;
-  await DB.remove('vault', id);
-  U.showToast(t('common_deleted'));
-  route();
-}
-
-// ---------------------------------------------------------------------------
-// Timeline
-// ---------------------------------------------------------------------------
-async function buildTimelineEvents(personId, limit) {
-  const [meds, doseLogs, bp, sugar, weight, other, notes, vault, activity, water, sleep, dq] = await Promise.all([
-    DB.getAll('medicines'), DB.getAll('doseLogs'), DB.getAll('vitalsBP'), DB.getAll('vitalsSugar'),
-    DB.getAll('vitalsWeight'), DB.getAll('vitalsOther'), DB.getAll('notes'), DB.getAll('vault'),
-    DB.getAll('activity'), DB.getAll('water'), DB.getAll('sleep'), DB.getAll('doctorQuestions')
-  ]);
-  const medMap = Object.fromEntries(meds.map((m) => [m.id, m]));
-  const events = [];
-
-  doseLogs.filter((l) => l.personId === personId && (l.status === 'taken' || l.status === 'missed')).forEach((l) => {
-    events.push({ ts: `${l.date}T${l.time}`, date: l.date, category: 'medicine', icon: l.status === 'taken' ? '✅' : '⚠️',
-      text: `${medMap[l.medicineId]?.name || t('nav_medicines')} — ${t('dose_' + l.status)}` });
-  });
-  bp.filter((v) => v.personId === personId).forEach((v) => events.push({ ts: `${v.date}T${v.time || '00:00'}`, date: v.date, category: 'bp', icon: '🩺', text: `${t('vitals_bp')}: ${v.systolic}/${v.diastolic}` }));
-  sugar.filter((v) => v.personId === personId).forEach((v) => events.push({ ts: `${v.date}T${v.time || '00:00'}`, date: v.date, category: 'sugar', icon: '🩸', text: `${t('vitals_sugar')}: ${v.value}` }));
-  weight.filter((v) => v.personId === personId).forEach((v) => events.push({ ts: `${v.date}T${v.time || '00:00'}`, date: v.date, category: 'weight', icon: '⚖️', text: `${t('vitals_weight')}: ${v.value} kg` }));
-  other.filter((v) => v.personId === personId).forEach((v) => events.push({ ts: `${v.date}T${v.time || '00:00'}`, date: v.date, category: 'other', icon: '📈', text: `${t('other_' + v.type) || v.type}: ${v.value} ${v.unit || ''}` }));
-  notes.filter((n) => n.personId === personId).forEach((n) => events.push({ ts: `${n.date}T00:00`, date: n.date, category: 'note', icon: '📝', text: `${t('note')}: ${n.title || n.content.slice(0, 40)}` }));
-  vault.filter((v) => v.personId === personId).forEach((v) => events.push({ ts: `${v.date}T00:00`, date: v.date, category: 'vault', icon: '🗂️', text: `${t('vault_category_' + v.category)}: ${v.title}` }));
-  activity.filter((a) => a.personId === personId).forEach((a) => events.push({ ts: `${a.date}T00:00`, date: a.date, category: 'activity', icon: '🚶', text: `${t('activity_walk')}: ${a.durationLabel || ''}` }));
-  sleep.filter((s) => s.personId === personId).forEach((s) => events.push({ ts: `${s.date}T00:00`, date: s.date, category: 'sleep', icon: '😴', text: `${t('sleep_title')}: ${sleepDurationLabel(s.bedtime, s.wake)}` }));
-  dq.filter((d) => d.personId === personId).forEach((d) => events.push({ ts: `${new Date(d.createdAt).toISOString().slice(0,10)}T00:00`, date: new Date(d.createdAt).toISOString().slice(0,10), category: 'doctor', icon: '❓', text: `${t('dq_title')}: ${d.text.slice(0, 40)}` }));
-
-  events.sort((a, b) => b.ts.localeCompare(a.ts));
-  return limit ? events.slice(0, limit) : events;
-}
-
-function timelineItemHTML(ev) {
-  return `<li class="timeline-item">
-    <span class="timeline-item__icon">${ev.icon}</span>
-    <span class="timeline-item__body"><strong>${U.escapeHTML(ev.text)}</strong><small>${ev.date}</small></span>
-  </li>`;
-}
-
-async function renderTimeline() {
-  topbarTitle.textContent = t('timeline_title');
-  const person = currentPerson();
-  const events = await buildTimelineEvents(person.id);
-  const categories = ['all', 'medicine', 'bp', 'sugar', 'weight', 'other', 'note', 'vault', 'activity', 'sleep', 'doctor'];
-  const catLabelKey = { medicine: 'nav_medicines', bp: 'vitals_bp', sugar: 'vitals_sugar', weight: 'vitals_weight', other: 'vitals_other', note: 'nav_notes', vault: 'nav_vault', activity: 'activity_title', sleep: 'sleep_title', doctor: 'dq_title' };
-
-  app.innerHTML = `
-    <div class="view-header"><h1>${t('timeline_title')}</h1></div>
-    <div class="filter-row" id="timeline-filters">
-      ${categories.map((c) => `<button class="filter-chip ${c === 'all' ? 'filter-chip--active' : ''}" data-cat="${c}">${c === 'all' ? t('timeline_filter_all') : t(catLabelKey[c])}</button>`).join('')}
-    </div>
-    <div id="timeline-content">
-      ${events.length ? `<ul class="timeline-list">${events.map(timelineItemHTML).join('')}</ul>` : `<p class="muted">${t('timeline_empty')}</p>`}
-    </div>
-  `;
-
-  document.getElementById('timeline-filters').addEventListener('click', (e) => {
-    const btn = e.target.closest('.filter-chip');
-    if (!btn) return;
-    document.querySelectorAll('.filter-chip').forEach((c) => c.classList.remove('filter-chip--active'));
-    btn.classList.add('filter-chip--active');
-    const cat = btn.dataset.cat;
-    const filtered = cat === 'all' ? events : events.filter((ev) => ev.category === cat);
-    document.getElementById('timeline-content').innerHTML = filtered.length
-      ? `<ul class="timeline-list">${filtered.map(timelineItemHTML).join('')}</ul>`
-      : `<p class="muted">${t('timeline_empty')}</p>`;
-  });
-}
-
-// ---------------------------------------------------------------------------
-// Calendar
-// ---------------------------------------------------------------------------
-async function renderCalendar(hash) {
-  topbarTitle.textContent = t('calendar_title');
-  const person = currentPerson();
-  const params = new URLSearchParams((hash.split('?')[1] || ''));
-  const now = new Date();
-  const viewYear = Number(params.get('y')) || now.getFullYear();
-  const viewMonth = Number(params.get('m')) || (now.getMonth() + 1);
-
-  const events = await buildTimelineEvents(person.id);
-  const eventsByDate = {};
-  events.forEach((ev) => { (eventsByDate[ev.date] = eventsByDate[ev.date] || []).push(ev); });
-
-  const firstOfMonth = new Date(viewYear, viewMonth - 1, 1);
-  const startWeekday = firstOfMonth.getDay();
-  const daysInMonth = new Date(viewYear, viewMonth, 0).getDate();
-  const monthNames = STRINGS[getLang()].month_names;
-  const weekdayShort = STRINGS[getLang()].weekday_short;
-
-  let cells = '';
-  for (let i = 0; i < startWeekday; i++) cells += `<div class="cal-cell cal-cell--empty"></div>`;
-  for (let d = 1; d <= daysInMonth; d++) {
-    const iso = `${viewYear}-${U.pad2(viewMonth)}-${U.pad2(d)}`;
-    const hasEvents = eventsByDate[iso];
-    const isToday = iso === U.todayISO();
-    cells += `<button class="cal-cell ${isToday ? 'cal-cell--today' : ''}" data-date="${iso}">
-      <span>${d}</span>${hasEvents ? `<span class="cal-dot"></span>` : ''}
-    </button>`;
-  }
-
-  const prevParams = viewMonth === 1 ? `y=${viewYear - 1}&m=12` : `y=${viewYear}&m=${viewMonth - 1}`;
-  const nextParams = viewMonth === 12 ? `y=${viewYear + 1}&m=1` : `y=${viewYear}&m=${viewMonth + 1}`;
-
-  app.innerHTML = `
-    <div class="view-header"><h1>${t('calendar_title')}</h1></div>
-    <div class="cal-nav">
-      <button class="icon-btn" id="cal-prev" aria-label="prev">‹</button>
-      <strong>${monthNames[viewMonth - 1]} ${viewYear}</strong>
-      <button class="icon-btn" id="cal-next" aria-label="next">›</button>
-    </div>
-    <div class="cal-grid cal-grid--head">${weekdayShort.map((w) => `<span>${w}</span>`).join('')}</div>
-    <div class="cal-grid">${cells}</div>
-    <div id="cal-day-detail" class="card-section"></div>
-  `;
-
-  document.getElementById('cal-prev').addEventListener('click', () => go(`#/calendar?${prevParams}`));
-  document.getElementById('cal-next').addEventListener('click', () => go(`#/calendar?${nextParams}`));
-  app.querySelectorAll('.cal-cell[data-date]').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const iso = btn.dataset.date;
-      const dayEvents = eventsByDate[iso] || [];
-      document.getElementById('cal-day-detail').innerHTML = `
-        <h2>${t('calendar_events_on')} ${iso}</h2>
-        ${dayEvents.length ? `<ul class="timeline-list">${dayEvents.map(timelineItemHTML).join('')}</ul>` : `<p class="muted">${t('calendar_no_events')}</p>`}
-      `;
-    });
-  });
-}
-
-// ---------------------------------------------------------------------------
-// Monthly reports
-// ---------------------------------------------------------------------------
-async function renderReports() {
-  topbarTitle.textContent = t('reports_title');
-  const now = new Date();
-  app.innerHTML = `
-    <div class="view-header"><h1>${t('reports_title')}</h1></div>
-    <div class="report-controls glass">
-      <label>${t('reports_select_person')}
-        <select id="rp-person">${state.persons.map((p) => `<option value="${p.id}" ${p.id === state.personId ? 'selected' : ''}>${U.escapeHTML(p.name)}</option>`).join('')}</select>
-      </label>
-      <label>${t('reports_select_month')}
-        <select id="rp-month">${STRINGS[getLang()].month_names.map((m, i) => `<option value="${i + 1}" ${i + 1 === now.getMonth() + 1 ? 'selected' : ''}>${m}</option>`).join('')}</select>
-      </label>
-      <label>${t('reports_select_year')}
-        <select id="rp-year">${[now.getFullYear(), now.getFullYear() - 1, now.getFullYear() - 2].map((y) => `<option value="${y}">${y}</option>`).join('')}</select>
-      </label>
-      <button class="btn btn--primary" id="rp-generate">${t('reports_generate')}</button>
-    </div>
-    <div id="report-output"></div>
-  `;
-  document.getElementById('rp-generate').addEventListener('click', generateReport);
-  generateReport();
-}
-
-async function generateReport() {
-  const personId = document.getElementById('rp-person').value;
-  const month = Number(document.getElementById('rp-month').value);
-  const year = Number(document.getElementById('rp-year').value);
-  const person = state.persons.find((p) => p.id === personId);
-  const startISO = `${year}-${U.pad2(month)}-01`;
-  const endISO = `${year}-${U.pad2(month)}-${U.pad2(new Date(year, month, 0).getDate())}`;
-  const inRange = (d) => d >= startISO && d <= endISO;
-
-  const [meds, doseLogs, bp, sugar, weight, other, notes, vault] = await Promise.all([
-    DB.getAll('medicines'), DB.getAll('doseLogs'), DB.getAll('vitalsBP'), DB.getAll('vitalsSugar'),
-    DB.getAll('vitalsWeight'), DB.getAll('vitalsOther'), DB.getAll('notes'), DB.getAll('vault')
-  ]);
-  const medMap = Object.fromEntries(meds.map((m) => [m.id, m]));
-  const myLogs = doseLogs.filter((l) => l.personId === personId && inRange(l.date));
-  const taken = myLogs.filter((l) => l.status === 'taken').length;
-  const missed = myLogs.filter((l) => l.status === 'missed').length;
-  const myBP = bp.filter((v) => v.personId === personId && inRange(v.date));
-  const mySugar = sugar.filter((v) => v.personId === personId && inRange(v.date));
-  const myWeight = weight.filter((v) => v.personId === personId && inRange(v.date)).sort((a, b) => a.date.localeCompare(b.date));
-  const myOther = other.filter((v) => v.personId === personId && inRange(v.date));
-  const myNotes = notes.filter((n) => n.personId === personId && inRange(n.date));
-  const myVault = vault.filter((v) => v.personId === personId && inRange(v.date));
-  const myMeds = meds.filter((m) => m.personId === personId);
-
-  const monthLabel = `${STRINGS[getLang()].month_names[month - 1]} ${year}`;
-
-  const section = (titleKey, bodyHTML) => `<div class="report-block"><h3>${t(titleKey)}</h3>${bodyHTML}</div>`;
-  const noData = `<p class="muted">${t('reports_no_data')}</p>`;
-
-  const html = `
-    <div class="report-sheet glass" id="report-sheet">
-      <div class="report-sheet__header">
-        <div>
-          <strong class="report-sheet__brand">${t('appName')}</strong>
-          <span>${t('tagline')}</span>
-        </div>
-        <div class="report-sheet__meta">
-          <span>${U.escapeHTML(person?.name || '')}</span>
-          <span>${monthLabel}</span>
-        </div>
-      </div>
-
-      ${section('med_title', myMeds.length ? `
-        <p>${taken} ${t('dose_taken').toLowerCase()} · ${missed} ${t('dose_missed').toLowerCase()} (${myLogs.length} ${t('common_all').toLowerCase()})</p>
-        <ul class="report-list">${myMeds.map((m) => `<li>${U.escapeHTML(m.name)} — ${U.escapeHTML(m.dosage || '')} ${U.escapeHTML(m.unit || '')}</li>`).join('')}</ul>` : noData)}
-
-      ${section('vitals_bp', myBP.length ? `<p>${t('bp_average')}: ${Math.round(U.average(myBP.map((v) => Number(v.systolic))))}/${Math.round(U.average(myBP.map((v) => Number(v.diastolic))))} mmHg (${myBP.length} ${t('common_all').toLowerCase()})</p>` : noData)}
-
-      ${section('vitals_sugar', mySugar.length ? `<p>${t('bp_average')}: ${Math.round(U.average(mySugar.map((v) => Number(v.value))))} mg/dL (${mySugar.length} ${t('common_all').toLowerCase()})</p>` : noData)}
-
-      ${section('vitals_weight', myWeight.length ? `<p>${t('weight_current')}: ${myWeight[myWeight.length - 1].value} kg — ${t('weight_change')}: ${U.round1(Number(myWeight[myWeight.length - 1].value) - Number(myWeight[0].value))} kg</p>` : noData)}
-
-      ${section('vitals_other', myOther.length ? `<ul class="report-list">${myOther.slice(0, 10).map((v) => `<li>${v.date}: ${t('other_' + v.type) || v.type} — ${v.value} ${v.unit || ''}</li>`).join('')}</ul>` : noData)}
-
-      ${section('notes_title', myNotes.length ? `<ul class="report-list">${myNotes.map((n) => `<li>${n.date}: ${U.escapeHTML(n.title || n.content.slice(0, 60))}</li>`).join('')}</ul>` : noData)}
-
-      ${section('vault_title', myVault.length ? `<ul class="report-list">${myVault.map((v) => `<li>${v.date}: ${U.escapeHTML(v.title)} (${t('vault_category_' + v.category)})</li>`).join('')}</ul>` : noData)}
-
-      <p class="report-sheet__disclaimer">${t('insights_disclaimer')}</p>
-    </div>
-    <div class="report-actions">
-      <button class="btn btn--soft" id="toggle-doctor-mode">${t('reports_doctor_mode')}</button>
-      <button class="btn btn--primary" id="print-report">🖨️ ${t('reports_print')}</button>
-    </div>
-  `;
-  document.getElementById('report-output').innerHTML = html;
-  document.getElementById('print-report').addEventListener('click', () => window.print());
-  document.getElementById('toggle-doctor-mode').addEventListener('click', () => {
-    document.getElementById('report-sheet').classList.toggle('report-sheet--doctor');
-  });
-}
-
-// ---------------------------------------------------------------------------
-// Insights (rule-based, informational only — never diagnostic)
-// ---------------------------------------------------------------------------
-async function renderInsights() {
-  topbarTitle.textContent = t('insights_title');
-  const person = currentPerson();
-  const [doseLogs, bp, sugar, weight] = await Promise.all([
-    DB.getAll('doseLogs'), DB.getAll('vitalsBP'), DB.getAll('vitalsSugar'), DB.getAll('vitalsWeight')
-  ]);
-  const cutoff = U.daysAgo(30);
-  const myLogs = doseLogs.filter((l) => l.personId === person.id && l.date >= cutoff);
-  const myBP = bp.filter((v) => v.personId === person.id && v.date >= cutoff);
-  const mySugar = sugar.filter((v) => v.personId === person.id && v.date >= cutoff);
-  const myWeight = weight.filter((v) => v.personId === person.id && v.date >= cutoff).sort((a, b) => a.date.localeCompare(b.date));
-
-  const insights = [];
-
-  if (myLogs.length >= 5) {
-    const taken = myLogs.filter((l) => l.status === 'taken').length;
-    const pct = Math.round((taken / myLogs.length) * 100);
-    insights.push(`💊 ${person.name}: ${pct}% ${getLang() === 'ur' ? 'خوراکیں گزشتہ 30 دنوں میں وقت پر لی گئیں۔' : 'of doses were taken on schedule over the last 30 days.'}`);
-  }
-
-  if (myBP.length >= 3) {
-    const morning = myBP.filter((v) => v.period === 'morning');
-    const evening = myBP.filter((v) => v.period === 'evening');
-    if (morning.length && evening.length) {
-      const moreLabel = morning.length > evening.length ? t('med_morning') : t('med_evening');
-      insights.push(`🩺 ${getLang() === 'ur' ? `بلڈ پریشر زیادہ تر ${moreLabel} میں ریکارڈ کیا گیا۔` : `Blood pressure was recorded more often in the ${moreLabel.toLowerCase()}.`}`);
-    }
-    const avgSys = Math.round(U.average(myBP.map((v) => Number(v.systolic))));
-    insights.push(`🩺 ${getLang() === 'ur' ? `اوسط سسٹولک ریڈنگ ${avgSys} تھی۔` : `Average systolic reading over the last 30 days was ${avgSys} mmHg.`}`);
-  }
-
-  if (mySugar.length >= 3) {
-    const avg = Math.round(U.average(mySugar.map((v) => Number(v.value))));
-    insights.push(`🩸 ${getLang() === 'ur' ? `اوسط بلڈ شوگر ${avg} mg/dL رہی۔` : `Average blood sugar over the last 30 days was ${avg} mg/dL.`}`);
-  }
-
-  if (myWeight.length >= 2) {
-    const change = U.round1(Number(myWeight[myWeight.length - 1].value) - Number(myWeight[0].value));
-    insights.push(`⚖️ ${getLang() === 'ur' ? `وزن میں ${change > 0 ? '+' : ''}${change} کلوگرام تبدیلی ہوئی۔` : `Weight changed by ${change > 0 ? '+' : ''}${change} kg over this period.`}`);
-  }
-
-  const byDayCount = {};
-  [...myBP, ...mySugar, ...myWeight].forEach((v) => { byDayCount[v.date] = (byDayCount[v.date] || 0) + 1; });
-  const busiestDay = Object.entries(byDayCount).sort((a, b) => b[1] - a[1])[0];
-  if (busiestDay && busiestDay[1] >= 3) {
-    insights.push(`📅 ${getLang() === 'ur' ? `${busiestDay[0]} کو سب سے زیادہ ریڈنگز درج کی گئیں۔` : `The most readings were recorded on ${busiestDay[0]}.`}`);
-  }
-
-  app.innerHTML = `
-    <div class="view-header"><h1>${t('insights_title')}</h1></div>
-    ${insights.length ? `<ul class="insight-list">${insights.map((i) => `<li class="insight-card glass">${i}</li>`).join('')}</ul>` : `
-      <div class="empty-state"><div class="empty-state__icon">📊</div><h2>${t('insights_empty')}</h2></div>`}
-    <p class="report-sheet__disclaimer">${t('insights_disclaimer')}</p>
-  `;
-}
-
-// ---------------------------------------------------------------------------
-// Global search
-// ---------------------------------------------------------------------------
-async function renderSearch() {
-  topbarTitle.textContent = t('nav_search');
-  app.innerHTML = `
-    <div class="search-box">
-      <input type="search" id="global-search" placeholder="${t('search_placeholder')}" autofocus>
-    </div>
-    <div id="search-results"></div>
-  `;
-  const input = document.getElementById('global-search');
-  input.addEventListener('input', U.debounce(() => runSearch(input.value.trim()), 200));
-}
-
-async function runSearch(query) {
-  const resultsEl = document.getElementById('search-results');
-  if (!query) { resultsEl.innerHTML = ''; return; }
-  const q = query.toLowerCase();
-  const person = currentPerson();
-  const [meds, notes, vault, bp, sugar, weight, dq, customEntries] = await Promise.all([
-    DB.getAll('medicines'), DB.getAll('notes'), DB.getAll('vault'), DB.getAll('vitalsBP'), DB.getAll('vitalsSugar'), DB.getAll('vitalsWeight'),
-    DB.getAll('doctorQuestions'), DB.getAll('customEntries')
-  ]);
-  const results = [];
-  meds.filter((m) => m.personId === person.id && (m.name.toLowerCase().includes(q) || (m.purpose || '').toLowerCase().includes(q)))
-    .forEach((m) => results.push({ icon: '💊', text: m.name, sub: m.dosage, href: '#/medicines' }));
-  notes.filter((n) => n.personId === person.id && ((n.title || '').toLowerCase().includes(q) || (n.content || '').toLowerCase().includes(q)))
-    .forEach((n) => results.push({ icon: '📝', text: n.title || n.content.slice(0, 40), sub: n.date, href: '#/notes' }));
-  vault.filter((v) => v.personId === person.id && v.title.toLowerCase().includes(q))
-    .forEach((v) => results.push({ icon: '🗂️', text: v.title, sub: v.date, href: '#/vault' }));
-  if ('blood pressure'.includes(q) || 'بلڈ پریشر'.includes(q)) bp.filter((v) => v.personId === person.id).forEach((v) => results.push({ icon: '🩺', text: `${v.systolic}/${v.diastolic}`, sub: v.date, href: '#/vitals/bp' }));
-  if ('sugar'.includes(q) || 'شوگر'.includes(q)) sugar.filter((v) => v.personId === person.id).forEach((v) => results.push({ icon: '🩸', text: `${v.value}`, sub: v.date, href: '#/vitals/sugar' }));
-  if ('weight'.includes(q) || 'وزن'.includes(q)) weight.filter((v) => v.personId === person.id).forEach((v) => results.push({ icon: '⚖️', text: `${v.value} kg`, sub: v.date, href: '#/vitals/weight' }));
-  dq.filter((d) => d.personId === person.id && d.text.toLowerCase().includes(q)).forEach((d) => results.push({ icon: '❓', text: d.text, sub: d.answered ? t('dq_answered') : t('dq_unanswered'), href: '#/doctor-questions' }));
-  customEntries.filter((c) => c.personId === person.id && c.name.toLowerCase().includes(q)).forEach((c) => results.push({ icon: '📈', text: `${c.name}: ${c.value} ${c.unit || ''}`, sub: c.date, href: '#/trackers' }));
-
-  resultsEl.innerHTML = results.length
-    ? `<ul class="search-result-list">${results.slice(0, 40).map((r) => `<li><a href="${r.href}"><span>${r.icon}</span><span><strong>${U.escapeHTML(r.text)}</strong><small>${U.escapeHTML(r.sub || '')}</small></span></a></li>`).join('')}</ul>`
-    : `<p class="muted">${t('search_no_results')}</p>`;
-}
-
-// ---------------------------------------------------------------------------
-// Settings
-// ---------------------------------------------------------------------------
-async function renderSettings() {
-  topbarTitle.textContent = t('settings_title');
-  const notifSupported = 'Notification' in window;
-  app.innerHTML = `
-    <div class="view-header"><h1>${t('settings_title')}</h1></div>
-
-    <section class="settings-block glass">
-      <h2>${t('settings_language')}</h2>
-      <div class="segmented">
-        <button class="segmented__btn ${state.lang === 'en' ? 'segmented__btn--active' : ''}" data-lang="en">English</button>
-        <button class="segmented__btn ${state.lang === 'ur' ? 'segmented__btn--active' : ''}" data-lang="ur">اردو</button>
-      </div>
-    </section>
-
-    <section class="settings-block glass">
-      <h2>${t('settings_theme')}</h2>
-      <div class="segmented">
-        <button class="segmented__btn ${state.theme === 'light' ? 'segmented__btn--active' : ''}" data-theme="light">${t('theme_light')}</button>
-        <button class="segmented__btn ${state.theme === 'dark' ? 'segmented__btn--active' : ''}" data-theme="dark">${t('theme_dark')}</button>
-        <button class="segmented__btn ${state.theme === 'medical' ? 'segmented__btn--active' : ''}" data-theme="medical">${t('theme_medical')}</button>
-      </div>
-    </section>
-
-    <section class="settings-block glass">
-      <h2>${t('settings_dashboard_sections')}</h2>
-      <div class="toggle-list">
-        ${Object.entries({ todayMeds: 'dash_todays_medicines', readings: 'dash_latest_readings', notes: 'nav_notes', activity: 'dash_recent_activity' }).map(([key, labelKey]) => `
-          <label class="toggle-row"><span>${t(labelKey)}</span><input type="checkbox" data-section="${key}" ${state.dashboardSections[key] ? 'checked' : ''}></label>
-        `).join('')}
-      </div>
-    </section>
-
-    <section class="settings-block glass">
-      <h2>${t('settings_trackers')}</h2>
-      <div class="toggle-list">
-        ${['heartrate', 'spo2', 'temperature', 'sleep', 'steps'].map((k) => `
-          <label class="toggle-row"><span>${t('other_' + k)}</span><input type="checkbox" data-tracker="${k}" ${state.trackers[k] !== false ? 'checked' : ''}></label>
-        `).join('')}
-      </div>
-    </section>
-
-    <section class="settings-block glass">
-      <h2>${t('settings_notifications')}</h2>
-      ${notifSupported ? `
-        <label class="toggle-row"><span>${t('settings_notifications_enable')}</span><input type="checkbox" id="notif-toggle" ${state.notificationsEnabled ? 'checked' : ''}></label>
-      ` : `<p class="muted">${t('settings_notifications_unsupported')}</p>`}
-    </section>
-
-    <section class="settings-block glass">
-      <h2>${t('install_title')}</h2>
-      <p>${t('install_body')}</p>
-      <button class="btn btn--primary" id="install-btn-settings" ${state.deferredInstallPrompt ? '' : 'disabled'}>${t('install_button')}</button>
-      ${state.deferredInstallPrompt ? '' : `<p class="muted">${t('install_unsupported')}</p>`}
-    </section>
-
-    <section class="settings-block glass">
-      <h2>${t('settings_privacy_title')}</h2>
-      <p>${t('settings_privacy_body')}</p>
-    </section>
-
-    <section class="settings-block glass">
-      <h2>${t('settings_data')}</h2>
-      <div class="form-actions form-actions--stack">
-        <button class="btn btn--soft btn--full" id="export-data-btn">⬇️ ${t('settings_export')}</button>
-        <label class="btn btn--soft btn--full file-btn">⬆️ ${t('settings_import')}<input type="file" id="import-data-input" accept="application/json" hidden></label>
-        <button class="btn btn--danger btn--full" id="clear-data-btn">🗑️ ${t('settings_clear')}</button>
-      </div>
-    </section>
-
-    <p class="muted app-version">${t('appName')} · v1.0</p>
-  `;
-
-  app.querySelectorAll('[data-lang]').forEach((btn) => btn.addEventListener('click', async () => {
-    state.lang = btn.dataset.lang;
-    setLang(state.lang);
-    await DB.setSetting('lang', state.lang);
-    forceRepaint();
-    renderPersonBar(); renderBottomNav(); route();
-  }));
-  app.querySelectorAll('[data-theme]').forEach((btn) => btn.addEventListener('click', async () => {
-    state.theme = btn.dataset.theme;
-    applyTheme(state.theme);
-    await DB.setSetting('theme', state.theme);
-    route();
-  }));
-  app.querySelectorAll('[data-section]').forEach((cb) => cb.addEventListener('change', async () => {
-    state.dashboardSections[cb.dataset.section] = cb.checked;
-    await DB.setSetting('dashboardSections', state.dashboardSections);
-  }));
-  app.querySelectorAll('[data-tracker]').forEach((cb) => cb.addEventListener('change', async () => {
-    state.trackers[cb.dataset.tracker] = cb.checked;
-    await DB.setSetting('trackers', state.trackers);
-  }));
-  document.getElementById('notif-toggle')?.addEventListener('change', async (e) => {
-    if (e.target.checked) {
-      const perm = await Notification.requestPermission();
-      if (perm !== 'granted') {
-        e.target.checked = false;
-        U.showToast(t('settings_notifications_denied'));
-        return;
-      }
-    }
-    state.notificationsEnabled = e.target.checked;
-    await DB.setSetting('notificationsEnabled', state.notificationsEnabled);
-  });
-  document.getElementById('install-btn-settings')?.addEventListener('click', triggerInstall);
-  document.getElementById('export-data-btn').addEventListener('click', exportData);
-  document.getElementById('import-data-input').addEventListener('change', importData);
-  document.getElementById('clear-data-btn').addEventListener('click', handleClearAllDataClick);
-}
-
-async function exportData() {
-  const data = await DB.exportAllData();
-  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `medisaathi-backup-${U.todayISO()}.json`;
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  URL.revokeObjectURL(url);
-  U.showToast(t('common_saved'));
-}
-
-async function importData(e) {
-  const file = e.target.files[0];
-  if (!file) return;
-  try {
-    const text = await file.text();
-    const data = JSON.parse(text);
-    await DB.importAllData(data);
-    U.showToast(t('common_saved'));
-    await ensurePersonExists();
-    renderPersonBar();
-    route();
-  } catch (err) {
-    console.error(err);
-    U.showToast(t('common_error_generic'));
-  } finally {
-    e.target.value = '';
-  }
-}
-
-async function handleClearAllDataClick() {
-  if (!U.confirmDialog(t('settings_clear_confirm'))) return;
-  await DB.clearAllData();
-  await ensurePersonExists();
-  renderPersonBar();
-  U.showToast(t('common_deleted'));
-  route();
-}
-
-// ---------------------------------------------------------------------------
-// About
-// ---------------------------------------------------------------------------
-function renderAbout() {
-  topbarTitle.textContent = t('nav_about');
-  const features = [
-    'nav_medicines', 'vitals_title', 'timeline_title', 'nav_calendar', 'notes_title', 'vault_title', 'reports_title', 'insights_title'
-  ];
-  app.innerHTML = `
-    <div class="view-header"><h1>${t('about_title')}</h1></div>
-    <section class="about-hero glass">
-      <div class="about-hero__logo">🩺</div>
-      <h2>${t('appName')}</h2>
-      <p>${t('tagline')}</p>
-    </section>
-    <section class="card-section">
-      <p>${t('about_body')}</p>
-      <p class="muted">${getLang() === 'ur' ? 'بنیادی خصوصیات (دوائیں، صحت کے ریکارڈز، نوٹس، دستاویزات) مکمل طور پر آف لائن کام کرتی ہیں۔ کچھ اضافی معلوماتی مواد (جیسے تجاویز) کے لیے مستقبل میں انٹرنیٹ درکار ہو سکتا ہے۔' : 'Core features (medicines, health records, notes, documents) work fully offline. Some optional informational content may use the internet in future updates.'}</p>
-    </section>
-    <section class="card-section">
-      <h2>${t('about_features_title')}</h2>
-      <ul class="feature-list">${features.map((f) => `<li>✓ ${t(f)}</li>`).join('')}</ul>
-    </section>
-    <section class="card-section warning-box">
-      <p>${t('about_disclaimer')}</p>
-    </section>
-    <section class="card-section about-developer">
-      <p class="muted">${t('about_developer')}</p>
-      <strong>${t('about_developer_name')}</strong>
-    </section>
-    <button class="btn btn--ghost btn--full" id="replay-intro-btn">🔁 ${t('intro_replay')}</button>
-  `;
-  document.getElementById('replay-intro-btn').addEventListener('click', showIntro);
-}
-
-// ---------------------------------------------------------------------------
-// PWA: service worker + reminders
-// ---------------------------------------------------------------------------
-function registerServiceWorker() {
-  if (!('serviceWorker' in navigator)) return;
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./service-worker.js').catch((err) => {
-      console.warn('Service worker registration failed:', err);
-    });
-  });
-}
-
-let lastReminderCheckMinute = null;
-async function checkDueReminders() {
-  if (!state.notificationsEnabled) return;
-  if (!('Notification' in window) || Notification.permission !== 'granted') return;
-  const nowHM = U.nowTimeHM();
-  if (nowHM === lastReminderCheckMinute) return;
-  lastReminderCheckMinute = nowHM;
-
-  const [meds, doseLogs] = await Promise.all([DB.getAll('medicines'), DB.getAll('doseLogs')]);
-  const today = U.todayISO();
-  meds.filter((m) => isMedicineActiveOn(m, today)).forEach((med) => {
-    scheduleTimesForMedicine(med).forEach((time) => {
-      if (time !== nowHM) return;
-      const already = doseLogs.find((l) => l.medicineId === med.id && l.date === today && l.time === time);
-      if (already) return;
-      try {
-        new Notification(t('appName'), {
-          body: `${med.name} — ${med.dosage || ''} ${med.unit || ''}`.trim(),
-          icon: './icons/icon-192.png',
-          tag: `${med.id}-${time}`
-        });
-      } catch (err) {
-        console.warn('Notification failed:', err);
-      }
-    });
-  });
-}
-
-// ---------------------------------------------------------------------------
-// Module scripts execute after the DOM has been parsed (like `defer`), so it
-// is safe to boot immediately rather than waiting for DOMContentLoaded.
-boot();
-
-
-
-</script>
-</body>
-</html>
+  if (todaysFeeli
