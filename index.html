@@ -693,7 +693,6 @@ button { cursor: pointer; }
   <div class="topbar__row">
     <div class="topbar__title-group">
       <h1 id="topbar-title" class="topbar__title">MediSaathi</h1>
-      <span id="topbar-brand-sub" class="topbar__brand-sub">Muhammad Usman Channa</span>
     </div>
     <div class="topbar__actions">
       <div class="lang-toggle" id="topbar-lang-toggle">
@@ -1926,19 +1925,60 @@ const topbarTitle = document.getElementById('topbar-title');
 // ---------------------------------------------------------------------------
 // Boot sequence
 // ---------------------------------------------------------------------------
+function withTimeout(promise, ms, label) {
+  return Promise.race([
+    promise,
+    new Promise((_, reject) => setTimeout(() => reject(new Error(`Timed out: ${label}`)), ms))
+  ]);
+}
+
 async function boot() {
-  registerServiceWorker();
-  await loadSettings();
-  await ensurePersonExists();
-  wireGlobalUI();
-  window.addEventListener('hashchange', route);
-  const seenIntro = await DB.getSetting('hasSeenIntro', false);
-  if (!seenIntro) {
-    showIntro();
-  } else {
-    route();
+  try {
+    registerServiceWorker();
+    await withTimeout(loadSettings(), 8000, 'loadSettings');
+    await withTimeout(ensurePersonExists(), 8000, 'ensurePersonExists');
+    wireGlobalUI();
+    window.addEventListener('hashchange', route);
+    const seenIntro = await withTimeout(DB.getSetting('hasSeenIntro', false), 8000, 'hasSeenIntro');
+    if (!seenIntro) {
+      showIntro();
+    } else {
+      route();
+    }
+    setInterval(checkDueReminders, 60 * 1000);
+  } catch (err) {
+    console.error('Boot failed:', err);
+    showBootError(err);
   }
-  setInterval(checkDueReminders, 60 * 1000);
+}
+
+function showBootError(err) {
+  const message = (err && err.message) ? err.message : 'Unknown error';
+  app.innerHTML = `
+    <div class="empty-state">
+      <div class="empty-state__icon">⚠️</div>
+      <h2>MediSaathi couldn't start</h2>
+      <p>Something prevented the app from loading — this is often caused by
+      private/incognito browsing mode, or a browser setting that blocks
+      on-device storage (IndexedDB), which MediSaathi needs to save your
+      health data.</p>
+      <p class="muted" style="font-size:.78rem;word-break:break-word;">${U.escapeHTML(message)}</p>
+      <button class="btn btn--primary" id="boot-retry-btn" style="margin-top:14px;">Try again</button>
+      <button class="btn btn--ghost" id="boot-reset-btn" style="margin-top:8px;">Reset app data &amp; reload</button>
+    </div>`;
+  document.getElementById('boot-retry-btn')?.addEventListener('click', () => window.location.reload());
+  document.getElementById('boot-reset-btn')?.addEventListener('click', async () => {
+    try {
+      if (window.indexedDB && indexedDB.databases) {
+        const dbs = await indexedDB.databases();
+        await Promise.all(dbs.map((d) => new Promise((res) => {
+          const req = indexedDB.deleteDatabase(d.name);
+          req.onsuccess = req.onerror = req.onblocked = () => res();
+        })));
+      }
+    } catch (e) { /* best-effort */ }
+    window.location.reload();
+  });
 }
 
 function showIntro() {
@@ -2111,8 +2151,6 @@ function renderTopbarLangToggle() {
     btn.classList.toggle('lang-toggle__btn--active', btn.dataset.lang === state.lang);
     btn.onclick = () => switchLanguage(btn.dataset.lang);
   });
-  const sub = document.getElementById('topbar-brand-sub');
-  if (sub) sub.textContent = t('about_developer_name');
 }
 
 function renderBottomNav() {
@@ -2329,44 +2367,4 @@ async function renderDashboard() {
       <div class="reading-grid">
         ${latestReadingCard('vitals_bp', bp.filter(v=>v.personId===person.id), (v)=>`${v.systolic}/${v.diastolic}`, 'mmHg', '#/vitals/bp')}
         ${latestReadingCard('vitals_sugar', sugar.filter(v=>v.personId===person.id), (v)=>`${v.value}`, 'mg/dL', '#/vitals/sugar')}
-        ${latestReadingCard('vitals_weight', weight.filter(v=>v.personId===person.id), (v)=>`${v.value}`, 'kg', '#/vitals/weight')}
-        ${latestReadingCard('other_heartrate', other.filter(v=>v.personId===person.id && v.type==='heartrate'), (v)=>`${v.value}`, 'bpm', '#/vitals/other')}
-      </div>
-    </section>` : ''}
-
-    ${s.notes ? `<section class="card-section">
-      <h2>${t('nav_notes')}</h2>
-      ${renderRecentNotes(notes.filter((n) => n.personId === person.id))}
-    </section>` : ''}
-
-    ${s.activity ? `<section class="card-section">
-      <h2>${t('dash_recent_activity')}</h2>
-      ${renderMiniTimeline(await buildTimelineEvents(person.id, 6))}
-    </section>` : ''}
-
-    <div class="install-banner glass" id="install-banner" hidden>
-      <div>
-        <strong>${t('install_title')}</strong>
-        <p>${t('install_body')}</p>
-      </div>
-      <button class="btn btn--primary" id="install-btn-dash">${t('install_button')}</button>
-    </div>
-
-    <p class="dashboard-footer-credit">${t('appName')} · ${t('about_developer_name')}</p>
-  `;
-
-  renderProgressRing(document.getElementById('adherence-ring'), {
-    percent: adherence, label: t('dash_adherence_today'),
-    sublabel: `${takenCount}/${todaysDoses.length || 0}`
-  });
-
-  app.querySelectorAll('[data-action]').forEach((btn) => {
-    btn.addEventListener('click', () => dashboardQuickAction(btn.dataset.action));
-  });
-  app.querySelectorAll('[data-mark]').forEach((btn) => {
-    btn.addEventListener('click', () => markDose(btn.dataset.medId, btn.dataset.time, btn.dataset.mark, today));
-  });
-
-  const feelings = await DB.getAll('feelings');
-  const todaysFeeling = feelings.find((f) => f.personId === person.id && f.date === today);
-  if (todaysFeeli
+        ${latestReadingCard('vitals_weight', weight.filter(v=>v.personId===person.id), (v)=>`${v.value}`, 'kg', '#/vital
